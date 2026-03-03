@@ -1,2 +1,2 @@
 // Core module: shared types, config, and app-wide utilities
-export {}
+export * from './cv'

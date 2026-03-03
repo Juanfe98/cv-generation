@@ -65,3 +65,8 @@ GitHub Actions workflow at `.github/workflows/ci.yml`:
 - Do NOT add `Co-Authored-By` trailers to commits
 - Keep PRs focused and single-purpose
 - Run `npm run lint && npm run typecheck && npm run test` before committing
+
+## Working Style
+
+- **Ask before assuming**: If a ticket or task is missing context or requirements are unclear, ASK the user for clarification before implementing. Do not infer or assume - have a conversation to clarify.
+- Prefer simple, minimal solutions over overengineered ones
