@@ -1,5 +1,7 @@
 # CV Builder
 
+[![CI](https://github.com/Juanfe98/cv-generation/actions/workflows/ci.yml/badge.svg)](https://github.com/Juanfe98/cv-generation/actions/workflows/ci.yml)
+
 An online CV builder application built with React and TypeScript.
 
 ## Requirements
