@@ -1,2 +1,2 @@
 // Reusable custom hooks
-export {}
+export * from './usePersistedCv'
