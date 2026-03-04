@@ -23,7 +23,7 @@ const profileLinkSchema = z.object({
   url: z.string().default(''),
 })
 
-const profileSchema = z.object({
+export const profileSchema = z.object({
   fullName: nonEmptyString,
   headline: z.string().default(''),
   location: z.string().default(''),
