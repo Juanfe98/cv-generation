@@ -1,18 +1,21 @@
-import { usePersistedCv } from '../../shared/hooks'
+import { useCv } from '../../app/providers'
 
 export function EditorPage() {
-  const [cv, , { reset, isSaving }] = usePersistedCv()
+  const { cv, resetCv, isSaving } = useCv()
+  const displayName = cv.profile.fullName || 'Unnamed'
 
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-slate-900">Editor</h1>
+        <h1 className="text-2xl font-bold text-slate-900">
+          Editor: {displayName}
+        </h1>
         <div className="flex items-center gap-2">
           {isSaving && (
             <span className="text-sm text-slate-500">Saving...</span>
           )}
           <button
-            onClick={reset}
+            onClick={resetCv}
             className="rounded bg-red-100 px-3 py-1 text-sm text-red-700"
           >
             Reset CV

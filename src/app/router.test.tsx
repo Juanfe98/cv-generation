@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import { createMemoryRouter, RouterProvider } from 'react-router-dom'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { Layout } from './Layout'
+import { CvProvider } from './providers'
 import { EditorPage } from '../features/editor/EditorPage'
 import { PreviewPage } from '../features/preview/PreviewPage'
 
@@ -16,26 +17,42 @@ const routes = [
   },
 ]
 
+function renderWithProviders(initialEntries: string[]) {
+  const router = createMemoryRouter(routes, { initialEntries })
+  return render(
+    <CvProvider>
+      <RouterProvider router={router} />
+    </CvProvider>
+  )
+}
+
 describe('Router', () => {
+  beforeEach(() => {
+    localStorage.clear()
+  })
+
   it('renders EditorPage at /editor', () => {
-    const router = createMemoryRouter(routes, { initialEntries: ['/editor'] })
-    render(<RouterProvider router={router} />)
+    renderWithProviders(['/editor'])
 
     expect(screen.getByRole('heading', { name: /editor/i })).toBeInTheDocument()
   })
 
   it('renders PreviewPage at /preview', () => {
-    const router = createMemoryRouter(routes, { initialEntries: ['/preview'] })
-    render(<RouterProvider router={router} />)
+    renderWithProviders(['/preview'])
 
     expect(screen.getByRole('heading', { name: /preview/i })).toBeInTheDocument()
   })
 
   it('renders navigation links', () => {
-    const router = createMemoryRouter(routes, { initialEntries: ['/editor'] })
-    render(<RouterProvider router={router} />)
+    renderWithProviders(['/editor'])
 
     expect(screen.getByRole('link', { name: /editor/i })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /preview/i })).toBeInTheDocument()
+  })
+
+  it('renders fallback name "Unnamed" when CV has no name', () => {
+    renderWithProviders(['/editor'])
+
+    expect(screen.getByRole('heading', { name: /unnamed/i })).toBeInTheDocument()
   })
 })
