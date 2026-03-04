@@ -33,7 +33,7 @@ export const profileSchema = z.object({
   links: z.array(profileLinkSchema).default([]),
 })
 
-const experienceItemSchema = z.object({
+export const experienceItemSchema = z.object({
   id: z.string().default(() => crypto.randomUUID()),
   company: nonEmptyString,
   role: nonEmptyString,
