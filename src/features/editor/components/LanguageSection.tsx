@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useCv } from '../../../app/providers'
 import type { LanguageItem } from '../../../core'
 import { reorderArray } from '../../../shared/utils'
+import { EditorCard, ReorderButtons, AddItemButton, EditButton, DeleteButton } from '../../../shared/editor'
 import { LanguageForm } from './LanguageForm'
 
 export function LanguageSection() {
@@ -55,10 +56,7 @@ export function LanguageSection() {
       )}
 
       {languages.map((lang, index) => (
-        <div
-          key={lang.id}
-          className="rounded-lg border border-slate-200 bg-white p-4"
-        >
+        <EditorCard key={lang.id}>
           {editingId === lang.id ? (
             <LanguageForm
               language={lang}
@@ -66,66 +64,40 @@ export function LanguageSection() {
               onCancel={() => setEditingId(null)}
             />
           ) : (
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
+            <EditorCard.Header
+              left={
                 <h3 className="font-medium text-slate-900">
                   {lang.name}
                   {lang.level && (
                     <span className="font-normal text-slate-500"> — {lang.level}</span>
                   )}
                 </h3>
-              </div>
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={() => handleMoveUp(index)}
-                  disabled={index === 0}
-                  className="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 disabled:cursor-not-allowed disabled:opacity-50"
-                  aria-label="Move up"
-                >
-                  ↑
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleMoveDown(index)}
-                  disabled={index === languages.length - 1}
-                  className="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 disabled:cursor-not-allowed disabled:opacity-50"
-                  aria-label="Move down"
-                >
-                  ↓
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setEditingId(lang.id)}
-                  className="rounded px-2 py-1 text-sm text-blue-600 hover:bg-blue-50"
-                >
-                  Edit
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleDelete(lang.id)}
-                  className="rounded px-2 py-1 text-sm text-red-600 hover:bg-red-50"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
+              }
+              right={
+                <>
+                  <ReorderButtons
+                    onMoveUp={() => handleMoveUp(index)}
+                    onMoveDown={() => handleMoveDown(index)}
+                    disabledUp={index === 0}
+                    disabledDown={index === languages.length - 1}
+                  />
+                  <EditButton onClick={() => setEditingId(lang.id)} />
+                  <DeleteButton onClick={() => handleDelete(lang.id)} />
+                </>
+              }
+            />
           )}
-        </div>
+        </EditorCard>
       ))}
 
       {isAdding ? (
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
+        <EditorCard>
           <LanguageForm onSubmit={handleAdd} onCancel={() => setIsAdding(false)} />
-        </div>
+        </EditorCard>
       ) : (
-        <button
-          type="button"
-          onClick={() => setIsAdding(true)}
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-        >
+        <AddItemButton onClick={() => setIsAdding(true)}>
           Add Language
-        </button>
+        </AddItemButton>
       )}
     </div>
   )

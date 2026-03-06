@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useCv } from '../../../app/providers'
 import type { ProjectItem } from '../../../core'
 import { reorderArray } from '../../../shared/utils'
+import { EditorCard, ReorderButtons, AddItemButton, EditButton, DeleteButton } from '../../../shared/editor'
 import { ProjectForm } from './ProjectForm'
 
 export function ProjectSection() {
@@ -55,10 +56,7 @@ export function ProjectSection() {
       )}
 
       {projects.map((project, index) => (
-        <div
-          key={project.id}
-          className="rounded-lg border border-slate-200 bg-white p-4"
-        >
+        <EditorCard key={project.id}>
           {editingId === project.id ? (
             <ProjectForm
               project={project}
@@ -66,74 +64,50 @@ export function ProjectSection() {
               onCancel={() => setEditingId(null)}
             />
           ) : (
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <h3 className="font-medium text-slate-900">{project.name}</h3>
-                {project.description && (
-                  <p className="text-sm text-slate-600">{project.description}</p>
-                )}
-                {project.link && (
-                  <p className="text-sm text-blue-600">{project.link}</p>
-                )}
-                {project.highlights.length > 0 && (
-                  <ul className="mt-2 list-inside list-disc text-sm text-slate-600">
-                    {project.highlights.map((h, i) => (
-                      <li key={i}>{h}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={() => handleMoveUp(index)}
-                  disabled={index === 0}
-                  className="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 disabled:cursor-not-allowed disabled:opacity-50"
-                  aria-label="Move up"
-                >
-                  ↑
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleMoveDown(index)}
-                  disabled={index === projects.length - 1}
-                  className="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 disabled:cursor-not-allowed disabled:opacity-50"
-                  aria-label="Move down"
-                >
-                  ↓
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setEditingId(project.id)}
-                  className="rounded px-2 py-1 text-sm text-blue-600 hover:bg-blue-50"
-                >
-                  Edit
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleDelete(project.id)}
-                  className="rounded px-2 py-1 text-sm text-red-600 hover:bg-red-50"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
+            <EditorCard.Header
+              left={
+                <>
+                  <h3 className="font-medium text-slate-900">{project.name}</h3>
+                  {project.description && (
+                    <p className="text-sm text-slate-600">{project.description}</p>
+                  )}
+                  {project.link && (
+                    <p className="text-sm text-blue-600">{project.link}</p>
+                  )}
+                  {project.highlights.length > 0 && (
+                    <ul className="mt-2 list-inside list-disc text-sm text-slate-600">
+                      {project.highlights.map((h, i) => (
+                        <li key={i}>{h}</li>
+                      ))}
+                    </ul>
+                  )}
+                </>
+              }
+              right={
+                <>
+                  <ReorderButtons
+                    onMoveUp={() => handleMoveUp(index)}
+                    onMoveDown={() => handleMoveDown(index)}
+                    disabledUp={index === 0}
+                    disabledDown={index === projects.length - 1}
+                  />
+                  <EditButton onClick={() => setEditingId(project.id)} />
+                  <DeleteButton onClick={() => handleDelete(project.id)} />
+                </>
+              }
+            />
           )}
-        </div>
+        </EditorCard>
       ))}
 
       {isAdding ? (
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
+        <EditorCard>
           <ProjectForm onSubmit={handleAdd} onCancel={() => setIsAdding(false)} />
-        </div>
+        </EditorCard>
       ) : (
-        <button
-          type="button"
-          onClick={() => setIsAdding(true)}
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-        >
+        <AddItemButton onClick={() => setIsAdding(true)}>
           Add Project
-        </button>
+        </AddItemButton>
       )}
     </div>
   )
