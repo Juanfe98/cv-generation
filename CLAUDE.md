@@ -70,3 +70,36 @@ GitHub Actions workflow at `.github/workflows/ci.yml`:
 
 - **Ask before assuming**: If a ticket or task is missing context or requirements are unclear, ASK the user for clarification before implementing. Do not infer or assume - have a conversation to clarify.
 - Prefer simple, minimal solutions over overengineered ones
+
+## Form Handling Pattern
+
+Forms use **React Hook Form + Zod**:
+- Use `z.input<typeof schema>` for form types (handles optional fields with defaults)
+- Use `zodResolver(schema)` for validation
+- Parse through schema on submit to apply defaults before saving
+
+Example:
+```typescript
+type FormInput = z.input<typeof mySchema>
+const { register, handleSubmit } = useForm<FormInput>({
+  resolver: zodResolver(mySchema),
+  defaultValues: existingData,
+})
+const onSubmit = (data: FormInput) => {
+  const parsed = mySchema.parse(data)
+  // save parsed data
+}
+```
+
+## State Management
+
+CV data flows through `CvProvider`:
+- Access via `useCv()` hook → `{ cv, updateCv, resetCv, isSaving }`
+- `updateCv` uses Immer for immutable updates
+- Auto-persists to localStorage with 300ms debounce
+
+## Testing Patterns
+
+- Wrap components in `<CvProvider>` for tests
+- Use helper functions to create valid CV test data (fullName is required)
+- localStorage persists between tests - clear in `beforeEach`

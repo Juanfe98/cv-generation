@@ -40,7 +40,7 @@ describe('Router', () => {
   it('renders PreviewPage at /preview', () => {
     renderWithProviders(['/preview'])
 
-    expect(screen.getByRole('heading', { name: /preview/i })).toBeInTheDocument()
+    expect(screen.getByRole('article')).toBeInTheDocument()
   })
 
   it('renders navigation links', () => {
