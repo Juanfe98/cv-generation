@@ -1,4 +1,4 @@
-import type { CvModel, ExperienceItem } from '../../../core/cv/types'
+import type { CvModel, ExperienceItem, EducationItem } from '../../../core/cv/types'
 
 interface TemplateV1Props {
   cv: CvModel
@@ -80,11 +80,55 @@ function ExperienceSection({ experience }: { experience: ExperienceItem[] }) {
   )
 }
 
+function formatDegreeField(degree: string, field: string): string {
+  if (degree && field) return `${degree} in ${field}`
+  if (degree) return degree
+  if (field) return field
+  return ''
+}
+
+function EducationEntry({ item }: { item: EducationItem }) {
+  const dateRange =
+    item.startDate || item.endDate
+      ? `${formatDate(item.startDate) || '?'} – ${formatDate(item.endDate) || '?'}`
+      : null
+
+  const degreeField = formatDegreeField(item.degree, item.field)
+
+  return (
+    <div className="mt-4 first:mt-0">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4">
+        <h3 className="font-semibold text-slate-900">{item.institution}</h3>
+        {dateRange && <span className="text-sm text-slate-500">{dateRange}</span>}
+      </div>
+      {degreeField && <p className="text-sm text-slate-600">{degreeField}</p>}
+    </div>
+  )
+}
+
+function EducationSection({ education }: { education: EducationItem[] }) {
+  if (education.length === 0) return null
+
+  return (
+    <section className="mt-6">
+      <h2 className="border-b border-slate-200 pb-1 text-lg font-semibold text-slate-800">
+        Education
+      </h2>
+      <div className="mt-3">
+        {education.map((item) => (
+          <EducationEntry key={item.id} item={item} />
+        ))}
+      </div>
+    </section>
+  )
+}
+
 export function TemplateV1({ cv }: TemplateV1Props) {
   return (
     <article className="mx-auto max-w-[800px] bg-white p-8 print:max-w-none print:p-0">
       <ProfileSection profile={cv.profile} />
       <ExperienceSection experience={cv.experience} />
+      <EducationSection education={cv.education} />
     </article>
   )
 }

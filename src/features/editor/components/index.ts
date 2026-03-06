@@ -1,3 +1,5 @@
 export * from './ProfileSection'
 export * from './ExperienceSection'
 export * from './ExperienceForm'
+export * from './EducationSection'
+export * from './EducationForm'

@@ -44,7 +44,7 @@ export const experienceItemSchema = z.object({
   highlights: z.array(z.string()).default([]),
 })
 
-const educationItemSchema = z.object({
+export const educationItemSchema = z.object({
   id: z.string().default(() => crypto.randomUUID()),
   institution: nonEmptyString,
   degree: z.string().default(''),
