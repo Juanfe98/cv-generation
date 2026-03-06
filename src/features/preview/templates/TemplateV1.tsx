@@ -1,4 +1,4 @@
-import type { CvModel, ExperienceItem, EducationItem } from '../../../core/cv/types'
+import type { CvModel, ExperienceItem, EducationItem, CertificationItem } from '../../../core/cv/types'
 
 interface TemplateV1Props {
   cv: CvModel
@@ -123,12 +123,66 @@ function EducationSection({ education }: { education: EducationItem[] }) {
   )
 }
 
+function SkillsSection({ skills }: { skills: string[] }) {
+  if (skills.length === 0) return null
+
+  return (
+    <section className="mt-6">
+      <h2 className="border-b border-slate-200 pb-1 text-lg font-semibold text-slate-800">
+        Skills
+      </h2>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {skills.map((skill, index) => (
+          <span
+            key={index}
+            className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700"
+          >
+            {skill}
+          </span>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function CertificationEntry({ item }: { item: CertificationItem }) {
+  const details = [item.issuer, item.date ? formatDate(item.date) : null]
+    .filter(Boolean)
+    .join(' • ')
+
+  return (
+    <div className="mt-2 first:mt-0">
+      <span className="font-medium text-slate-900">{item.name}</span>
+      {details && <span className="text-sm text-slate-500"> — {details}</span>}
+    </div>
+  )
+}
+
+function CertificationsSection({ certifications }: { certifications: CertificationItem[] }) {
+  if (certifications.length === 0) return null
+
+  return (
+    <section className="mt-6">
+      <h2 className="border-b border-slate-200 pb-1 text-lg font-semibold text-slate-800">
+        Certifications
+      </h2>
+      <div className="mt-3">
+        {certifications.map((item) => (
+          <CertificationEntry key={item.id} item={item} />
+        ))}
+      </div>
+    </section>
+  )
+}
+
 export function TemplateV1({ cv }: TemplateV1Props) {
   return (
     <article className="mx-auto max-w-[800px] bg-white p-8 print:max-w-none print:p-0">
       <ProfileSection profile={cv.profile} />
       <ExperienceSection experience={cv.experience} />
       <EducationSection education={cv.education} />
+      <SkillsSection skills={cv.skills} />
+      <CertificationsSection certifications={cv.certifications} />
     </article>
   )
 }

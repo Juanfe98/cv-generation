@@ -67,7 +67,7 @@ const languageItemSchema = z.object({
   level: z.string().default(''),
 })
 
-const certificationItemSchema = z.object({
+export const certificationItemSchema = z.object({
   id: z.string().default(() => crypto.randomUUID()),
   name: nonEmptyString,
   issuer: z.string().default(''),
