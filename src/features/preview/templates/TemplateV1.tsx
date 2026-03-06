@@ -1,23 +1,33 @@
-import type { CvModel, ExperienceItem, EducationItem, CertificationItem, LanguageItem } from '../../../core/cv/types'
+import type {
+  CvModel,
+  ExperienceItem,
+  EducationItem,
+  ProjectItem,
+  CertificationItem,
+  LanguageItem,
+} from '../../../core/cv/types'
+import {
+  formatDate,
+  formatDateRange,
+  formatEducationDateRange,
+  formatContactLine,
+  formatDegreeField,
+} from '../../../core/formatters'
 
 interface TemplateV1Props {
   cv: CvModel
 }
 
-function formatDate(dateString: string): string {
-  if (!dateString) return ''
-  const [year, month] = dateString.split('-')
-  const date = new Date(Number(year), Number(month) - 1)
-  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
-}
+// Consistent styles
+const sectionStyles = 'mt-6'
+const headingStyles = 'border-b border-slate-200 pb-1 text-lg font-semibold text-slate-800'
+const contentWrapperStyles = 'mt-3'
+const entrySpacingStyles = 'mt-4 first:mt-0'
+const compactEntrySpacingStyles = 'mt-2 first:mt-0'
+const highlightListStyles = 'mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700'
 
 function ProfileSection({ profile }: { profile: CvModel['profile'] }) {
-  const contactItems = [
-    profile.email,
-    profile.phone,
-    profile.location,
-    profile.website,
-  ].filter(Boolean)
+  const contactLine = formatContactLine(profile)
 
   return (
     <header className="border-b border-slate-300 pb-4">
@@ -25,22 +35,18 @@ function ProfileSection({ profile }: { profile: CvModel['profile'] }) {
       {profile.headline && (
         <p className="mt-1 text-lg text-slate-600">{profile.headline}</p>
       )}
-      {contactItems.length > 0 && (
-        <p className="mt-2 text-sm text-slate-500">
-          {contactItems.join(' • ')}
-        </p>
+      {contactLine && (
+        <p className="mt-2 text-sm text-slate-500">{contactLine}</p>
       )}
     </header>
   )
 }
 
 function ExperienceEntry({ item }: { item: ExperienceItem }) {
-  const dateRange = item.isCurrent
-    ? `${formatDate(item.startDate)} – Present`
-    : `${formatDate(item.startDate)} – ${formatDate(item.endDate)}`
+  const dateRange = formatDateRange(item.startDate, item.endDate, item.isCurrent)
 
   return (
-    <div className="mt-4 first:mt-0">
+    <div className={entrySpacingStyles}>
       <div className="flex flex-wrap items-baseline justify-between gap-x-4">
         <h3 className="font-semibold text-slate-900">
           {item.role} at {item.company}
@@ -51,7 +57,7 @@ function ExperienceEntry({ item }: { item: ExperienceItem }) {
         <p className="text-sm text-slate-500">{item.location}</p>
       )}
       {item.highlights.length > 0 && (
-        <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700">
+        <ul className={highlightListStyles}>
           {item.highlights.map((highlight, index) => (
             <li key={index} className="break-words">
               {highlight}
@@ -67,11 +73,9 @@ function ExperienceSection({ experience }: { experience: ExperienceItem[] }) {
   if (experience.length === 0) return null
 
   return (
-    <section className="mt-6">
-      <h2 className="border-b border-slate-200 pb-1 text-lg font-semibold text-slate-800">
-        Experience
-      </h2>
-      <div className="mt-3">
+    <section className={sectionStyles}>
+      <h2 className={headingStyles}>Experience</h2>
+      <div className={contentWrapperStyles}>
         {experience.map((item) => (
           <ExperienceEntry key={item.id} item={item} />
         ))}
@@ -80,23 +84,12 @@ function ExperienceSection({ experience }: { experience: ExperienceItem[] }) {
   )
 }
 
-function formatDegreeField(degree: string, field: string): string {
-  if (degree && field) return `${degree} in ${field}`
-  if (degree) return degree
-  if (field) return field
-  return ''
-}
-
 function EducationEntry({ item }: { item: EducationItem }) {
-  const dateRange =
-    item.startDate || item.endDate
-      ? `${formatDate(item.startDate) || '?'} – ${formatDate(item.endDate) || '?'}`
-      : null
-
+  const dateRange = formatEducationDateRange(item.startDate, item.endDate)
   const degreeField = formatDegreeField(item.degree, item.field)
 
   return (
-    <div className="mt-4 first:mt-0">
+    <div className={entrySpacingStyles}>
       <div className="flex flex-wrap items-baseline justify-between gap-x-4">
         <h3 className="font-semibold text-slate-900">{item.institution}</h3>
         {dateRange && <span className="text-sm text-slate-500">{dateRange}</span>}
@@ -110,13 +103,58 @@ function EducationSection({ education }: { education: EducationItem[] }) {
   if (education.length === 0) return null
 
   return (
-    <section className="mt-6">
-      <h2 className="border-b border-slate-200 pb-1 text-lg font-semibold text-slate-800">
-        Education
-      </h2>
-      <div className="mt-3">
+    <section className={sectionStyles}>
+      <h2 className={headingStyles}>Education</h2>
+      <div className={contentWrapperStyles}>
         {education.map((item) => (
           <EducationEntry key={item.id} item={item} />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function ProjectEntry({ item }: { item: ProjectItem }) {
+  return (
+    <div className={entrySpacingStyles}>
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4">
+        <h3 className="font-semibold text-slate-900">{item.name}</h3>
+        {item.link && (
+          <a
+            href={item.link}
+            className="text-sm text-blue-600 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {item.link}
+          </a>
+        )}
+      </div>
+      {item.description && (
+        <p className="text-sm text-slate-600">{item.description}</p>
+      )}
+      {item.highlights.length > 0 && (
+        <ul className={highlightListStyles}>
+          {item.highlights.map((highlight, index) => (
+            <li key={index} className="break-words">
+              {highlight}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
+function ProjectsSection({ projects }: { projects: ProjectItem[] }) {
+  if (projects.length === 0) return null
+
+  return (
+    <section className={sectionStyles}>
+      <h2 className={headingStyles}>Projects</h2>
+      <div className={contentWrapperStyles}>
+        {projects.map((item) => (
+          <ProjectEntry key={item.id} item={item} />
         ))}
       </div>
     </section>
@@ -127,11 +165,9 @@ function SkillsSection({ skills }: { skills: string[] }) {
   if (skills.length === 0) return null
 
   return (
-    <section className="mt-6">
-      <h2 className="border-b border-slate-200 pb-1 text-lg font-semibold text-slate-800">
-        Skills
-      </h2>
-      <div className="mt-3 flex flex-wrap gap-2">
+    <section className={sectionStyles}>
+      <h2 className={headingStyles}>Skills</h2>
+      <div className={`${contentWrapperStyles} flex flex-wrap gap-2`}>
         {skills.map((skill, index) => (
           <span
             key={index}
@@ -151,7 +187,7 @@ function CertificationEntry({ item }: { item: CertificationItem }) {
     .join(' • ')
 
   return (
-    <div className="mt-2 first:mt-0">
+    <div className={compactEntrySpacingStyles}>
       <span className="font-medium text-slate-900">{item.name}</span>
       {details && <span className="text-sm text-slate-500"> — {details}</span>}
     </div>
@@ -162,11 +198,9 @@ function CertificationsSection({ certifications }: { certifications: Certificati
   if (certifications.length === 0) return null
 
   return (
-    <section className="mt-6">
-      <h2 className="border-b border-slate-200 pb-1 text-lg font-semibold text-slate-800">
-        Certifications
-      </h2>
-      <div className="mt-3">
+    <section className={sectionStyles}>
+      <h2 className={headingStyles}>Certifications</h2>
+      <div className={contentWrapperStyles}>
         {certifications.map((item) => (
           <CertificationEntry key={item.id} item={item} />
         ))}
@@ -175,32 +209,51 @@ function CertificationsSection({ certifications }: { certifications: Certificati
   )
 }
 
+function LanguageEntry({ item }: { item: LanguageItem }) {
+  return (
+    <div className={compactEntrySpacingStyles}>
+      <span className="font-medium text-slate-900">{item.name}</span>
+      {item.level && <span className="text-sm text-slate-500"> — {item.level}</span>}
+    </div>
+  )
+}
+
 function LanguagesSection({ languages }: { languages: LanguageItem[] }) {
   if (languages.length === 0) return null
 
   return (
-    <section className="mt-6">
-      <h2 className="border-b border-slate-200 pb-1 text-lg font-semibold text-slate-800">
-        Languages
-      </h2>
-      <div className="mt-3 space-y-1">
+    <section className={sectionStyles}>
+      <h2 className={headingStyles}>Languages</h2>
+      <div className={contentWrapperStyles}>
         {languages.map((item) => (
-          <div key={item.id} className="text-sm text-slate-700">
-            <span className="font-medium">{item.name}</span>
-            {item.level && <span className="text-slate-500"> — {item.level}</span>}
-          </div>
+          <LanguageEntry key={item.id} item={item} />
         ))}
       </div>
     </section>
   )
 }
 
+/**
+ * Template V1 - Clean, professional CV layout
+ *
+ * Section order:
+ * 1. Profile (header)
+ * 2. Experience
+ * 3. Education
+ * 4. Projects
+ * 5. Skills
+ * 6. Certifications
+ * 7. Languages
+ *
+ * Empty sections are automatically omitted.
+ */
 export function TemplateV1({ cv }: TemplateV1Props) {
   return (
     <article className="mx-auto max-w-[800px] bg-white p-8 print:max-w-none print:p-0">
       <ProfileSection profile={cv.profile} />
       <ExperienceSection experience={cv.experience} />
       <EducationSection education={cv.education} />
+      <ProjectsSection projects={cv.projects} />
       <SkillsSection skills={cv.skills} />
       <CertificationsSection certifications={cv.certifications} />
       <LanguagesSection languages={cv.languages} />

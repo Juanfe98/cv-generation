@@ -53,7 +53,7 @@ export const educationItemSchema = z.object({
   endDate: optionalDateString,
 })
 
-const projectItemSchema = z.object({
+export const projectItemSchema = z.object({
   id: z.string().default(() => crypto.randomUUID()),
   name: nonEmptyString,
   description: z.string().default(''),
