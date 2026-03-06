@@ -1,4 +1,4 @@
-import type { CvModel, ExperienceItem, EducationItem, CertificationItem } from '../../../core/cv/types'
+import type { CvModel, ExperienceItem, EducationItem, CertificationItem, LanguageItem } from '../../../core/cv/types'
 
 interface TemplateV1Props {
   cv: CvModel
@@ -175,6 +175,26 @@ function CertificationsSection({ certifications }: { certifications: Certificati
   )
 }
 
+function LanguagesSection({ languages }: { languages: LanguageItem[] }) {
+  if (languages.length === 0) return null
+
+  return (
+    <section className="mt-6">
+      <h2 className="border-b border-slate-200 pb-1 text-lg font-semibold text-slate-800">
+        Languages
+      </h2>
+      <div className="mt-3 space-y-1">
+        {languages.map((item) => (
+          <div key={item.id} className="text-sm text-slate-700">
+            <span className="font-medium">{item.name}</span>
+            {item.level && <span className="text-slate-500"> — {item.level}</span>}
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 export function TemplateV1({ cv }: TemplateV1Props) {
   return (
     <article className="mx-auto max-w-[800px] bg-white p-8 print:max-w-none print:p-0">
@@ -183,6 +203,7 @@ export function TemplateV1({ cv }: TemplateV1Props) {
       <EducationSection education={cv.education} />
       <SkillsSection skills={cv.skills} />
       <CertificationsSection certifications={cv.certifications} />
+      <LanguagesSection languages={cv.languages} />
     </article>
   )
 }

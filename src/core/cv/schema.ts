@@ -61,7 +61,7 @@ const projectItemSchema = z.object({
   link: z.string().url().or(z.literal('')).default(''),
 })
 
-const languageItemSchema = z.object({
+export const languageItemSchema = z.object({
   id: z.string().default(() => crypto.randomUUID()),
   name: nonEmptyString,
   level: z.string().default(''),
