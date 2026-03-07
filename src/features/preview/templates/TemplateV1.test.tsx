@@ -232,4 +232,118 @@ describe('TemplateV1', () => {
       expect(lists.length).toBeGreaterThanOrEqual(2)
     })
   })
+
+  describe('long content handling', () => {
+    const createCvWithLongContent = (): CvModel => ({
+      schemaVersion: 1,
+      profile: {
+        fullName: 'Alexandra Christina Montgomery-Worthington III',
+        headline: 'Senior Principal Distinguished Staff Software Engineer and Technical Architect',
+        location: 'San Francisco Bay Area, California, United States',
+        email: 'alexandra.montgomery-worthington@verylongcompanyname.enterprise.com',
+        phone: '+1 (555) 123-4567 ext. 89012',
+        website: 'https://www.alexandra-montgomery-worthington-portfolio.dev',
+        links: [],
+      },
+      experience: [
+        {
+          id: 'exp-1',
+          company: 'Global International Multinational Technology Solutions Corporation Ltd.',
+          role: 'Senior Principal Distinguished Staff Software Engineer',
+          location: 'San Francisco Bay Area, California, United States (Remote-First)',
+          startDate: '2022-01',
+          endDate: '',
+          isCurrent: true,
+          highlights: [
+            'Led the complete redesign and implementation of the company\'s flagship distributed microservices platform serving over 50 million daily active users across 150 countries',
+            'Architected and delivered a real-time data processing pipeline capable of handling 10 million events per second with sub-millisecond latency using Apache Kafka, Apache Flink, and custom-built components',
+            'Mentored and coached a team of 25 engineers across 5 time zones while establishing best practices for code review, testing, and continuous deployment',
+          ],
+        },
+      ],
+      education: [
+        {
+          id: 'edu-1',
+          institution: 'Massachusetts Institute of Technology (MIT) - School of Engineering',
+          degree: 'Doctor of Philosophy (Ph.D.) with Distinction',
+          field: 'Computer Science and Artificial Intelligence',
+          startDate: '2010-09',
+          endDate: '2016-05',
+        },
+      ],
+      skills: [
+        'TypeScript/JavaScript (ES2024+)',
+        'React/Next.js/Remix',
+        'Node.js/Deno/Bun',
+        'PostgreSQL/MySQL/MongoDB',
+        'AWS/GCP/Azure (Multi-cloud)',
+      ],
+      projects: [
+        {
+          id: 'proj-1',
+          name: 'Enterprise Distributed Real-Time Analytics Platform',
+          description: 'A comprehensive full-stack solution for processing, analyzing, and visualizing streaming data at scale with support for multiple data sources and export formats',
+          highlights: [
+            'Implemented custom streaming aggregation algorithms that reduced memory usage by 75% while maintaining accuracy guarantees',
+            'Built a plugin architecture supporting over 100 community-contributed integrations with automated testing and deployment',
+          ],
+          link: 'https://github.com/alexandra-montgomery-worthington/enterprise-distributed-realtime-analytics-platform',
+        },
+      ],
+      languages: [
+        { id: 'lang-1', name: 'English', level: 'Native/Bilingual Proficiency' },
+      ],
+      certifications: [
+        {
+          id: 'cert-1',
+          name: 'AWS Certified Solutions Architect - Professional (SAP-C02)',
+          issuer: 'Amazon Web Services (AWS)',
+          date: '2023-06',
+        },
+      ],
+      additionalInfo: '',
+    })
+
+    it('renders long names with break-words class', () => {
+      const cv = createCvWithLongContent()
+      const { container } = render(<TemplateV1 cv={cv} />)
+
+      const nameHeading = container.querySelector('h1')
+      expect(nameHeading).toHaveClass('break-words')
+    })
+
+    it('renders long experience titles with break-words class', () => {
+      const cv = createCvWithLongContent()
+      const { container } = render(<TemplateV1 cv={cv} />)
+
+      const experienceTitle = container.querySelector('section h3')
+      expect(experienceTitle).toHaveClass('break-words')
+    })
+
+    it('renders long highlights with break-words class', () => {
+      const cv = createCvWithLongContent()
+      const { container } = render(<TemplateV1 cv={cv} />)
+
+      const highlightItems = container.querySelectorAll('ul.list-disc li')
+      expect(highlightItems.length).toBeGreaterThan(0)
+      highlightItems.forEach(item => {
+        expect(item).toHaveClass('break-words')
+      })
+    })
+
+    it('renders all long content without errors', () => {
+      const cv = createCvWithLongContent()
+      const { container } = render(<TemplateV1 cv={cv} />)
+
+      // Verify all sections rendered
+      expect(screen.getByText(/Alexandra Christina/)).toBeInTheDocument()
+      expect(screen.getByText(/Global International/)).toBeInTheDocument()
+      expect(screen.getByText(/Massachusetts Institute/)).toBeInTheDocument()
+      expect(screen.getByText(/Enterprise Distributed/)).toBeInTheDocument()
+
+      // Verify no content is cut off (element exists and has content)
+      const article = container.querySelector('article')
+      expect(article).toBeInTheDocument()
+    })
+  })
 })

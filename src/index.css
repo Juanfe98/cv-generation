@@ -1,1 +1,14 @@
 @import 'tailwindcss';
+
+/* Print styles for CV export */
+@media print {
+  @page {
+    margin: 0.5in;
+    size: letter;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
