@@ -103,6 +103,8 @@ describe('EducationSection', () => {
     renderWithProvider()
 
     await user.click(screen.getByRole('button', { name: /add education/i }))
+    // Type in a non-required field to make form dirty
+    await user.type(screen.getByLabelText(/degree/i), 'BS')
     await user.click(screen.getByRole('button', { name: /^add$/i }))
 
     await waitFor(() => {

@@ -1,7 +1,7 @@
 import type { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { languageItemSchema } from '../../../core'
+import { languageItemSchema, normalizeLanguageItem } from '../../../core'
 import type { LanguageItem } from '../../../core'
 
 type LanguageFormInput = z.input<typeof languageItemSchema>
@@ -16,7 +16,7 @@ export function LanguageForm({ language, onSubmit, onCancel }: LanguageFormProps
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<LanguageFormInput>({
     resolver: zodResolver(languageItemSchema),
     defaultValues: language ?? {
@@ -28,7 +28,8 @@ export function LanguageForm({ language, onSubmit, onCancel }: LanguageFormProps
 
   const handleFormSubmit = (data: LanguageFormInput) => {
     const parsed = languageItemSchema.parse(data)
-    onSubmit(parsed as LanguageItem)
+    const normalized = normalizeLanguageItem(parsed as LanguageItem)
+    onSubmit(normalized)
   }
 
   return (
@@ -73,7 +74,8 @@ export function LanguageForm({ language, onSubmit, onCancel }: LanguageFormProps
       <div className="flex gap-2">
         <button
           type="submit"
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          disabled={!isDirty}
+          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
         >
           {language ? 'Update' : 'Add'}
         </button>

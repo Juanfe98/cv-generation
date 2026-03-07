@@ -19,10 +19,10 @@ interface TemplateV1Props {
 }
 
 // Consistent styles
-const sectionStyles = 'mt-6'
+const sectionStyles = 'mt-6 break-inside-avoid-page'
 const headingStyles = 'border-b border-slate-200 pb-1 text-lg font-semibold text-slate-800'
 const contentWrapperStyles = 'mt-3'
-const entrySpacingStyles = 'mt-4 first:mt-0'
+const entrySpacingStyles = 'mt-4 first:mt-0 break-inside-avoid-page'
 const compactEntrySpacingStyles = 'mt-2 first:mt-0'
 const highlightListStyles = 'mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700'
 
@@ -30,13 +30,13 @@ function ProfileSection({ profile }: { profile: CvModel['profile'] }) {
   const contactLine = formatContactLine(profile)
 
   return (
-    <header className="border-b border-slate-300 pb-4">
-      <h1 className="text-2xl font-bold text-slate-900">{profile.fullName}</h1>
+    <header className="border-b border-slate-300 pb-4 break-inside-avoid-page">
+      <h1 className="text-2xl font-bold text-slate-900 break-words">{profile.fullName}</h1>
       {profile.headline && (
-        <p className="mt-1 text-lg text-slate-600">{profile.headline}</p>
+        <p className="mt-1 text-lg text-slate-600 break-words">{profile.headline}</p>
       )}
       {contactLine && (
-        <p className="mt-2 text-sm text-slate-500">{contactLine}</p>
+        <p className="mt-2 text-sm text-slate-500 break-words">{contactLine}</p>
       )}
     </header>
   )
@@ -48,13 +48,13 @@ function ExperienceEntry({ item }: { item: ExperienceItem }) {
   return (
     <div className={entrySpacingStyles}>
       <div className="flex flex-wrap items-baseline justify-between gap-x-4">
-        <h3 className="font-semibold text-slate-900">
+        <h3 className="font-semibold text-slate-900 break-words min-w-0 flex-1">
           {item.role} at {item.company}
         </h3>
-        <span className="text-sm text-slate-500">{dateRange}</span>
+        <span className="text-sm text-slate-500 shrink-0">{dateRange}</span>
       </div>
       {item.location && (
-        <p className="text-sm text-slate-500">{item.location}</p>
+        <p className="text-sm text-slate-500 break-words">{item.location}</p>
       )}
       {item.highlights.length > 0 && (
         <ul className={highlightListStyles}>
@@ -91,10 +91,10 @@ function EducationEntry({ item }: { item: EducationItem }) {
   return (
     <div className={entrySpacingStyles}>
       <div className="flex flex-wrap items-baseline justify-between gap-x-4">
-        <h3 className="font-semibold text-slate-900">{item.institution}</h3>
-        {dateRange && <span className="text-sm text-slate-500">{dateRange}</span>}
+        <h3 className="font-semibold text-slate-900 break-words min-w-0 flex-1">{item.institution}</h3>
+        {dateRange && <span className="text-sm text-slate-500 shrink-0">{dateRange}</span>}
       </div>
-      {degreeField && <p className="text-sm text-slate-600">{degreeField}</p>}
+      {degreeField && <p className="text-sm text-slate-600 break-words">{degreeField}</p>}
     </div>
   )
 }
@@ -118,20 +118,21 @@ function ProjectEntry({ item }: { item: ProjectItem }) {
   return (
     <div className={entrySpacingStyles}>
       <div className="flex flex-wrap items-baseline justify-between gap-x-4">
-        <h3 className="font-semibold text-slate-900">{item.name}</h3>
+        <h3 className="font-semibold text-slate-900 break-words min-w-0 flex-1">{item.name}</h3>
         {item.link && (
           <a
             href={item.link}
-            className="text-sm text-blue-600 hover:underline"
+            className="text-sm text-blue-600 hover:underline break-all shrink-0 max-w-[200px] truncate print:max-w-none print:truncate"
             target="_blank"
             rel="noopener noreferrer"
+            title={item.link}
           >
             {item.link}
           </a>
         )}
       </div>
       {item.description && (
-        <p className="text-sm text-slate-600">{item.description}</p>
+        <p className="text-sm text-slate-600 break-words">{item.description}</p>
       )}
       {item.highlights.length > 0 && (
         <ul className={highlightListStyles}>
@@ -171,7 +172,7 @@ function SkillsSection({ skills }: { skills: string[] }) {
         {skills.map((skill, index) => (
           <span
             key={index}
-            className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700"
+            className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700 break-words print:bg-transparent print:border print:border-slate-300"
           >
             {skill}
           </span>
@@ -188,8 +189,8 @@ function CertificationEntry({ item }: { item: CertificationItem }) {
 
   return (
     <div className={compactEntrySpacingStyles}>
-      <span className="font-medium text-slate-900">{item.name}</span>
-      {details && <span className="text-sm text-slate-500"> — {details}</span>}
+      <span className="font-medium text-slate-900 break-words">{item.name}</span>
+      {details && <span className="text-sm text-slate-500 break-words"> — {details}</span>}
     </div>
   )
 }
@@ -212,8 +213,8 @@ function CertificationsSection({ certifications }: { certifications: Certificati
 function LanguageEntry({ item }: { item: LanguageItem }) {
   return (
     <div className={compactEntrySpacingStyles}>
-      <span className="font-medium text-slate-900">{item.name}</span>
-      {item.level && <span className="text-sm text-slate-500"> — {item.level}</span>}
+      <span className="font-medium text-slate-900 break-words">{item.name}</span>
+      {item.level && <span className="text-sm text-slate-500 break-words"> — {item.level}</span>}
     </div>
   )
 }
@@ -249,7 +250,7 @@ function LanguagesSection({ languages }: { languages: LanguageItem[] }) {
  */
 export function TemplateV1({ cv }: TemplateV1Props) {
   return (
-    <article className="mx-auto max-w-[800px] bg-white p-8 print:max-w-none print:p-0">
+    <article className="mx-auto max-w-[800px] bg-white p-8 print:max-w-none print:p-6 print:text-black">
       <ProfileSection profile={cv.profile} />
       <ExperienceSection experience={cv.experience} />
       <EducationSection education={cv.education} />

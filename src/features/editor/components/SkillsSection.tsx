@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useCv } from '../../../app/providers'
+import { normalizeSkills } from '../../../core'
 
 export function SkillsSection() {
   const { cv, updateCv } = useCv()
@@ -42,9 +43,13 @@ export function SkillsSection() {
   }
 
   const handleSave = () => {
+    // Normalize to trim whitespace, remove empties, and dedupe
+    const normalized = normalizeSkills(draftSkills)
     updateCv(draft => {
-      draft.skills = draftSkills
+      draft.skills = normalized
     })
+    // Update draft to match normalized (in case any empties were removed)
+    setDraftSkills(normalized)
   }
 
   const handleCancel = () => {

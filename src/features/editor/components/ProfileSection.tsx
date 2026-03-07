@@ -2,7 +2,7 @@ import type { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCv } from '../../../app/providers'
-import { profileSchema } from '../../../core'
+import { profileSchema, normalizeProfile } from '../../../core'
 import type { Profile } from '../../../core'
 
 type ProfileFormInput = z.input<typeof profileSchema>
@@ -13,19 +13,22 @@ export function ProfileSection() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isDirty },
   } = useForm<ProfileFormInput>({
     resolver: zodResolver(profileSchema),
     defaultValues: cv.profile,
   })
-    console.log("🚀 ~ ProfileSection ~ isDirty:", isDirty)
 
   const onSubmit = (data: ProfileFormInput) => {
-    // Parse through schema to apply defaults
+    // Parse through schema to apply defaults, then normalize
     const parsed = profileSchema.parse(data)
+    const normalized = normalizeProfile(parsed as Profile)
     updateCv(draft => {
-      draft.profile = parsed as Profile
+      draft.profile = normalized
     })
+    // Reset form state with saved values to clear dirty flag
+    reset(normalized)
   }
 
   return (

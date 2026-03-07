@@ -120,6 +120,8 @@ describe('ProjectSection', () => {
     renderWithProvider()
 
     await user.click(screen.getByRole('button', { name: /add project/i }))
+    // Type in a non-required field to make form dirty
+    await user.type(screen.getByLabelText(/description/i), 'A cool project')
     await user.click(screen.getByRole('button', { name: /^add$/i }))
 
     await waitFor(() => {

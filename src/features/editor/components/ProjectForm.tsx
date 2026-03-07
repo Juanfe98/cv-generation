@@ -1,7 +1,7 @@
 import type { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { projectItemSchema } from '../../../core'
+import { projectItemSchema, normalizeProjectItem } from '../../../core'
 import type { ProjectItem } from '../../../core'
 
 type ProjectFormInput = z.input<typeof projectItemSchema>
@@ -16,7 +16,7 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<ProjectFormInput>({
     resolver: zodResolver(projectItemSchema),
     defaultValues: project ?? {
@@ -30,7 +30,8 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
 
   const handleFormSubmit = (data: ProjectFormInput) => {
     const parsed = projectItemSchema.parse(data)
-    onSubmit(parsed as ProjectItem)
+    const normalized = normalizeProjectItem(parsed as ProjectItem)
+    onSubmit(normalized)
   }
 
   return (
@@ -117,7 +118,8 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
       <div className="flex gap-2">
         <button
           type="submit"
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          disabled={!isDirty}
+          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
         >
           {project ? 'Update' : 'Add'}
         </button>

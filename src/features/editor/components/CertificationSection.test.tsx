@@ -104,6 +104,8 @@ describe('CertificationSection', () => {
     renderWithProvider()
 
     await user.click(screen.getByRole('button', { name: /add certification/i }))
+    // Type in a non-required field to make form dirty
+    await user.type(screen.getByLabelText(/issuer/i), 'AWS')
     await user.click(screen.getByRole('button', { name: /^add$/i }))
 
     await waitFor(() => {

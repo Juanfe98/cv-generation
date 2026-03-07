@@ -1,7 +1,7 @@
 import type { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { experienceItemSchema } from '../../../core'
+import { experienceItemSchema, normalizeExperienceItem } from '../../../core'
 import type { ExperienceItem } from '../../../core'
 
 type ExperienceFormInput = z.input<typeof experienceItemSchema>
@@ -17,7 +17,7 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<ExperienceFormInput>({
     resolver: zodResolver(experienceItemSchema),
     defaultValues: experience ?? {
@@ -36,11 +36,9 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
 
   const handleFormSubmit = (data: ExperienceFormInput) => {
     const parsed = experienceItemSchema.parse(data)
-    // Clear endDate if isCurrent is true
-    if (parsed.isCurrent) {
-      parsed.endDate = ''
-    }
-    onSubmit(parsed as ExperienceItem)
+    // Normalize handles trimming, empty filtering, and clearing endDate for current roles
+    const normalized = normalizeExperienceItem(parsed as ExperienceItem)
+    onSubmit(normalized)
   }
 
   return (
@@ -180,7 +178,8 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
       <div className="flex gap-2">
         <button
           type="submit"
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          disabled={!isDirty}
+          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
         >
           {experience ? 'Update' : 'Add'}
         </button>

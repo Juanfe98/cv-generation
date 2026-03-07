@@ -128,4 +128,18 @@ describe('ProfileSection', () => {
 
     expect(screen.getByRole('button', { name: /save/i })).toBeEnabled()
   })
+
+  it('disables save button after successful save', async () => {
+    const user = userEvent.setup()
+    renderWithProvider()
+
+    await user.type(screen.getByLabelText(/full name/i), 'John Doe')
+    expect(screen.getByRole('button', { name: /save/i })).toBeEnabled()
+
+    await user.click(screen.getByRole('button', { name: /save/i }))
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /save/i })).toBeDisabled()
+    })
+  })
 })

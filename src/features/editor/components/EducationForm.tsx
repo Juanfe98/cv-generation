@@ -1,7 +1,7 @@
 import type { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { educationItemSchema } from '../../../core'
+import { educationItemSchema, normalizeEducationItem } from '../../../core'
 import type { EducationItem } from '../../../core'
 
 type EducationFormInput = z.input<typeof educationItemSchema>
@@ -16,7 +16,7 @@ export function EducationForm({ education, onSubmit, onCancel }: EducationFormPr
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<EducationFormInput>({
     resolver: zodResolver(educationItemSchema),
     defaultValues: education ?? {
@@ -31,7 +31,8 @@ export function EducationForm({ education, onSubmit, onCancel }: EducationFormPr
 
   const handleFormSubmit = (data: EducationFormInput) => {
     const parsed = educationItemSchema.parse(data)
-    onSubmit(parsed as EducationItem)
+    const normalized = normalizeEducationItem(parsed as EducationItem)
+    onSubmit(normalized)
   }
 
   return (
@@ -131,7 +132,8 @@ export function EducationForm({ education, onSubmit, onCancel }: EducationFormPr
       <div className="flex gap-2">
         <button
           type="submit"
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          disabled={!isDirty}
+          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
         >
           {education ? 'Update' : 'Add'}
         </button>

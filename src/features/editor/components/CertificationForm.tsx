@@ -1,7 +1,7 @@
 import type { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { certificationItemSchema } from '../../../core'
+import { certificationItemSchema, normalizeCertificationItem } from '../../../core'
 import type { CertificationItem } from '../../../core'
 
 type CertificationFormInput = z.input<typeof certificationItemSchema>
@@ -16,7 +16,7 @@ export function CertificationForm({ certification, onSubmit, onCancel }: Certifi
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<CertificationFormInput>({
     resolver: zodResolver(certificationItemSchema),
     defaultValues: certification ?? {
@@ -29,7 +29,8 @@ export function CertificationForm({ certification, onSubmit, onCancel }: Certifi
 
   const handleFormSubmit = (data: CertificationFormInput) => {
     const parsed = certificationItemSchema.parse(data)
-    onSubmit(parsed as CertificationItem)
+    const normalized = normalizeCertificationItem(parsed as CertificationItem)
+    onSubmit(normalized)
   }
 
   return (
@@ -93,7 +94,8 @@ export function CertificationForm({ certification, onSubmit, onCancel }: Certifi
       <div className="flex gap-2">
         <button
           type="submit"
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          disabled={!isDirty}
+          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
         >
           {certification ? 'Update' : 'Add'}
         </button>
