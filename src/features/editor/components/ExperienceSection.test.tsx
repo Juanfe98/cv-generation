@@ -104,6 +104,8 @@ describe('ExperienceSection', () => {
     renderWithProvider()
 
     await user.click(screen.getByRole('button', { name: /add experience/i }))
+    // Type in a non-required field to make form dirty
+    await user.type(screen.getByLabelText(/location/i), 'Remote')
     await user.click(screen.getByRole('button', { name: /^add$/i }))
 
     await waitFor(() => {
