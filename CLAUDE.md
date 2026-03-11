@@ -32,7 +32,10 @@ src/
 
 ## Key Commands
 
+**IMPORTANT**: Always run `nvm use` before any npm commands to ensure correct Node version (see `.nvmrc`).
+
 ```bash
+nvm use              # Switch to project's Node version (ALWAYS run first!)
 npm run dev          # Start dev server
 npm run build        # Production build
 npm run lint         # ESLint check
