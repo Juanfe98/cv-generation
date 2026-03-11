@@ -74,6 +74,12 @@ export const certificationItemSchema = z.object({
   date: optionalDateString,
 })
 
+const templateIdSchema = z.enum(['classic', 'modern', 'executive', 'creative'])
+
+export const cvSettingsSchema = z.object({
+  templateId: templateIdSchema.default('classic'),
+})
+
 export const cvModelSchema = z.object({
   schemaVersion: z.number().default(CURRENT_SCHEMA_VERSION),
   profile: profileSchema,
@@ -84,6 +90,7 @@ export const cvModelSchema = z.object({
   languages: z.array(languageItemSchema).default([]),
   certifications: z.array(certificationItemSchema).default([]),
   additionalInfo: z.string().default(''),
+  settings: cvSettingsSchema.default({ templateId: 'classic' }),
 })
 
 /**
@@ -108,6 +115,7 @@ export function createEmptyCv(): CvModel {
     languages: [],
     certifications: [],
     additionalInfo: '',
+    settings: { templateId: 'classic' },
   }
 }
 

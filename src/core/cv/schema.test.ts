@@ -38,6 +38,12 @@ describe('createEmptyCv', () => {
 
     expect(cv.additionalInfo).toBe('')
   })
+
+  it('has default settings with classic template', () => {
+    const cv = createEmptyCv()
+
+    expect(cv.settings).toEqual({ templateId: 'classic' })
+  })
 })
 
 describe('parseCv', () => {
@@ -222,5 +228,52 @@ describe('parseCv', () => {
     const result = safeParseCv(input)
 
     expect(result.success).toBe(true)
+  })
+
+  describe('settings migration', () => {
+    it('adds default settings.templateId when settings is missing', () => {
+      const input = {
+        profile: { fullName: 'John Doe' },
+        // no settings field
+      }
+
+      const cv = parseCv(input)
+
+      expect(cv.settings).toBeDefined()
+      expect(cv.settings.templateId).toBe('classic')
+    })
+
+    it('adds default templateId when settings exists but templateId is missing', () => {
+      const input = {
+        profile: { fullName: 'John Doe' },
+        settings: {},
+      }
+
+      const cv = parseCv(input)
+
+      expect(cv.settings.templateId).toBe('classic')
+    })
+
+    it('preserves existing templateId when provided', () => {
+      const input = {
+        profile: { fullName: 'John Doe' },
+        settings: { templateId: 'modern' },
+      }
+
+      const cv = parseCv(input)
+
+      expect(cv.settings.templateId).toBe('modern')
+    })
+
+    it('rejects invalid templateId values', () => {
+      const input = {
+        profile: { fullName: 'John Doe' },
+        settings: { templateId: 'invalid-template' },
+      }
+
+      const result = safeParseCv(input)
+
+      expect(result.success).toBe(false)
+    })
   })
 })

@@ -21,6 +21,7 @@ const createEmptyCv = (): CvModel => ({
   languages: [],
   certifications: [],
   additionalInfo: '',
+  settings: { templateId: 'classic' },
 })
 
 const createPopulatedCv = (): CvModel => ({
@@ -74,6 +75,7 @@ const createPopulatedCv = (): CvModel => ({
     { id: 'cert-1', name: 'AWS Solutions Architect', issuer: 'Amazon', date: '2023-06' },
   ],
   additionalInfo: '',
+  settings: { templateId: 'classic' },
 })
 
 describe('TemplateV1', () => {
@@ -302,6 +304,7 @@ describe('TemplateV1', () => {
         },
       ],
       additionalInfo: '',
+      settings: { templateId: 'classic' },
     })
 
     it('renders long names with break-words class', () => {

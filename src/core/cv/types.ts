@@ -12,6 +12,12 @@ export const CURRENT_SCHEMA_VERSION = 1
 /** YYYY-MM format date string */
 export type DateString = string
 
+export type TemplateId = 'classic' | 'modern' | 'executive' | 'creative'
+
+export interface CvSettings {
+  templateId: TemplateId
+}
+
 export interface ProfileLink {
   label: string
   url: string
@@ -78,4 +84,5 @@ export interface CvModel {
   languages: LanguageItem[]
   certifications: CertificationItem[]
   additionalInfo: string
+  settings: CvSettings
 }

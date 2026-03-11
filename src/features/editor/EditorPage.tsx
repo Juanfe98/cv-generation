@@ -1,5 +1,5 @@
 import { useCv } from '../../app/providers'
-import { ProfileSection, ExperienceSection, EducationSection, ProjectSection, SkillsSection, CertificationSection, LanguageSection } from './components'
+import { ProfileSection, ExperienceSection, EducationSection, ProjectSection, SkillsSection, CertificationSection, LanguageSection, TemplateSelector } from './components'
 
 export function EditorPage() {
   const { cv, resetCv, isSaving } = useCv()
@@ -24,6 +24,11 @@ export function EditorPage() {
         </div>
       </div>
       <p className="mt-2 text-slate-600">Build your CV here.</p>
+
+      <section className="mt-6">
+        <h2 className="mb-4 text-lg font-semibold text-slate-800">Template</h2>
+        <TemplateSelector />
+      </section>
 
       <section className="mt-6">
         <h2 className="mb-4 text-lg font-semibold text-slate-800">Profile</h2>
