@@ -2,3 +2,5 @@
 export * from './cv'
 export * from './persistence'
 export * from './formatters'
+export * from './exporters'
+export * from './templates'
