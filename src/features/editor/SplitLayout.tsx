@@ -13,7 +13,7 @@ export function SplitLayout({ children }: SplitLayoutProps) {
     <div className="flex flex-col md:h-[calc(100vh-64px)]">
       <MobileViewToggle value={mobileView} onChange={setMobileView} />
 
-      <div className="flex flex-1 flex-col md:flex-row">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden md:flex-row">
         {/* Editor panel - left on desktop */}
         <div
           className={`flex h-full flex-1 flex-col overflow-hidden md:w-1/2 md:border-r md:border-slate-200 ${
