@@ -1,5 +1,5 @@
 import { useCv } from '../../app/providers'
-import { ProfileSection, ExperienceSection, EducationSection, ProjectSection, SkillsSection, CertificationSection, LanguageSection, TemplateSelector, ThemeCustomizer } from './components'
+import { WizardContainer } from './wizard'
 
 export function EditorPage() {
   const { cv, resetCv, isSaving } = useCv()
@@ -25,54 +25,9 @@ export function EditorPage() {
       </div>
       <p className="mt-2 text-slate-600">Build your CV here.</p>
 
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Template</h2>
-        <TemplateSelector />
-      </section>
-
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Theme</h2>
-        <ThemeCustomizer />
-      </section>
-
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Profile</h2>
-        <ProfileSection />
-      </section>
-
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Experience</h2>
-        <ExperienceSection />
-      </section>
-
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Education</h2>
-        <EducationSection />
-      </section>
-
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Projects</h2>
-        <ProjectSection />
-      </section>
-
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Skills</h2>
-        <SkillsSection />
-      </section>
-
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Certifications</h2>
-        <CertificationSection />
-      </section>
-
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Languages</h2>
-        <LanguageSection />
-      </section>
-
-      <pre className="mt-8 overflow-auto rounded bg-slate-100 p-4 text-xs">
-        {JSON.stringify(cv, null, 2)}
-      </pre>
+      <div className="mt-6">
+        <WizardContainer />
+      </div>
     </div>
   )
 }
