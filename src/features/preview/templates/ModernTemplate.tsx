@@ -21,21 +21,31 @@ interface ModernTemplateProps {
 // Sidebar section styles (smaller headings for compact left column)
 const sidebarSectionStyles = 'mt-5 first:mt-0 break-inside-avoid-page'
 const sidebarHeadingStyles =
-  'text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2'
+  'text-xs font-semibold uppercase tracking-wider mb-2'
 const sidebarContentStyles = 'space-y-1'
 
 // Main section styles (larger headings for primary content)
 const mainSectionStyles = 'mt-6 first:mt-0 break-inside-avoid-page'
 const mainHeadingStyles =
-  'border-b border-slate-200 pb-1 text-lg font-semibold text-slate-800'
+  'border-b pb-1 text-lg font-semibold'
 const mainContentStyles = 'mt-3'
 const entrySpacingStyles = 'mt-4 first:mt-0 break-inside-avoid-page'
 const highlightListStyles = 'mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700'
 
+// Theme-aware styles
+const getSidebarHeadingStyle = () => ({
+  color: 'var(--theme-accent-primary, #2563eb)',
+})
+
+const getMainHeadingStyle = () => ({
+  borderColor: 'var(--theme-accent-primary, #2563eb)',
+  color: 'var(--theme-accent-dark, #1e40af)',
+})
+
 // Header (full width at top)
 function HeaderSection({ profile }: { profile: Profile }) {
   return (
-    <header className="border-b border-slate-300 pb-4 break-inside-avoid-page">
+    <header className="border-b pb-4 break-inside-avoid-page" style={{ borderColor: 'var(--theme-accent-primary, #2563eb)' }}>
       <h1 className="text-2xl font-bold text-slate-900 break-words">{profile.fullName}</h1>
       {profile.headline && (
         <p className="mt-1 text-lg text-slate-600 break-words">{profile.headline}</p>
@@ -57,7 +67,7 @@ function ContactSection({ profile }: { profile: Profile }) {
 
   return (
     <section className={sidebarSectionStyles}>
-      <h2 className={sidebarHeadingStyles}>Contact</h2>
+      <h2 className={sidebarHeadingStyles} style={getSidebarHeadingStyle()}>Contact</h2>
       <div className={sidebarContentStyles}>
         {contactItems.map((item) => (
           <div key={item.label} className="text-sm text-slate-700 break-words">
@@ -74,7 +84,7 @@ function SkillsSection({ skills }: { skills: string[] }) {
 
   return (
     <section className={sidebarSectionStyles}>
-      <h2 className={sidebarHeadingStyles}>Skills</h2>
+      <h2 className={sidebarHeadingStyles} style={getSidebarHeadingStyle()}>Skills</h2>
       <div className={sidebarContentStyles}>
         {skills.map((skill, index) => (
           <div key={index} className="text-sm text-slate-700 break-words">
@@ -100,7 +110,7 @@ function LanguagesSection({ languages }: { languages: LanguageItem[] }) {
 
   return (
     <section className={sidebarSectionStyles}>
-      <h2 className={sidebarHeadingStyles}>Languages</h2>
+      <h2 className={sidebarHeadingStyles} style={getSidebarHeadingStyle()}>Languages</h2>
       <div className={sidebarContentStyles}>
         {languages.map((item) => (
           <SidebarLanguageEntry key={item.id} item={item} />
@@ -130,7 +140,7 @@ function CertificationsSection({ certifications }: { certifications: Certificati
 
   return (
     <section className={sidebarSectionStyles}>
-      <h2 className={sidebarHeadingStyles}>Certifications</h2>
+      <h2 className={sidebarHeadingStyles} style={getSidebarHeadingStyle()}>Certifications</h2>
       <div className={sidebarContentStyles}>
         {certifications.map((item) => (
           <SidebarCertificationEntry key={item.id} item={item} />
@@ -171,7 +181,7 @@ function ExperienceSection({ experience }: { experience: ExperienceItem[] }) {
 
   return (
     <section className={mainSectionStyles}>
-      <h2 className={mainHeadingStyles}>Experience</h2>
+      <h2 className={mainHeadingStyles} style={getMainHeadingStyle()}>Experience</h2>
       <div className={mainContentStyles}>
         {experience.map((item) => (
           <ExperienceEntry key={item.id} item={item} />
@@ -189,7 +199,8 @@ function ProjectEntry({ item }: { item: ProjectItem }) {
         {item.link && (
           <a
             href={item.link}
-            className="text-sm text-blue-600 hover:underline break-all shrink-0 max-w-[200px] truncate print:max-w-none print:truncate"
+            className="text-sm hover:underline break-all shrink-0 max-w-[200px] truncate print:max-w-none print:truncate"
+            style={{ color: 'var(--theme-accent-primary, #2563eb)' }}
             target="_blank"
             rel="noopener noreferrer"
             title={item.link}
@@ -219,7 +230,7 @@ function ProjectsSection({ projects }: { projects: ProjectItem[] }) {
 
   return (
     <section className={mainSectionStyles}>
-      <h2 className={mainHeadingStyles}>Projects</h2>
+      <h2 className={mainHeadingStyles} style={getMainHeadingStyle()}>Projects</h2>
       <div className={mainContentStyles}>
         {projects.map((item) => (
           <ProjectEntry key={item.id} item={item} />
@@ -251,7 +262,7 @@ function EducationSection({ education }: { education: EducationItem[] }) {
 
   return (
     <section className={mainSectionStyles}>
-      <h2 className={mainHeadingStyles}>Education</h2>
+      <h2 className={mainHeadingStyles} style={getMainHeadingStyle()}>Education</h2>
       <div className={mainContentStyles}>
         {education.map((item) => (
           <EducationEntry key={item.id} item={item} />

@@ -1,11 +1,14 @@
+import { useState } from 'react'
 import { useCv } from '../../../app/providers'
-import { getAllTemplateIds, getTemplateInfo } from '../../preview/templates'
+import { getTemplateInfo } from '../../preview/templates'
+import { TemplateGalleryModal } from './TemplateGalleryModal'
 import type { TemplateId } from '../../../core/cv/types'
 
 export function TemplateSelector() {
   const { cv, updateCv } = useCv()
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false)
   const selectedId = cv.settings.templateId
-  const templateIds = getAllTemplateIds()
+  const selectedTemplate = getTemplateInfo(selectedId)
 
   const handleSelect = (id: TemplateId) => {
     updateCv((draft) => {
@@ -14,32 +17,29 @@ export function TemplateSelector() {
   }
 
   return (
-    <div className="grid grid-cols-2 gap-4">
-      {templateIds.map((id) => {
-        const info = getTemplateInfo(id)
-        const isSelected = id === selectedId
+    <div className="space-y-4">
+      {/* Current selection display */}
+      <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-white p-4">
+        <div>
+          <p className="text-sm text-slate-500">Current template</p>
+          <p className="font-semibold text-slate-900">{selectedTemplate.displayName}</p>
+        </div>
+        <button
+          type="button"
+          onClick={() => setIsGalleryOpen(true)}
+          className="rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600"
+        >
+          Browse Templates
+        </button>
+      </div>
 
-        return (
-          <button
-            key={id}
-            type="button"
-            onClick={() => handleSelect(id)}
-            className={`relative rounded-lg border-2 p-4 text-left transition-colors ${
-              isSelected
-                ? 'border-blue-500 bg-blue-50'
-                : 'border-slate-200 bg-white hover:border-slate-300'
-            }`}
-          >
-            {isSelected && (
-              <span className="absolute right-2 top-2 rounded-full bg-blue-500 px-2 py-0.5 text-xs font-medium text-white">
-                Selected
-              </span>
-            )}
-            <h3 className="font-semibold text-slate-900">{info.displayName}</h3>
-            <p className="mt-1 text-sm text-slate-500">{info.description}</p>
-          </button>
-        )
-      })}
+      {/* Gallery modal */}
+      <TemplateGalleryModal
+        isOpen={isGalleryOpen}
+        selectedTemplateId={selectedId}
+        onSelect={handleSelect}
+        onClose={() => setIsGalleryOpen(false)}
+      />
     </div>
   )
 }

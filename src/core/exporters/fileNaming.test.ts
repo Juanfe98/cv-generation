@@ -67,7 +67,7 @@ describe('buildExportFileName', () => {
     languages: [],
     certifications: [],
     additionalInfo: '',
-    settings: { templateId: 'classic' },
+    settings: { templateId: 'classic', accentColor: 'blue', spacingPreset: 'standard' },
   })
 
   it('builds correct filename with name and date', () => {

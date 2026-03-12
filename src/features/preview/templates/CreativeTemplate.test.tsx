@@ -21,7 +21,7 @@ const createEmptyCv = (): CvModel => ({
   languages: [],
   certifications: [],
   additionalInfo: '',
-  settings: { templateId: 'creative' },
+  settings: { templateId: 'creative', accentColor: 'blue', spacingPreset: 'standard' },
 })
 
 const createPopulatedCv = (): CvModel => ({
@@ -80,7 +80,7 @@ const createPopulatedCv = (): CvModel => ({
   languages: [],
   certifications: [],
   additionalInfo: '',
-  settings: { templateId: 'creative' },
+  settings: { templateId: 'creative', accentColor: 'blue', spacingPreset: 'standard' },
 })
 
 describe('CreativeTemplate', () => {
@@ -335,7 +335,7 @@ describe('CreativeTemplate', () => {
       languages: [],
       certifications: [],
       additionalInfo: '',
-      settings: { templateId: 'creative' },
+      settings: { templateId: 'creative', accentColor: 'blue', spacingPreset: 'standard' },
     })
 
     it('renders long names with break-words class', () => {

@@ -1,7 +1,7 @@
 import { pdf } from '@react-pdf/renderer'
-import type { CvModel } from '../cv/types'
-import type { PdfTemplateId, TemplateFormatters } from '../templates'
-import { TemplateV1Pdf } from '../templates/templateV1/pdf/TemplateV1Pdf'
+import type { CvModel, TemplateId } from '../cv/types'
+import type { TemplateFormatters } from '../templates'
+import { getPdfTemplate } from '../templates'
 import {
   formatDate,
   formatDateRange,
@@ -22,6 +22,15 @@ export class PdfExportError extends Error {
     this.name = 'PdfExportError'
     this.cause = cause
   }
+}
+
+/**
+ * Result of PDF export operation
+ */
+export interface ExportPdfResult {
+  blob: Blob
+  usedFallback: boolean
+  fallbackMessage?: string
 }
 
 /**
@@ -50,26 +59,25 @@ function validateCv(cv: CvModel): void {
  *
  * @param cv - The CV data to export
  * @param templateId - The template to use for rendering
- * @returns Promise resolving to a Blob containing the PDF data
+ * @returns Promise resolving to ExportPdfResult containing the PDF blob and fallback info
  * @throws PdfExportError if export fails
  *
  * @example
  * ```ts
- * const blob = await exportPdf(cv, 'v1')
- * const url = URL.createObjectURL(blob)
+ * const result = await exportPdf(cv, 'modern')
+ * if (result.usedFallback) {
+ *   console.log(result.fallbackMessage)
+ * }
+ * const url = URL.createObjectURL(result.blob)
  * ```
  */
-export async function exportPdf(cv: CvModel, templateId: PdfTemplateId): Promise<Blob> {
+export async function exportPdf(cv: CvModel, templateId: TemplateId): Promise<ExportPdfResult> {
   validateCv(cv)
 
   try {
-    // Currently only v1 is supported, but structure allows easy addition
-    if (templateId !== 'v1') {
-      throw new PdfExportError(`Unknown template: ${templateId}`)
-    }
-
-    const blob = await pdf(<TemplateV1Pdf cv={cv} formatters={defaultFormatters} />).toBlob()
-    return blob
+    const PdfTemplate = getPdfTemplate(templateId)
+    const blob = await pdf(<PdfTemplate cv={cv} formatters={defaultFormatters} />).toBlob()
+    return { blob, usedFallback: false }
   } catch (error) {
     if (error instanceof PdfExportError) {
       throw error

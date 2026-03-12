@@ -75,9 +75,13 @@ export const certificationItemSchema = z.object({
 })
 
 const templateIdSchema = z.enum(['classic', 'modern', 'executive', 'creative'])
+const accentColorSchema = z.enum(['blue', 'emerald', 'violet', 'amber'])
+const spacingPresetSchema = z.enum(['compact', 'standard', 'relaxed'])
 
 export const cvSettingsSchema = z.object({
   templateId: templateIdSchema.default('classic'),
+  accentColor: accentColorSchema.default('blue'),
+  spacingPreset: spacingPresetSchema.default('standard'),
 })
 
 export const cvModelSchema = z.object({
@@ -90,7 +94,7 @@ export const cvModelSchema = z.object({
   languages: z.array(languageItemSchema).default([]),
   certifications: z.array(certificationItemSchema).default([]),
   additionalInfo: z.string().default(''),
-  settings: cvSettingsSchema.default({ templateId: 'classic' }),
+  settings: cvSettingsSchema.default({ templateId: 'classic', accentColor: 'blue', spacingPreset: 'standard' }),
 })
 
 /**
@@ -115,7 +119,7 @@ export function createEmptyCv(): CvModel {
     languages: [],
     certifications: [],
     additionalInfo: '',
-    settings: { templateId: 'classic' },
+    settings: { templateId: 'classic', accentColor: 'blue', spacingPreset: 'standard' },
   }
 }
 

@@ -14,8 +14,18 @@ export type DateString = string
 
 export type TemplateId = 'classic' | 'modern' | 'executive' | 'creative'
 
+// Template metadata types
+export type TemplateCategory = 'modern' | 'ats-friendly' | 'creative'
+export type LayoutType = 'one-column' | 'two-column' | 'sidebar'
+
+// Theme customization types
+export type AccentColor = 'blue' | 'emerald' | 'violet' | 'amber'
+export type SpacingPreset = 'compact' | 'standard' | 'relaxed'
+
 export interface CvSettings {
   templateId: TemplateId
+  accentColor: AccentColor
+  spacingPreset: SpacingPreset
 }
 
 export interface ProfileLink {

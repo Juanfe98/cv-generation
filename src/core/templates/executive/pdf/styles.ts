@@ -1,7 +1,7 @@
 import { StyleSheet } from '@react-pdf/renderer'
 
 /**
- * Color palette matching the HTML template
+ * Color palette for Executive PDF template
  */
 const colors = {
   slate900: '#0f172a',
@@ -11,13 +11,12 @@ const colors = {
   slate500: '#64748b',
   slate300: '#cbd5e1',
   slate200: '#e2e8f0',
-  slate100: '#f1f5f9',
   blue600: '#2563eb',
 }
 
 /**
- * PDF styles for Template V1
- * Mirrors the Tailwind styles from the HTML template
+ * PDF styles for Executive Template
+ * Two-column layout (no photo) for senior professionals
  */
 export const styles = StyleSheet.create({
   // Page
@@ -28,12 +27,12 @@ export const styles = StyleSheet.create({
     color: colors.slate900,
   },
 
-  // Profile/Header section
+  // Header (full width at top)
   header: {
     borderBottomWidth: 1,
     borderBottomColor: colors.slate300,
     paddingBottom: 16,
-    marginBottom: 0,
+    marginBottom: 20,
   },
   name: {
     fontSize: 20,
@@ -45,15 +44,56 @@ export const styles = StyleSheet.create({
     color: colors.slate600,
     marginTop: 4,
   },
-  contactLine: {
-    fontSize: 9,
-    color: colors.slate500,
-    marginTop: 8,
+
+  // Two-column layout
+  twoColumn: {
+    flexDirection: 'row',
+    gap: 20,
+  },
+  sidebar: {
+    width: '30%',
+  },
+  main: {
+    width: '70%',
   },
 
-  // Section container
+  // Sidebar section
+  sidebarSection: {
+    marginBottom: 16,
+  },
+  sidebarHeading: {
+    fontSize: 9,
+    fontFamily: 'Helvetica-Bold',
+    color: colors.slate500,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    marginBottom: 8,
+  },
+  sidebarItem: {
+    fontSize: 9,
+    color: colors.slate700,
+    marginBottom: 4,
+  },
+
+  // Links section
+  linkItem: {
+    marginBottom: 4,
+  },
+  link: {
+    fontSize: 9,
+    color: colors.blue600,
+  },
+
+  // Skills in sidebar
+  skillItem: {
+    fontSize: 9,
+    color: colors.slate700,
+    marginBottom: 4,
+  },
+
+  // Main section
   section: {
-    marginTop: 20,
+    marginBottom: 16,
   },
   sectionHeading: {
     fontSize: 14,
@@ -65,9 +105,9 @@ export const styles = StyleSheet.create({
     marginBottom: 12,
   },
 
-  // Entry items (experience, education, projects)
+  // Entry items
   entry: {
-    marginTop: 12,
+    marginTop: 10,
   },
   entryFirst: {
     marginTop: 0,
@@ -100,15 +140,13 @@ export const styles = StyleSheet.create({
     marginTop: 2,
   },
 
-  // Highlights list (bullet points)
+  // Highlights list
   highlightsList: {
     marginTop: 6,
-    paddingLeft: 0,
   },
   highlightItem: {
     flexDirection: 'row',
     marginTop: 3,
-    paddingRight: 10,
   },
   highlightBullet: {
     fontSize: 9,
@@ -121,43 +159,8 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
 
-  // Skills (chips)
-  skillsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 6,
-    marginTop: 0,
-  },
-  skillChip: {
-    fontSize: 9,
-    color: colors.slate700,
-    backgroundColor: colors.slate100,
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    borderRadius: 12,
-  },
-
-  // Compact entries (certifications, languages)
-  compactEntry: {
-    marginTop: 6,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  compactEntryFirst: {
-    marginTop: 0,
-  },
-  compactEntryName: {
-    fontSize: 10,
-    fontFamily: 'Helvetica-Bold',
-    color: colors.slate900,
-  },
-  compactEntryDetails: {
-    fontSize: 10,
-    color: colors.slate500,
-  },
-
-  // Link
-  link: {
+  // Project link
+  projectLink: {
     fontSize: 9,
     color: colors.blue600,
     flexShrink: 0,

@@ -20,17 +20,23 @@ interface TemplateV1Props {
 
 // Consistent styles
 const sectionStyles = 'mt-6 break-inside-avoid-page'
-const headingStyles = 'border-b border-slate-200 pb-1 text-lg font-semibold text-slate-800'
+const headingStyles = 'border-b pb-1 text-lg font-semibold'
 const contentWrapperStyles = 'mt-3'
 const entrySpacingStyles = 'mt-4 first:mt-0 break-inside-avoid-page'
 const compactEntrySpacingStyles = 'mt-2 first:mt-0'
 const highlightListStyles = 'mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700'
 
+// Theme-aware heading style
+const getHeadingStyle = () => ({
+  borderColor: 'var(--theme-accent-primary, #2563eb)',
+  color: 'var(--theme-accent-dark, #1e40af)',
+})
+
 function ProfileSection({ profile }: { profile: CvModel['profile'] }) {
   const contactLine = formatContactLine(profile)
 
   return (
-    <header className="border-b border-slate-300 pb-4 break-inside-avoid-page">
+    <header className="border-b pb-4 break-inside-avoid-page" style={{ borderColor: 'var(--theme-accent-primary, #2563eb)' }}>
       <h1 className="text-2xl font-bold text-slate-900 break-words">{profile.fullName}</h1>
       {profile.headline && (
         <p className="mt-1 text-lg text-slate-600 break-words">{profile.headline}</p>
@@ -74,7 +80,7 @@ function ExperienceSection({ experience }: { experience: ExperienceItem[] }) {
 
   return (
     <section className={sectionStyles}>
-      <h2 className={headingStyles}>Experience</h2>
+      <h2 className={headingStyles} style={getHeadingStyle()}>Experience</h2>
       <div className={contentWrapperStyles}>
         {experience.map((item) => (
           <ExperienceEntry key={item.id} item={item} />
@@ -104,7 +110,7 @@ function EducationSection({ education }: { education: EducationItem[] }) {
 
   return (
     <section className={sectionStyles}>
-      <h2 className={headingStyles}>Education</h2>
+      <h2 className={headingStyles} style={getHeadingStyle()}>Education</h2>
       <div className={contentWrapperStyles}>
         {education.map((item) => (
           <EducationEntry key={item.id} item={item} />
@@ -122,7 +128,8 @@ function ProjectEntry({ item }: { item: ProjectItem }) {
         {item.link && (
           <a
             href={item.link}
-            className="text-sm text-blue-600 hover:underline break-all shrink-0 max-w-[200px] truncate print:max-w-none print:truncate"
+            className="text-sm hover:underline break-all shrink-0 max-w-[200px] truncate print:max-w-none print:truncate"
+            style={{ color: 'var(--theme-accent-primary, #2563eb)' }}
             target="_blank"
             rel="noopener noreferrer"
             title={item.link}
@@ -152,7 +159,7 @@ function ProjectsSection({ projects }: { projects: ProjectItem[] }) {
 
   return (
     <section className={sectionStyles}>
-      <h2 className={headingStyles}>Projects</h2>
+      <h2 className={headingStyles} style={getHeadingStyle()}>Projects</h2>
       <div className={contentWrapperStyles}>
         {projects.map((item) => (
           <ProjectEntry key={item.id} item={item} />
@@ -167,7 +174,7 @@ function SkillsSection({ skills }: { skills: string[] }) {
 
   return (
     <section className={sectionStyles}>
-      <h2 className={headingStyles}>Skills</h2>
+      <h2 className={headingStyles} style={getHeadingStyle()}>Skills</h2>
       <div className={`${contentWrapperStyles} flex flex-wrap gap-2`}>
         {skills.map((skill, index) => (
           <span
@@ -200,7 +207,7 @@ function CertificationsSection({ certifications }: { certifications: Certificati
 
   return (
     <section className={sectionStyles}>
-      <h2 className={headingStyles}>Certifications</h2>
+      <h2 className={headingStyles} style={getHeadingStyle()}>Certifications</h2>
       <div className={contentWrapperStyles}>
         {certifications.map((item) => (
           <CertificationEntry key={item.id} item={item} />
@@ -224,7 +231,7 @@ function LanguagesSection({ languages }: { languages: LanguageItem[] }) {
 
   return (
     <section className={sectionStyles}>
-      <h2 className={headingStyles}>Languages</h2>
+      <h2 className={headingStyles} style={getHeadingStyle()}>Languages</h2>
       <div className={contentWrapperStyles}>
         {languages.map((item) => (
           <LanguageEntry key={item.id} item={item} />

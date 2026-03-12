@@ -21,7 +21,7 @@ const createEmptyCv = (): CvModel => ({
   languages: [],
   certifications: [],
   additionalInfo: '',
-  settings: { templateId: 'executive' },
+  settings: { templateId: 'executive', accentColor: 'blue', spacingPreset: 'standard' },
 })
 
 const createPopulatedCv = (): CvModel => ({
@@ -73,7 +73,7 @@ const createPopulatedCv = (): CvModel => ({
   languages: [],
   certifications: [],
   additionalInfo: '',
-  settings: { templateId: 'executive' },
+  settings: { templateId: 'executive', accentColor: 'blue', spacingPreset: 'standard' },
 })
 
 describe('ExecutiveTemplate', () => {
@@ -374,7 +374,7 @@ describe('ExecutiveTemplate', () => {
       languages: [],
       certifications: [],
       additionalInfo: '',
-      settings: { templateId: 'executive' },
+      settings: { templateId: 'executive', accentColor: 'blue', spacingPreset: 'standard' },
     })
 
     it('renders long names with break-words class', () => {

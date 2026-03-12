@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { exportPdf, PdfExportError } from './exportPdf'
-import type { CvModel, ExperienceItem } from '../cv/types'
+import type { CvModel, ExperienceItem, TemplateId } from '../cv/types'
 
 const createMinimalCv = (): CvModel => ({
   schemaVersion: 1,
@@ -20,7 +20,7 @@ const createMinimalCv = (): CvModel => ({
   languages: [],
   certifications: [],
   additionalInfo: '',
-  settings: { templateId: 'classic' },
+  settings: { templateId: 'classic', accentColor: 'blue', spacingPreset: 'standard' },
 })
 
 const createPopulatedCv = (): CvModel => ({
@@ -32,7 +32,10 @@ const createPopulatedCv = (): CvModel => ({
     email: 'jane@example.com',
     phone: '555-1234',
     website: 'https://jane.dev',
-    links: [],
+    links: [
+      { label: 'LinkedIn', url: 'https://linkedin.com/in/janesmith' },
+      { label: 'GitHub', url: 'https://github.com/janesmith' },
+    ],
   },
   experience: [
     {
@@ -74,89 +77,98 @@ const createPopulatedCv = (): CvModel => ({
     { id: 'cert-1', name: 'AWS Solutions Architect', issuer: 'Amazon', date: '2023-06' },
   ],
   additionalInfo: '',
-  settings: { templateId: 'classic' },
+  settings: { templateId: 'classic', accentColor: 'blue', spacingPreset: 'standard' },
 })
 
 describe('exportPdf', () => {
-  describe('successful exports', () => {
-    it('returns Blob for minimal CV', async () => {
-      const cv = createMinimalCv()
-      const blob = await exportPdf(cv, 'v1')
+  // Parameterized tests for all templates
+  describe.each(['classic', 'modern', 'executive', 'creative'] as const)(
+    'template: %s',
+    (templateId: TemplateId) => {
+      it('returns valid PDF blob for populated CV', async () => {
+        const cv = createPopulatedCv()
+        cv.settings.templateId = templateId
+        const result = await exportPdf(cv, templateId)
 
-      expect(blob).toBeInstanceOf(Blob)
-      expect(blob.type).toBe('application/pdf')
-      expect(blob.size).toBeGreaterThan(0)
-    })
+        expect(result.blob).toBeInstanceOf(Blob)
+        expect(result.blob.type).toBe('application/pdf')
+        expect(result.blob.size).toBeGreaterThan(0)
+        expect(result.usedFallback).toBe(false)
+      })
 
-    it('returns Blob for fully populated CV', async () => {
-      const cv = createPopulatedCv()
-      const blob = await exportPdf(cv, 'v1')
+      it('handles minimal CV (empty sections)', async () => {
+        const cv = createMinimalCv()
+        cv.settings.templateId = templateId
+        const result = await exportPdf(cv, templateId)
 
-      expect(blob).toBeInstanceOf(Blob)
-      expect(blob.type).toBe('application/pdf')
-      expect(blob.size).toBeGreaterThan(0)
-    })
-  })
+        expect(result.blob).toBeInstanceOf(Blob)
+        expect(result.blob.type).toBe('application/pdf')
+        expect(result.blob.size).toBeGreaterThan(0)
+      })
+
+      it('handles CV with many experience entries', async () => {
+        const cv = createMinimalCv()
+        cv.settings.templateId = templateId
+        cv.experience = Array.from({ length: 10 }, (_, i): ExperienceItem => ({
+          id: `exp-${i}`,
+          company: `Company ${i}`,
+          role: `Software Engineer ${i}`,
+          location: 'Remote',
+          startDate: '2020-01',
+          endDate: '2021-01',
+          isCurrent: false,
+          highlights: ['Built APIs', 'Led team'],
+        }))
+
+        const result = await exportPdf(cv, templateId)
+
+        expect(result.blob).toBeInstanceOf(Blob)
+        expect(result.blob.size).toBeGreaterThan(0)
+      })
+
+      it('handles CV with long highlights text', async () => {
+        const cv = createMinimalCv()
+        cv.settings.templateId = templateId
+        const longHighlight = 'A'.repeat(500)
+        cv.experience = [
+          {
+            id: 'exp-1',
+            company: 'Company',
+            role: 'Engineer',
+            location: 'Remote',
+            startDate: '2020-01',
+            endDate: '',
+            isCurrent: true,
+            highlights: [longHighlight, longHighlight],
+          },
+        ]
+
+        const result = await exportPdf(cv, templateId)
+
+        expect(result.blob).toBeInstanceOf(Blob)
+        expect(result.blob.size).toBeGreaterThan(0)
+      })
+    }
+  )
 
   describe('validation', () => {
     it('throws PdfExportError for CV without name', async () => {
       const cv = createMinimalCv()
       cv.profile.fullName = ''
 
-      await expect(exportPdf(cv, 'v1')).rejects.toThrow(PdfExportError)
-      await expect(exportPdf(cv, 'v1')).rejects.toThrow('Full name is required')
+      await expect(exportPdf(cv, 'classic')).rejects.toThrow(PdfExportError)
+      await expect(exportPdf(cv, 'classic')).rejects.toThrow('Full name is required')
     })
 
     it('throws PdfExportError for CV with whitespace-only name', async () => {
       const cv = createMinimalCv()
       cv.profile.fullName = '   '
 
-      await expect(exportPdf(cv, 'v1')).rejects.toThrow(PdfExportError)
+      await expect(exportPdf(cv, 'classic')).rejects.toThrow(PdfExportError)
     })
   })
 
-  describe('long content handling', () => {
-    it('handles CV with many experience entries', async () => {
-      const cv = createMinimalCv()
-      cv.experience = Array.from({ length: 20 }, (_, i): ExperienceItem => ({
-        id: `exp-${i}`,
-        company: `Company ${i}`,
-        role: `Software Engineer ${i}`,
-        location: 'Remote',
-        startDate: '2020-01',
-        endDate: '2021-01',
-        isCurrent: false,
-        highlights: ['Built APIs', 'Led team'],
-      }))
-
-      const blob = await exportPdf(cv, 'v1')
-
-      expect(blob).toBeInstanceOf(Blob)
-      expect(blob.size).toBeGreaterThan(0)
-    })
-
-    it('handles CV with long highlights text', async () => {
-      const cv = createMinimalCv()
-      const longHighlight = 'A'.repeat(500)
-      cv.experience = [
-        {
-          id: 'exp-1',
-          company: 'Company',
-          role: 'Engineer',
-          location: 'Remote',
-          startDate: '2020-01',
-          endDate: '',
-          isCurrent: true,
-          highlights: [longHighlight, longHighlight],
-        },
-      ]
-
-      const blob = await exportPdf(cv, 'v1')
-
-      expect(blob).toBeInstanceOf(Blob)
-      expect(blob.size).toBeGreaterThan(0)
-    })
-
+  describe('comprehensive content handling', () => {
     it('handles CV with all sections populated with multiple entries', async () => {
       const cv = createPopulatedCv()
 
@@ -200,10 +212,14 @@ describe('exportPdf', () => {
         date: '2024-01',
       })
 
-      const blob = await exportPdf(cv, 'v1')
+      // Test all templates with comprehensive content
+      for (const templateId of ['classic', 'modern', 'executive', 'creative'] as const) {
+        cv.settings.templateId = templateId
+        const result = await exportPdf(cv, templateId)
 
-      expect(blob).toBeInstanceOf(Blob)
-      expect(blob.size).toBeGreaterThan(0)
+        expect(result.blob).toBeInstanceOf(Blob)
+        expect(result.blob.size).toBeGreaterThan(0)
+      }
     })
   })
 })

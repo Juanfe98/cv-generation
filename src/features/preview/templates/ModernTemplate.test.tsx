@@ -21,7 +21,7 @@ const createEmptyCv = (): CvModel => ({
   languages: [],
   certifications: [],
   additionalInfo: '',
-  settings: { templateId: 'modern' },
+  settings: { templateId: 'modern', accentColor: 'blue', spacingPreset: 'standard' },
 })
 
 const createPopulatedCv = (): CvModel => ({
@@ -75,7 +75,7 @@ const createPopulatedCv = (): CvModel => ({
     { id: 'cert-1', name: 'AWS Solutions Architect', issuer: 'Amazon', date: '2023-06' },
   ],
   additionalInfo: '',
-  settings: { templateId: 'modern' },
+  settings: { templateId: 'modern', accentColor: 'blue', spacingPreset: 'standard' },
 })
 
 describe('ModernTemplate', () => {
@@ -361,7 +361,7 @@ describe('ModernTemplate', () => {
       languages: [],
       certifications: [],
       additionalInfo: '',
-      settings: { templateId: 'modern' },
+      settings: { templateId: 'modern', accentColor: 'blue', spacingPreset: 'standard' },
     })
 
     it('renders long names with break-words class', () => {

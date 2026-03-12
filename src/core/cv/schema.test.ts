@@ -42,7 +42,7 @@ describe('createEmptyCv', () => {
   it('has default settings with classic template', () => {
     const cv = createEmptyCv()
 
-    expect(cv.settings).toEqual({ templateId: 'classic' })
+    expect(cv.settings).toEqual({ templateId: 'classic', accentColor: 'blue', spacingPreset: 'standard' })
   })
 })
 

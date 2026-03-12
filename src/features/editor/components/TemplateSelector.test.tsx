@@ -31,7 +31,7 @@ const createCvWithTemplate = (templateId: string) => ({
   languages: [],
   certifications: [],
   additionalInfo: '',
-  settings: { templateId },
+  settings: { templateId, accentColor: 'blue', spacingPreset: 'standard' },
 })
 
 describe('TemplateSelector', () => {
@@ -39,76 +39,97 @@ describe('TemplateSelector', () => {
     localStorage.clear()
   })
 
-  it('renders all four template options', () => {
+  it('displays the current template name', () => {
     renderWithProvider()
 
+    expect(screen.getByText('Current template')).toBeInTheDocument()
     expect(screen.getByText('Classic')).toBeInTheDocument()
-    expect(screen.getByText('Modern')).toBeInTheDocument()
-    expect(screen.getByText('Executive')).toBeInTheDocument()
-    expect(screen.getByText('Creative')).toBeInTheDocument()
   })
 
-  it('shows descriptions for all templates', () => {
-    renderWithProvider()
-
-    expect(screen.getByText(/professional layout/i)).toBeInTheDocument()
-    expect(screen.getByText(/contemporary design/i)).toBeInTheDocument()
-    expect(screen.getByText(/senior professionals/i)).toBeInTheDocument()
-    expect(screen.getByText(/creative and design/i)).toBeInTheDocument()
-  })
-
-  it('shows classic as selected by default', () => {
-    renderWithProvider()
-
-    const selectedBadges = screen.getAllByText('Selected')
-    expect(selectedBadges).toHaveLength(1)
-
-    const classicButton = screen.getByRole('button', { name: /classic/i })
-    expect(classicButton).toHaveClass('border-blue-500')
-  })
-
-  it('shows correct selected state from stored CV', () => {
+  it('displays correct template from stored CV', () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(createCvWithTemplate('modern')))
 
     renderWithProvider()
 
-    const modernButton = screen.getByRole('button', { name: /modern/i })
-    expect(modernButton).toHaveClass('border-blue-500')
-
-    const classicButton = screen.getByRole('button', { name: /classic/i })
-    expect(classicButton).not.toHaveClass('border-blue-500')
+    expect(screen.getByText('Modern')).toBeInTheDocument()
   })
 
-  it('changes selection when clicking a different template', async () => {
+  it('has a Browse Templates button', () => {
+    renderWithProvider()
+
+    expect(screen.getByRole('button', { name: /browse templates/i })).toBeInTheDocument()
+  })
+
+  it('opens the gallery modal when clicking Browse Templates', async () => {
     const user = userEvent.setup()
     renderWithProvider()
 
-    const modernButton = screen.getByRole('button', { name: /modern/i })
-    await user.click(modernButton)
+    await user.click(screen.getByRole('button', { name: /browse templates/i }))
 
-    expect(modernButton).toHaveClass('border-blue-500')
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+    expect(screen.getByText('Choose a Template')).toBeInTheDocument()
+  })
 
-    const classicButton = screen.getByRole('button', { name: /classic/i })
-    expect(classicButton).not.toHaveClass('border-blue-500')
+  it('closes the gallery modal when clicking close button', async () => {
+    const user = userEvent.setup()
+    renderWithProvider()
+
+    await user.click(screen.getByRole('button', { name: /browse templates/i }))
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /close gallery/i }))
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    })
+  })
+
+  it('closes the gallery modal when pressing Escape', async () => {
+    const user = userEvent.setup()
+    renderWithProvider()
+
+    await user.click(screen.getByRole('button', { name: /browse templates/i }))
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+
+    await user.keyboard('{Escape}')
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    })
+  })
+
+  it('selects a template and closes the modal', async () => {
+    const user = userEvent.setup()
+    renderWithProvider()
+
+    await user.click(screen.getByRole('button', { name: /browse templates/i }))
+
+    // Find and click the Modern template card by its description
+    const modernCard = screen.getByRole('button', { name: /contemporary design/i })
+    await user.click(modernCard)
+
+    // Modal should close
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    })
+
+    // Template should be updated
+    expect(screen.getByText('Modern')).toBeInTheDocument()
   })
 
   it('persists selection to localStorage', async () => {
     const user = userEvent.setup()
     renderWithProvider()
 
-    const executiveButton = screen.getByRole('button', { name: /executive/i })
-    await user.click(executiveButton)
+    await user.click(screen.getByRole('button', { name: /browse templates/i }))
+
+    // Find the Executive template card by its description
+    const executiveCard = screen.getByRole('button', { name: /senior professionals/i })
+    await user.click(executiveCard)
 
     await waitFor(() => {
       const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')
       expect(stored.settings?.templateId).toBe('executive')
     })
-  })
-
-  it('renders as a 2-column grid', () => {
-    const { container } = renderWithProvider()
-
-    const grid = container.querySelector('.grid-cols-2')
-    expect(grid).toBeInTheDocument()
   })
 })
