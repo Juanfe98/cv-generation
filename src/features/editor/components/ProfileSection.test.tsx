@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { CvProvider } from '../../../app/providers'
 import { STORAGE_KEY } from '../../../core'
 import { ProfileSection } from './ProfileSection'
@@ -16,6 +16,11 @@ function renderWithProvider() {
 describe('ProfileSection', () => {
   beforeEach(() => {
     localStorage.clear()
+    vi.useFakeTimers({ shouldAdvanceTime: true })
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
   })
 
   it('renders all profile fields', () => {
@@ -27,7 +32,6 @@ describe('ProfileSection', () => {
     expect(screen.getByLabelText(/phone/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/location/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/website/i)).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument()
   })
 
   it('renders existing name from cv', () => {
@@ -58,44 +62,23 @@ describe('ProfileSection', () => {
     expect(screen.getByLabelText(/headline/i)).toHaveValue('Developer')
   })
 
-  it('shows validation error for empty fullName on submit', async () => {
-    // Start with existing name so we can clear it and form remains dirty
-    const existingCv = {
-      schemaVersion: 1,
-      profile: {
-        fullName: 'Existing Name',
-        headline: '',
-        location: '',
-        email: '',
-        phone: '',
-        website: '',
-        links: [],
-      },
-      experience: [],
-      education: [],
-      skills: [],
-      projects: [],
-      languages: [],
-      certifications: [],
-      additionalInfo: '',
-    }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(existingCv))
-
-    const user = userEvent.setup()
+  it('auto-syncs profile changes to CV context after debounce', async () => {
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
     renderWithProvider()
 
-    const nameInput = screen.getByLabelText(/full name/i)
-    await user.clear(nameInput)
+    await user.type(screen.getByLabelText(/full name/i), 'John Doe')
 
-    await user.click(screen.getByRole('button', { name: /save/i }))
+    // Wait for debounce (300ms)
+    await vi.advanceTimersByTimeAsync(350)
 
     await waitFor(() => {
-      expect(screen.getByText(/this field is required/i)).toBeInTheDocument()
+      const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')
+      expect(stored.profile.fullName).toBe('John Doe')
     })
   })
 
-  it('updates cv.profile on save', async () => {
-    const user = userEvent.setup()
+  it('updates multiple fields and syncs after debounce', async () => {
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
     renderWithProvider()
 
     await user.type(screen.getByLabelText(/full name/i), 'John Doe')
@@ -103,7 +86,8 @@ describe('ProfileSection', () => {
     await user.type(screen.getByLabelText(/email/i), 'john@example.com')
     await user.type(screen.getByLabelText(/location/i), 'New York, NY')
 
-    await user.click(screen.getByRole('button', { name: /save/i }))
+    // Wait for debounce
+    await vi.advanceTimersByTimeAsync(350)
 
     await waitFor(() => {
       const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')
@@ -114,32 +98,27 @@ describe('ProfileSection', () => {
     })
   })
 
-  it('disables save button when form is not dirty', () => {
+  it('debounces rapid input changes', async () => {
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
     renderWithProvider()
 
-    expect(screen.getByRole('button', { name: /save/i })).toBeDisabled()
-  })
+    // Type rapidly
+    await user.type(screen.getByLabelText(/full name/i), 'A')
+    await vi.advanceTimersByTimeAsync(100)
+    await user.type(screen.getByLabelText(/full name/i), 'B')
+    await vi.advanceTimersByTimeAsync(100)
+    await user.type(screen.getByLabelText(/full name/i), 'C')
 
-  it('enables save button when form is dirty', async () => {
-    const user = userEvent.setup()
-    renderWithProvider()
+    // Before debounce completes, storage should not have the full value
+    let stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')
+    expect(stored.profile?.fullName || '').not.toBe('ABC')
 
-    await user.type(screen.getByLabelText(/full name/i), 'Test')
-
-    expect(screen.getByRole('button', { name: /save/i })).toBeEnabled()
-  })
-
-  it('disables save button after successful save', async () => {
-    const user = userEvent.setup()
-    renderWithProvider()
-
-    await user.type(screen.getByLabelText(/full name/i), 'John Doe')
-    expect(screen.getByRole('button', { name: /save/i })).toBeEnabled()
-
-    await user.click(screen.getByRole('button', { name: /save/i }))
+    // After debounce
+    await vi.advanceTimersByTimeAsync(350)
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: /save/i })).toBeDisabled()
+      stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')
+      expect(stored.profile.fullName).toBe('ABC')
     })
   })
 })

@@ -1,4 +1,5 @@
 import { useCv } from '../../app/providers'
+import { SplitLayout } from './SplitLayout'
 import { WizardContainer } from './wizard'
 
 export function EditorPage() {
@@ -6,10 +7,10 @@ export function EditorPage() {
   const displayName = cv.profile.fullName || 'Unnamed'
 
   return (
-    <div>
+    <SplitLayout>
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-slate-900">
-          Editor: {displayName}
+        <h1 className="text-xl font-bold text-slate-900 md:text-2xl">
+          {displayName || 'Your CV'}
         </h1>
         <div className="flex items-center gap-2">
           {isSaving && (
@@ -17,17 +18,16 @@ export function EditorPage() {
           )}
           <button
             onClick={resetCv}
-            className="rounded bg-red-100 px-3 py-1 text-sm text-red-700"
+            className="rounded bg-red-100 px-3 py-1 text-sm text-red-700 hover:bg-red-200"
           >
-            Reset CV
+            Reset
           </button>
         </div>
       </div>
-      <p className="mt-2 text-slate-600">Build your CV here.</p>
 
       <div className="mt-6">
         <WizardContainer />
       </div>
-    </div>
+    </SplitLayout>
   )
 }

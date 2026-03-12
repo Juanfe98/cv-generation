@@ -1,38 +1,59 @@
+import { useEffect, useRef } from 'react'
 import type { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCv } from '../../../app/providers'
-import { profileSchema, normalizeProfile } from '../../../core'
-import type { Profile } from '../../../core'
+import { profileSchema } from '../../../core'
 
 type ProfileFormInput = z.input<typeof profileSchema>
 
+const DEBOUNCE_MS = 300
+
 export function ProfileSection() {
   const { cv, updateCv } = useCv()
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const {
     register,
-    handleSubmit,
-    reset,
-    formState: { errors, isDirty },
+    watch,
+    formState: { errors },
   } = useForm<ProfileFormInput>({
     resolver: zodResolver(profileSchema),
     defaultValues: cv.profile,
   })
 
-  const onSubmit = (data: ProfileFormInput) => {
-    // Parse through schema to apply defaults, then normalize
-    const parsed = profileSchema.parse(data)
-    const normalized = normalizeProfile(parsed as Profile)
-    updateCv(draft => {
-      draft.profile = normalized
+  // Live sync form values to CV context with debounce
+  useEffect(() => {
+    const subscription = watch(data => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+
+      timeoutRef.current = setTimeout(() => {
+        updateCv(draft => {
+          draft.profile = {
+            ...draft.profile,
+            fullName: data.fullName ?? '',
+            headline: data.headline ?? '',
+            email: data.email ?? '',
+            phone: data.phone ?? '',
+            location: data.location ?? '',
+            website: data.website ?? '',
+          }
+        })
+      }, DEBOUNCE_MS)
     })
-    // Reset form state with saved values to clear dirty flag
-    reset(normalized)
-  }
+
+    return () => {
+      subscription.unsubscribe()
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [watch, updateCv])
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <div className="space-y-4">
       <div>
         <label
           htmlFor="fullName"
@@ -135,13 +156,6 @@ export function ProfileSection() {
         )}
       </div>
 
-      <button
-        type="submit"
-        disabled={!isDirty}
-        className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
-      >
-        Save
-      </button>
-    </form>
+    </div>
   )
 }
