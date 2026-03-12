@@ -1,4 +1,4 @@
-import { SkillsSection, ProjectSection } from '../../components'
+import { SkillsSection, ProjectSection, LanguageSection } from '../../components'
 
 export function SkillsProjectsStep() {
   return (
@@ -17,6 +17,14 @@ export function SkillsProjectsStep() {
           Showcase your notable projects and achievements.
         </p>
         <ProjectSection />
+      </section>
+
+      <section>
+        <h2 className="mb-4 text-lg font-semibold text-slate-800">Languages</h2>
+        <p className="mb-6 text-sm text-slate-600">
+          Add languages you speak and your proficiency level.
+        </p>
+        <LanguageSection />
       </section>
     </div>
   )

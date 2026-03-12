@@ -5,7 +5,7 @@ import {
   WorkExperienceStep,
   EducationStep,
   SkillsProjectsStep,
-  FinishingUpStep,
+  ReviewStep,
 } from './steps'
 
 interface WizardStepperHeaderProps {
@@ -47,7 +47,7 @@ function StepContent({ step }: { step: number }) {
     case 4:
       return <SkillsProjectsStep />
     case 5:
-      return <FinishingUpStep />
+      return <ReviewStep />
     default:
       return <GettingStartedStep />
   }
