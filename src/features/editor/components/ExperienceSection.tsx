@@ -82,62 +82,64 @@ export function ExperienceSection() {
                 onCancel={() => setEditingId(null)}
               />
             ) : (
-              <EditorCard.Header
-                left={
-                  <div className="flex items-start gap-2">
-                    <button
-                      type="button"
-                      onClick={() => toggleExpand(exp.id)}
-                      className="mt-0.5 rounded p-0.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
-                      aria-label={isExpanded ? 'Collapse' : 'Expand'}
-                    >
-                      {isExpanded ? (
-                        <ChevronDownIcon className="h-4 w-4" />
-                      ) : (
-                        <ChevronRightIcon className="h-4 w-4" />
-                      )}
-                    </button>
-                    <div>
-                      <h3 className="font-medium text-slate-900">{exp.role}</h3>
-                      <p className="text-sm text-slate-600">
-                        {exp.company}
-                        {!isExpanded && (
-                          <span className="text-slate-400">
-                            {' · '}
-                            {exp.startDate} - {exp.isCurrent ? 'Present' : exp.endDate}
-                          </span>
+              <>
+                <EditorCard.Header
+                  left={
+                    <div className="flex items-start gap-2">
+                      <button
+                        type="button"
+                        onClick={() => toggleExpand(exp.id)}
+                        className="mt-0.5 rounded p-0.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+                        aria-label={isExpanded ? 'Collapse' : 'Expand'}
+                      >
+                        {isExpanded ? (
+                          <ChevronDownIcon className="h-4 w-4" />
+                        ) : (
+                          <ChevronRightIcon className="h-4 w-4" />
                         )}
-                      </p>
-                      {isExpanded && (
-                        <>
-                          <p className="text-sm text-slate-500">
-                            {exp.startDate} - {exp.isCurrent ? 'Present' : exp.endDate}
-                          </p>
-                          {exp.highlights.length > 0 && (
-                            <ul className="mt-2 list-inside list-disc text-sm text-slate-600">
-                              {exp.highlights.map((h, i) => (
-                                <li key={i}>{h}</li>
-                              ))}
-                            </ul>
+                      </button>
+                      <div>
+                        <h3 className="font-medium text-slate-900">{exp.role}</h3>
+                        <p className="text-sm text-slate-600">
+                          {exp.company}
+                          {!isExpanded && (
+                            <span className="text-slate-400">
+                              {' · '}
+                              {exp.startDate} - {exp.isCurrent ? 'Present' : exp.endDate}
+                            </span>
                           )}
-                        </>
-                      )}
+                        </p>
+                      </div>
                     </div>
+                  }
+                  right={
+                    <>
+                      <ReorderButtons
+                        onMoveUp={() => handleMoveUp(index)}
+                        onMoveDown={() => handleMoveDown(index)}
+                        disabledUp={index === 0}
+                        disabledDown={index === experiences.length - 1}
+                      />
+                      <EditButton onClick={() => setEditingId(exp.id)} />
+                      <DeleteButton onClick={() => handleDelete(exp.id)} />
+                    </>
+                  }
+                />
+                {isExpanded && (
+                  <div className="mt-3 pl-6">
+                    <p className="text-sm text-slate-500">
+                      {exp.startDate} - {exp.isCurrent ? 'Present' : exp.endDate}
+                    </p>
+                    {exp.highlights.length > 0 && (
+                      <ul className="mt-2 list-inside list-disc text-sm text-slate-600">
+                        {exp.highlights.map((h, i) => (
+                          <li key={i}>{h}</li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
-                }
-                right={
-                  <>
-                    <ReorderButtons
-                      onMoveUp={() => handleMoveUp(index)}
-                      onMoveDown={() => handleMoveDown(index)}
-                      disabledUp={index === 0}
-                      disabledDown={index === experiences.length - 1}
-                    />
-                    <EditButton onClick={() => setEditingId(exp.id)} />
-                    <DeleteButton onClick={() => handleDelete(exp.id)} />
-                  </>
-                }
-              />
+                )}
+              </>
             )}
           </EditorCard>
         )

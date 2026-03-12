@@ -66,14 +66,14 @@ export function EditorPage() {
       </header>
 
       {/* CONTENT (flex-1, scrollable) */}
-      <main className="flex-1 overflow-auto bg-slate-50 md:py-6">
-        <div className="rounded-lg bg-white p-4 shadow-sm md:p-6">
+      <main className="flex-1 overflow-auto bg-slate-50 pt-4 md:pt-5">
+        <div className="min-h-full bg-white p-4 md:p-6">
           <WizardStepContent currentStep={currentStep} />
         </div>
       </main>
 
       {/* FOOTER (sticky action bar) */}
-      <footer className="flex-shrink-0 border-t border-slate-200 bg-white px-4 py-3 md:px-6 md:py-4">
+      <footer className="flex-shrink-0 border-t border-slate-200 bg-white px-4 py-4 md:px-6 md:py-5">
         <WizardNavigation
           onPrevious={goPrevious}
           onNext={goNext}

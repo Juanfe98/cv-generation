@@ -64,20 +64,20 @@ export function WizardStepper({
                 />
                 {!isLast && (
                   <div
-                    className={`ml-4 h-0.5 flex-1 ${
-                      isCompleted ? 'bg-blue-600' : 'bg-slate-200'
+                    className={`ml-4 h-1 flex-1 rounded-full transition-colors duration-300 ${
+                      isCompleted ? 'bg-emerald-500' : 'bg-slate-200'
                     }`}
                     aria-hidden="true"
                   />
                 )}
               </div>
               <span
-                className={`mt-2 block text-xs ${
+                className={`mt-2.5 block text-xs tracking-wide ${
                   isCurrent
-                    ? 'font-bold text-blue-600'
+                    ? 'font-bold text-blue-700'
                     : isCompleted
-                      ? 'font-medium text-slate-700'
-                      : 'font-normal text-slate-400'
+                      ? 'font-semibold text-emerald-600'
+                      : 'font-medium text-slate-400'
                 }`}
               >
                 {step.shortTitle}
@@ -104,17 +104,17 @@ function StepCircle({
   onClick,
 }: StepCircleProps) {
   const baseClasses =
-    'flex items-center justify-center rounded-full font-medium transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+    'flex items-center justify-center rounded-full font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
 
   if (isCompleted) {
     return (
       <button
         type="button"
         onClick={onClick}
-        className={`${baseClasses} h-8 w-8 bg-blue-600 text-sm text-white hover:bg-blue-700`}
+        className={`${baseClasses} h-9 w-9 bg-emerald-500 text-sm text-white shadow-sm hover:bg-emerald-600 hover:shadow-md`}
         aria-label={`Go to ${step.title} (completed)`}
       >
-        <CheckIcon className="h-4 w-4" aria-hidden="true" />
+        <CheckIcon className="h-5 w-5" aria-hidden="true" />
       </button>
     )
   }
@@ -124,7 +124,7 @@ function StepCircle({
       <button
         type="button"
         onClick={onClick}
-        className={`${baseClasses} h-10 w-10 border-2 border-blue-600 bg-blue-50 text-base text-blue-600 shadow-md ring-4 ring-blue-100`}
+        className={`${baseClasses} h-11 w-11 border-2 border-blue-600 bg-blue-600 text-base text-white shadow-lg ring-4 ring-blue-100`}
         aria-current="step"
         aria-label={`${step.title} (current step)`}
       >
@@ -137,7 +137,7 @@ function StepCircle({
     <button
       type="button"
       onClick={onClick}
-      className={`${baseClasses} h-8 w-8 border-2 border-slate-300 bg-white text-sm text-slate-400 hover:border-slate-400`}
+      className={`${baseClasses} h-9 w-9 border-2 border-slate-200 bg-slate-50 text-sm text-slate-400 hover:border-slate-300 hover:bg-white`}
       aria-label={`Go to ${step.title}`}
     >
       {step.id}
@@ -159,16 +159,16 @@ function MobileProgress({
   const progressPercent = ((currentStep - 1) / (totalSteps - 1)) * 100
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2.5">
       <div className="flex items-center justify-between">
-        <span className="text-xs text-slate-500">
+        <span className="text-xs font-medium text-slate-500">
           Step {currentStep} of {totalSteps}
         </span>
-        <span className="text-sm font-semibold text-blue-600">{title}</span>
+        <span className="text-sm font-bold text-blue-700">{title}</span>
       </div>
-      <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200">
+      <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100 shadow-inner">
         <div
-          className="h-full rounded-full bg-blue-600 transition-all duration-300"
+          className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-blue-600 transition-all duration-300"
           style={{ width: `${progressPercent}%` }}
           role="progressbar"
           aria-valuenow={currentStep}

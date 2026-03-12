@@ -9,6 +9,9 @@ type ProfileFormInput = z.input<typeof profileSchema>
 
 const DEBOUNCE_MS = 300
 
+const inputStyles =
+  'mt-2 block w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 shadow-sm transition-all duration-200 placeholder:text-slate-400 hover:border-slate-300 hover:shadow focus:border-blue-500 focus:shadow-md focus:outline-none focus:ring-4 focus:ring-blue-500/10'
+
 export function ProfileSection() {
   const { cv, updateCv } = useCv()
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -53,21 +56,16 @@ export function ProfileSection() {
   }, [watch, updateCv])
 
   return (
-    <div className="space-y-6">
-      {/* Section header */}
-      <div className="border-b border-slate-200 pb-4">
-        <h2 className="text-lg font-semibold text-slate-900">
-          Personal Information
-        </h2>
-        <p className="mt-1 text-sm text-slate-500">
-          This appears at the top of your CV. Make sure your contact details are up to date.
-        </p>
-      </div>
+    <div>
+      {/* Helper text */}
+      <p className="mb-5 text-sm text-slate-500">
+        This is the first thing recruiters see. Keep it current and easy to scan.
+      </p>
 
       {/* Form fields */}
-      <div className="space-y-6">
+      <div className="space-y-5">
         {/* Full Name / Headline */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-8">
           <div>
             <label
               htmlFor="fullName"
@@ -80,10 +78,10 @@ export function ProfileSection() {
               id="fullName"
               type="text"
               {...register('fullName')}
-              className="mt-1.5 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+              className={inputStyles}
             />
             {errors.fullName && (
-              <p className="mt-1.5 text-sm text-red-600">{errors.fullName.message}</p>
+              <p className="mt-1 text-sm text-red-600">{errors.fullName.message}</p>
             )}
           </div>
 
@@ -99,16 +97,16 @@ export function ProfileSection() {
               type="text"
               {...register('headline')}
               placeholder="e.g., Senior Software Engineer"
-              className="mt-1.5 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+              className={inputStyles}
             />
-            <p className="mt-1.5 text-xs text-slate-500">
-              Your professional title or role
+            <p className="mt-1 text-xs text-slate-500">
+              The title you want recruiters to notice first
             </p>
           </div>
         </div>
 
         {/* Email / Phone */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-8">
           <div>
             <label
               htmlFor="email"
@@ -121,10 +119,10 @@ export function ProfileSection() {
               type="email"
               {...register('email')}
               placeholder="you@example.com"
-              className="mt-1.5 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+              className={inputStyles}
             />
             {errors.email && (
-              <p className="mt-1.5 text-sm text-red-600">{errors.email.message}</p>
+              <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
             )}
           </div>
 
@@ -140,13 +138,13 @@ export function ProfileSection() {
               type="tel"
               {...register('phone')}
               placeholder="+1 (555) 000-0000"
-              className="mt-1.5 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+              className={inputStyles}
             />
           </div>
         </div>
 
         {/* Location / Website */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-8">
           <div>
             <label
               htmlFor="location"
@@ -159,10 +157,10 @@ export function ProfileSection() {
               type="text"
               {...register('location')}
               placeholder="e.g., San Francisco, CA"
-              className="mt-1.5 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+              className={inputStyles}
             />
-            <p className="mt-1.5 text-xs text-slate-500">
-              City and country or region
+            <p className="mt-1 text-xs text-slate-500">
+              City and country is usually enough
             </p>
           </div>
 
@@ -178,16 +176,21 @@ export function ProfileSection() {
               type="url"
               {...register('website')}
               placeholder="https://yourportfolio.com"
-              className="mt-1.5 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+              className={inputStyles}
             />
-            <p className="mt-1.5 text-xs text-slate-500">
-              Portfolio, LinkedIn, or personal site
+            <p className="mt-1 text-xs text-slate-500">
+              Portfolio, LinkedIn, or personal website
             </p>
             {errors.website && (
               <p className="mt-1 text-sm text-red-600">{errors.website.message}</p>
             )}
           </div>
         </div>
+
+        {/* Reassurance note */}
+        <p className="pt-2 text-xs text-slate-400">
+          Only your name is required to continue. You can update the rest anytime.
+        </p>
       </div>
     </div>
   )

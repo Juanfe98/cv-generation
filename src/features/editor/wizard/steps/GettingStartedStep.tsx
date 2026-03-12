@@ -6,7 +6,7 @@ export function GettingStartedStep() {
   return (
     <div className="space-y-8">
       <section>
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Profile</h2>
+        <h2 className="mb-5 text-lg font-semibold text-slate-900">Profile</h2>
         <ProfileSection />
       </section>
 
