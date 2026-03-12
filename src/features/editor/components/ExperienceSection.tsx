@@ -66,7 +66,7 @@ export function ExperienceSection() {
   return (
     <div className="space-y-4">
       {experiences.length === 0 && !isAdding && (
-        <p className="text-sm text-slate-500">No experience entries yet.</p>
+        <p className="text-sm text-slate-500">Add roles that highlight your professional journey.</p>
       )}
 
       {experiences.map((exp, index) => {

@@ -50,7 +50,7 @@ describe('CertificationSection', () => {
 
   it('shows empty state when no certifications', () => {
     renderWithProvider()
-    expect(screen.getByText(/no certifications yet/i)).toBeInTheDocument()
+    expect(screen.getByText(/add professional certifications or licenses/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /add certification/i })).toBeInTheDocument()
   })
 
@@ -159,7 +159,7 @@ describe('CertificationSection', () => {
 
     await waitFor(() => {
       expect(screen.queryByText('To Delete')).not.toBeInTheDocument()
-      expect(screen.getByText(/no certifications yet/i)).toBeInTheDocument()
+      expect(screen.getByText(/add professional certifications or licenses/i)).toBeInTheDocument()
     })
   })
 

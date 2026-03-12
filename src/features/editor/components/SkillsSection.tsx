@@ -86,7 +86,7 @@ export function SkillsSection() {
       </div>
 
       {draftSkills.length === 0 ? (
-        <p className="text-sm text-slate-500">No skills added yet.</p>
+        <p className="text-sm text-slate-500">Add technical skills, tools, or areas of expertise.</p>
       ) : (
         <div className="flex flex-wrap gap-2">
           {draftSkills.map((skill, index) => (

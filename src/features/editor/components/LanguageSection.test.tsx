@@ -48,7 +48,7 @@ describe('LanguageSection', () => {
 
   it('shows empty state when no languages', () => {
     renderWithProvider()
-    expect(screen.getByText(/no languages added yet/i)).toBeInTheDocument()
+    expect(screen.getByText(/add languages you speak and your proficiency level/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /add language/i })).toBeInTheDocument()
   })
 
@@ -155,7 +155,7 @@ describe('LanguageSection', () => {
 
     await waitFor(() => {
       expect(screen.queryByText('To Delete')).not.toBeInTheDocument()
-      expect(screen.getByText(/no languages added yet/i)).toBeInTheDocument()
+      expect(screen.getByText(/add languages you speak and your proficiency level/i)).toBeInTheDocument()
     })
   })
 

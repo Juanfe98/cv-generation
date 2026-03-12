@@ -58,7 +58,7 @@ describe('ExperienceSection', () => {
 
   it('shows empty state when no experiences', () => {
     renderWithProvider()
-    expect(screen.getByText(/no experience entries yet/i)).toBeInTheDocument()
+    expect(screen.getByText(/add roles that highlight your professional journey/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /add experience/i })).toBeInTheDocument()
   })
 
@@ -159,7 +159,7 @@ describe('ExperienceSection', () => {
 
     await waitFor(() => {
       expect(screen.queryByText('To Delete')).not.toBeInTheDocument()
-      expect(screen.getByText(/no experience entries yet/i)).toBeInTheDocument()
+      expect(screen.getByText(/add roles that highlight your professional journey/i)).toBeInTheDocument()
     })
   })
 
