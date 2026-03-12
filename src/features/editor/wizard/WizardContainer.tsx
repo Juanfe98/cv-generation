@@ -1,6 +1,5 @@
-import { useWizardStep } from './useWizardStep'
 import { WizardStepper } from './WizardStepper'
-import { WizardNavigation } from './WizardNavigation'
+import { type StepConfig } from './wizardConfig'
 import {
   GettingStartedStep,
   WorkExperienceStep,
@@ -9,37 +8,32 @@ import {
   FinishingUpStep,
 } from './steps'
 
-export function WizardContainer() {
-  const {
-    currentStep,
-    goToStep,
-    goNext,
-    goPrevious,
-    isFirstStep,
-    isLastStep,
-    steps,
-  } = useWizardStep()
+interface WizardStepperHeaderProps {
+  currentStep: number
+  steps: readonly StepConfig[]
+  onStepClick: (step: number) => void
+}
 
+export function WizardStepperHeader({
+  currentStep,
+  steps,
+  onStepClick,
+}: WizardStepperHeaderProps) {
   return (
-    <div className="space-y-8">
-      <WizardStepper
-        steps={steps}
-        currentStep={currentStep}
-        onStepClick={goToStep}
-      />
-
-      <div className="min-h-[400px]">
-        <StepContent step={currentStep} />
-      </div>
-
-      <WizardNavigation
-        onPrevious={goPrevious}
-        onNext={goNext}
-        isFirstStep={isFirstStep}
-        isLastStep={isLastStep}
-      />
-    </div>
+    <WizardStepper
+      steps={steps}
+      currentStep={currentStep}
+      onStepClick={onStepClick}
+    />
   )
+}
+
+interface WizardStepContentProps {
+  currentStep: number
+}
+
+export function WizardStepContent({ currentStep }: WizardStepContentProps) {
+  return <StepContent step={currentStep} />
 }
 
 function StepContent({ step }: { step: number }) {

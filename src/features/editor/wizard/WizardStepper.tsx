@@ -72,12 +72,12 @@ export function WizardStepper({
                 )}
               </div>
               <span
-                className={`mt-2 block text-xs font-medium ${
+                className={`mt-2 block text-xs ${
                   isCurrent
-                    ? 'text-blue-600'
+                    ? 'font-bold text-blue-600'
                     : isCompleted
-                      ? 'text-slate-700'
-                      : 'text-slate-500'
+                      ? 'font-medium text-slate-700'
+                      : 'font-normal text-slate-400'
                 }`}
               >
                 {step.shortTitle}
@@ -104,14 +104,14 @@ function StepCircle({
   onClick,
 }: StepCircleProps) {
   const baseClasses =
-    'flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+    'flex items-center justify-center rounded-full font-medium transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
 
   if (isCompleted) {
     return (
       <button
         type="button"
         onClick={onClick}
-        className={`${baseClasses} bg-blue-600 text-white hover:bg-blue-700`}
+        className={`${baseClasses} h-8 w-8 bg-blue-600 text-sm text-white hover:bg-blue-700`}
         aria-label={`Go to ${step.title} (completed)`}
       >
         <CheckIcon className="h-4 w-4" aria-hidden="true" />
@@ -124,7 +124,7 @@ function StepCircle({
       <button
         type="button"
         onClick={onClick}
-        className={`${baseClasses} border-2 border-blue-600 bg-white text-blue-600`}
+        className={`${baseClasses} h-10 w-10 border-2 border-blue-600 bg-blue-50 text-base text-blue-600 shadow-md ring-4 ring-blue-100`}
         aria-current="step"
         aria-label={`${step.title} (current step)`}
       >
@@ -137,7 +137,7 @@ function StepCircle({
     <button
       type="button"
       onClick={onClick}
-      className={`${baseClasses} border-2 border-slate-300 bg-white text-slate-500 hover:border-slate-400`}
+      className={`${baseClasses} h-8 w-8 border-2 border-slate-300 bg-white text-sm text-slate-400 hover:border-slate-400`}
       aria-label={`Go to ${step.title}`}
     >
       {step.id}
@@ -160,11 +160,11 @@ function MobileProgress({
 
   return (
     <div className="space-y-2">
-      <div className="flex items-center justify-between text-sm">
-        <span className="font-medium text-slate-900">
+      <div className="flex items-center justify-between">
+        <span className="text-xs text-slate-500">
           Step {currentStep} of {totalSteps}
         </span>
-        <span className="text-slate-600">{title}</span>
+        <span className="text-sm font-semibold text-blue-600">{title}</span>
       </div>
       <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200">
         <div

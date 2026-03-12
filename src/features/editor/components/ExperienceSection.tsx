@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import { useCv } from '../../../app/providers'
 import type { ExperienceItem } from '../../../core'
 import { reorderArray } from '../../../shared/utils'
@@ -9,6 +10,19 @@ export function ExperienceSection() {
   const { cv, updateCv } = useCv()
   const [editingId, setEditingId] = useState<string | null>(null)
   const [isAdding, setIsAdding] = useState(false)
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set())
+
+  const toggleExpand = (id: string) => {
+    setExpandedIds(prev => {
+      const next = new Set(prev)
+      if (next.has(id)) {
+        next.delete(id)
+      } else {
+        next.add(id)
+      }
+      return next
+    })
+  }
 
   const experiences = cv.experience
 
@@ -55,48 +69,79 @@ export function ExperienceSection() {
         <p className="text-sm text-slate-500">No experience entries yet.</p>
       )}
 
-      {experiences.map((exp, index) => (
-        <EditorCard key={exp.id}>
-          {editingId === exp.id ? (
-            <ExperienceForm
-              experience={exp}
-              onSubmit={handleUpdate}
-              onCancel={() => setEditingId(null)}
-            />
-          ) : (
-            <EditorCard.Header
-              left={
-                <>
-                  <h3 className="font-medium text-slate-900">{exp.role}</h3>
-                  <p className="text-sm text-slate-600">{exp.company}</p>
-                  <p className="text-sm text-slate-500">
-                    {exp.startDate} - {exp.isCurrent ? 'Present' : exp.endDate}
-                  </p>
-                  {exp.highlights.length > 0 && (
-                    <ul className="mt-2 list-inside list-disc text-sm text-slate-600">
-                      {exp.highlights.map((h, i) => (
-                        <li key={i}>{h}</li>
-                      ))}
-                    </ul>
-                  )}
-                </>
-              }
-              right={
-                <>
-                  <ReorderButtons
-                    onMoveUp={() => handleMoveUp(index)}
-                    onMoveDown={() => handleMoveDown(index)}
-                    disabledUp={index === 0}
-                    disabledDown={index === experiences.length - 1}
-                  />
-                  <EditButton onClick={() => setEditingId(exp.id)} />
-                  <DeleteButton onClick={() => handleDelete(exp.id)} />
-                </>
-              }
-            />
-          )}
-        </EditorCard>
-      ))}
+      {experiences.map((exp, index) => {
+        const isExpanded = expandedIds.has(exp.id)
+        const isEditing = editingId === exp.id
+
+        return (
+          <EditorCard key={exp.id}>
+            {isEditing ? (
+              <ExperienceForm
+                experience={exp}
+                onSubmit={handleUpdate}
+                onCancel={() => setEditingId(null)}
+              />
+            ) : (
+              <EditorCard.Header
+                left={
+                  <div className="flex items-start gap-2">
+                    <button
+                      type="button"
+                      onClick={() => toggleExpand(exp.id)}
+                      className="mt-0.5 rounded p-0.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+                      aria-label={isExpanded ? 'Collapse' : 'Expand'}
+                    >
+                      {isExpanded ? (
+                        <ChevronDownIcon className="h-4 w-4" />
+                      ) : (
+                        <ChevronRightIcon className="h-4 w-4" />
+                      )}
+                    </button>
+                    <div>
+                      <h3 className="font-medium text-slate-900">{exp.role}</h3>
+                      <p className="text-sm text-slate-600">
+                        {exp.company}
+                        {!isExpanded && (
+                          <span className="text-slate-400">
+                            {' · '}
+                            {exp.startDate} - {exp.isCurrent ? 'Present' : exp.endDate}
+                          </span>
+                        )}
+                      </p>
+                      {isExpanded && (
+                        <>
+                          <p className="text-sm text-slate-500">
+                            {exp.startDate} - {exp.isCurrent ? 'Present' : exp.endDate}
+                          </p>
+                          {exp.highlights.length > 0 && (
+                            <ul className="mt-2 list-inside list-disc text-sm text-slate-600">
+                              {exp.highlights.map((h, i) => (
+                                <li key={i}>{h}</li>
+                              ))}
+                            </ul>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </div>
+                }
+                right={
+                  <>
+                    <ReorderButtons
+                      onMoveUp={() => handleMoveUp(index)}
+                      onMoveDown={() => handleMoveDown(index)}
+                      disabledUp={index === 0}
+                      disabledDown={index === experiences.length - 1}
+                    />
+                    <EditButton onClick={() => setEditingId(exp.id)} />
+                    <DeleteButton onClick={() => handleDelete(exp.id)} />
+                  </>
+                }
+              />
+            )}
+          </EditorCard>
+        )
+      })}
 
       {isAdding ? (
         <EditorCard>

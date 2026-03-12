@@ -29,11 +29,11 @@ export function PreviewPanel() {
   return (
     <div
       ref={containerRef}
-      className="h-full overflow-auto bg-slate-100 p-4"
+      className="flex h-full items-start justify-center overflow-auto bg-slate-100 p-4"
       data-testid="preview-panel"
     >
       <div
-        className="origin-top-left"
+        className="origin-top"
         style={{
           transform: `scale(${scale})`,
           width: A4_WIDTH,

@@ -15,11 +15,11 @@ describe('WizardNavigation', () => {
     isLastStep: false,
   }
 
-  it('renders Previous and Next buttons', () => {
+  it('renders Previous and Continue buttons', () => {
     renderWithRouter(<WizardNavigation {...defaultProps} />)
 
     expect(screen.getByRole('button', { name: /previous/i })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /continue/i })).toBeInTheDocument()
   })
 
   it('disables Previous button on first step', () => {
@@ -45,11 +45,11 @@ describe('WizardNavigation', () => {
     expect(onPrevious).toHaveBeenCalled()
   })
 
-  it('calls onNext when Next button is clicked', () => {
+  it('calls onNext when Continue button is clicked', () => {
     const onNext = vi.fn()
     renderWithRouter(<WizardNavigation {...defaultProps} onNext={onNext} />)
 
-    fireEvent.click(screen.getByRole('button', { name: /next/i }))
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
 
     expect(onNext).toHaveBeenCalled()
   })
@@ -59,7 +59,7 @@ describe('WizardNavigation', () => {
 
     expect(screen.getByRole('link', { name: /preview cv/i })).toBeInTheDocument()
     expect(
-      screen.queryByRole('button', { name: /next/i })
+      screen.queryByRole('button', { name: /continue/i })
     ).not.toBeInTheDocument()
   })
 

@@ -56,7 +56,7 @@ describe('WizardStepper', () => {
       )
 
       const completedStep = screen.getByRole('button', {
-        name: /getting started.*completed/i,
+        name: /personal info.*completed/i,
       })
       fireEvent.click(completedStep)
 

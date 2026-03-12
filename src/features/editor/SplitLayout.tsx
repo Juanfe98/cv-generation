@@ -16,8 +16,8 @@ export function SplitLayout({ children }: SplitLayoutProps) {
       <div className="flex flex-1 flex-col md:flex-row">
         {/* Editor panel - left on desktop */}
         <div
-          className={`flex-1 overflow-auto p-4 md:w-1/2 md:border-r md:border-slate-200 md:p-6 ${
-            mobileView !== 'editor' ? 'hidden md:block' : ''
+          className={`flex h-full flex-1 flex-col overflow-hidden md:w-1/2 md:border-r md:border-slate-200 ${
+            mobileView !== 'editor' ? 'hidden md:flex' : ''
           }`}
           data-testid="editor-container"
         >

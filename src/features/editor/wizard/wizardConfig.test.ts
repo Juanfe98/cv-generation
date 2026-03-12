@@ -36,11 +36,11 @@ describe('wizardConfig', () => {
 
   describe('getStepConfig', () => {
     it('returns correct step config for valid step numbers', () => {
-      expect(getStepConfig(1).slug).toBe('getting-started')
+      expect(getStepConfig(1).slug).toBe('personal-info')
       expect(getStepConfig(2).slug).toBe('experience')
       expect(getStepConfig(3).slug).toBe('education')
       expect(getStepConfig(4).slug).toBe('skills-projects')
-      expect(getStepConfig(5).slug).toBe('finishing-up')
+      expect(getStepConfig(5).slug).toBe('review')
     })
 
     it('returns first step for invalid step number', () => {

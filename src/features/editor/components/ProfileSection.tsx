@@ -53,109 +53,142 @@ export function ProfileSection() {
   }, [watch, updateCv])
 
   return (
-    <div className="space-y-4">
-      <div>
-        <label
-          htmlFor="fullName"
-          className="block text-sm font-medium text-slate-700"
-        >
-          Full Name *
-        </label>
-        <input
-          id="fullName"
-          type="text"
-          {...register('fullName')}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-        />
-        {errors.fullName && (
-          <p className="mt-1 text-sm text-red-600">{errors.fullName.message}</p>
-        )}
+    <div className="space-y-6">
+      {/* Section header */}
+      <div className="border-b border-slate-200 pb-4">
+        <h2 className="text-lg font-semibold text-slate-900">
+          Personal Information
+        </h2>
+        <p className="mt-1 text-sm text-slate-500">
+          This appears at the top of your CV. Make sure your contact details are up to date.
+        </p>
       </div>
 
-      <div>
-        <label
-          htmlFor="headline"
-          className="block text-sm font-medium text-slate-700"
-        >
-          Headline
-        </label>
-        <input
-          id="headline"
-          type="text"
-          {...register('headline')}
-          placeholder="e.g., Senior Software Engineer"
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-        />
-      </div>
+      {/* Form fields */}
+      <div className="space-y-6">
+        {/* Full Name / Headline */}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+          <div>
+            <label
+              htmlFor="fullName"
+              className="block text-sm font-medium text-slate-700"
+            >
+              Full Name
+              <span className="ml-1 text-red-500">*</span>
+            </label>
+            <input
+              id="fullName"
+              type="text"
+              {...register('fullName')}
+              className="mt-1.5 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+            />
+            {errors.fullName && (
+              <p className="mt-1.5 text-sm text-red-600">{errors.fullName.message}</p>
+            )}
+          </div>
 
-      <div>
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-slate-700"
-        >
-          Email
-        </label>
-        <input
-          id="email"
-          type="email"
-          {...register('email')}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-        />
-        {errors.email && (
-          <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-        )}
-      </div>
+          <div>
+            <label
+              htmlFor="headline"
+              className="block text-sm font-medium text-slate-700"
+            >
+              Headline
+            </label>
+            <input
+              id="headline"
+              type="text"
+              {...register('headline')}
+              placeholder="e.g., Senior Software Engineer"
+              className="mt-1.5 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+            />
+            <p className="mt-1.5 text-xs text-slate-500">
+              Your professional title or role
+            </p>
+          </div>
+        </div>
 
-      <div>
-        <label
-          htmlFor="phone"
-          className="block text-sm font-medium text-slate-700"
-        >
-          Phone
-        </label>
-        <input
-          id="phone"
-          type="tel"
-          {...register('phone')}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-        />
-      </div>
+        {/* Email / Phone */}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-slate-700"
+            >
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              {...register('email')}
+              placeholder="you@example.com"
+              className="mt-1.5 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+            />
+            {errors.email && (
+              <p className="mt-1.5 text-sm text-red-600">{errors.email.message}</p>
+            )}
+          </div>
 
-      <div>
-        <label
-          htmlFor="location"
-          className="block text-sm font-medium text-slate-700"
-        >
-          Location
-        </label>
-        <input
-          id="location"
-          type="text"
-          {...register('location')}
-          placeholder="e.g., San Francisco, CA"
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-        />
-      </div>
+          <div>
+            <label
+              htmlFor="phone"
+              className="block text-sm font-medium text-slate-700"
+            >
+              Phone
+            </label>
+            <input
+              id="phone"
+              type="tel"
+              {...register('phone')}
+              placeholder="+1 (555) 000-0000"
+              className="mt-1.5 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+            />
+          </div>
+        </div>
 
-      <div>
-        <label
-          htmlFor="website"
-          className="block text-sm font-medium text-slate-700"
-        >
-          Website
-        </label>
-        <input
-          id="website"
-          type="url"
-          {...register('website')}
-          placeholder="https://yourwebsite.com"
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-        />
-        {errors.website && (
-          <p className="mt-1 text-sm text-red-600">{errors.website.message}</p>
-        )}
-      </div>
+        {/* Location / Website */}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+          <div>
+            <label
+              htmlFor="location"
+              className="block text-sm font-medium text-slate-700"
+            >
+              Location
+            </label>
+            <input
+              id="location"
+              type="text"
+              {...register('location')}
+              placeholder="e.g., San Francisco, CA"
+              className="mt-1.5 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+            />
+            <p className="mt-1.5 text-xs text-slate-500">
+              City and country or region
+            </p>
+          </div>
 
+          <div>
+            <label
+              htmlFor="website"
+              className="block text-sm font-medium text-slate-700"
+            >
+              Website
+            </label>
+            <input
+              id="website"
+              type="url"
+              {...register('website')}
+              placeholder="https://yourportfolio.com"
+              className="mt-1.5 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+            />
+            <p className="mt-1.5 text-xs text-slate-500">
+              Portfolio, LinkedIn, or personal site
+            </p>
+            {errors.website && (
+              <p className="mt-1 text-sm text-red-600">{errors.website.message}</p>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

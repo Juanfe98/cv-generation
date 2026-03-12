@@ -19,10 +19,6 @@ describe('ProfileSection', () => {
     vi.useFakeTimers({ shouldAdvanceTime: true })
   })
 
-  afterEach(() => {
-    vi.useRealTimers()
-  })
-
   it('renders all profile fields', () => {
     renderWithProvider()
 

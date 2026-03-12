@@ -6,16 +6,11 @@ export interface StepConfig {
 }
 
 export const WIZARD_STEPS: readonly StepConfig[] = [
-  { id: 1, slug: 'getting-started', title: 'Getting Started', shortTitle: 'Start' },
+  { id: 1, slug: 'personal-info', title: 'Personal Information', shortTitle: 'Personal Info' },
   { id: 2, slug: 'experience', title: 'Work Experience', shortTitle: 'Experience' },
   { id: 3, slug: 'education', title: 'Education', shortTitle: 'Education' },
-  {
-    id: 4,
-    slug: 'skills-projects',
-    title: 'Skills & Projects',
-    shortTitle: 'Skills',
-  },
-  { id: 5, slug: 'finishing-up', title: 'Finishing Up', shortTitle: 'Finish' },
+  { id: 4, slug: 'skills-projects', title: 'Skills & Projects', shortTitle: 'Skills' },
+  { id: 5, slug: 'review', title: 'Review', shortTitle: 'Review' },
 ] as const
 
 export const TOTAL_STEPS = WIZARD_STEPS.length

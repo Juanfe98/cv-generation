@@ -1,2 +1,2 @@
 // Reusable UI components
-export {}
+export { ConfirmDialog } from './ConfirmDialog'
