@@ -42,9 +42,11 @@ export function EditorPage() {
                 {currentStepConfig.title}
               </h1>
             </div>
-            <p className="mt-1 text-sm text-slate-500">
-              Editing: {displayName}
-            </p>
+            {displayName && displayName !== 'Unnamed' && (
+              <p className="mt-1 text-sm text-slate-500">
+                {displayName}
+              </p>
+            )}
           </div>
           <div className="flex items-center gap-3">
             {isSaving && (

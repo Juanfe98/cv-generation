@@ -155,7 +155,7 @@ describe('ExperienceSection', () => {
 
     expect(screen.getByText('To Delete')).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: /delete/i }))
+    await user.click(screen.getByRole('button', { name: 'Delete' }))
 
     await waitFor(() => {
       expect(screen.queryByText('To Delete')).not.toBeInTheDocument()
