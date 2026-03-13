@@ -1,78 +1,103 @@
+import { useState } from 'react'
 import { useCv } from '../../app/providers'
-import { ProfileSection, ExperienceSection, EducationSection, ProjectSection, SkillsSection, CertificationSection, LanguageSection, TemplateSelector, ThemeCustomizer } from './components'
+import { ConfirmDialog } from '../../shared/components'
+import { SplitLayout } from './SplitLayout'
+import {
+  useWizardStep,
+  WizardStepperHeader,
+  WizardStepContent,
+  WizardNavigation,
+  getStepConfig,
+  TOTAL_STEPS,
+} from './wizard'
 
 export function EditorPage() {
   const { cv, resetCv, isSaving } = useCv()
+  const [showResetConfirm, setShowResetConfirm] = useState(false)
   const displayName = cv.profile.fullName || 'Unnamed'
+  const {
+    currentStep,
+    goToStep,
+    goNext,
+    goPrevious,
+    isFirstStep,
+    isLastStep,
+    steps,
+  } = useWizardStep()
+
+  const currentStepConfig = getStepConfig(currentStep)
 
   return (
-    <div>
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-slate-900">
-          Editor: {displayName}
-        </h1>
-        <div className="flex items-center gap-2">
-          {isSaving && (
-            <span className="text-sm text-slate-500">Saving...</span>
-          )}
-          <button
-            onClick={resetCv}
-            className="rounded bg-red-100 px-3 py-1 text-sm text-red-700"
-          >
-            Reset CV
-          </button>
+    <SplitLayout>
+      {/* HEADER (sticky) */}
+      <header className="flex-shrink-0 border-b border-slate-200 bg-white p-4 md:p-6">
+        <div className="mb-4 flex items-center justify-between">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-slate-500">
+                Step {currentStep} of {TOTAL_STEPS}
+              </span>
+              <span className="text-slate-300">•</span>
+              <h1 className="text-xl font-bold text-slate-900 md:text-2xl">
+                {currentStepConfig.title}
+              </h1>
+            </div>
+            {displayName && displayName !== 'Unnamed' && (
+              <p className="mt-1 text-sm text-slate-500">
+                {displayName}
+              </p>
+            )}
+          </div>
+          <div className="flex items-center gap-3">
+            {isSaving && (
+              <span className="text-sm text-slate-500">Saving...</span>
+            )}
+            <button
+              onClick={() => setShowResetConfirm(true)}
+              className="text-sm text-slate-400 hover:text-slate-600"
+            >
+              Start Over
+            </button>
+          </div>
         </div>
-      </div>
-      <p className="mt-2 text-slate-600">Build your CV here.</p>
+        <WizardStepperHeader
+          currentStep={currentStep}
+          steps={steps}
+          onStepClick={goToStep}
+        />
+      </header>
 
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Template</h2>
-        <TemplateSelector />
-      </section>
+      {/* CONTENT (flex-1, scrollable) */}
+      <main className="flex-1 overflow-auto bg-slate-50 pt-4 md:pt-5">
+        <div className="min-h-full bg-white p-4 md:p-6">
+          <WizardStepContent currentStep={currentStep} />
+        </div>
+      </main>
 
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Theme</h2>
-        <ThemeCustomizer />
-      </section>
+      {/* FOOTER (sticky action bar) */}
+      <footer className="flex-shrink-0 border-t border-slate-200 bg-white px-4 py-4 md:px-6 md:py-5">
+        <WizardNavigation
+          onPrevious={goPrevious}
+          onNext={goNext}
+          isFirstStep={isFirstStep}
+          isLastStep={isLastStep}
+          nextStepTitle={!isLastStep ? getStepConfig(currentStep + 1).shortTitle : undefined}
+        />
+      </footer>
 
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Profile</h2>
-        <ProfileSection />
-      </section>
-
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Experience</h2>
-        <ExperienceSection />
-      </section>
-
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Education</h2>
-        <EducationSection />
-      </section>
-
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Projects</h2>
-        <ProjectSection />
-      </section>
-
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Skills</h2>
-        <SkillsSection />
-      </section>
-
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Certifications</h2>
-        <CertificationSection />
-      </section>
-
-      <section className="mt-6">
-        <h2 className="mb-4 text-lg font-semibold text-slate-800">Languages</h2>
-        <LanguageSection />
-      </section>
-
-      <pre className="mt-8 overflow-auto rounded bg-slate-100 p-4 text-xs">
-        {JSON.stringify(cv, null, 2)}
-      </pre>
-    </div>
+      <ConfirmDialog
+        isOpen={showResetConfirm}
+        title="Start Over?"
+        message="This will clear all your CV data including personal info, experience, education, and skills. This action cannot be undone."
+        confirmLabel="Clear All Data"
+        cancelLabel="Cancel"
+        variant="destructive"
+        onConfirm={() => {
+          resetCv()
+          setShowResetConfirm(false)
+        }}
+        onCancel={() => setShowResetConfirm(false)}
+      />
+    </SplitLayout>
   )
 }

@@ -54,7 +54,7 @@ describe('EducationSection', () => {
 
   it('shows empty state when no education entries', () => {
     renderWithProvider()
-    expect(screen.getByText(/no education entries yet/i)).toBeInTheDocument()
+    expect(screen.getByText(/add degrees, bootcamps, or relevant coursework/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /add education/i })).toBeInTheDocument()
   })
 
@@ -158,7 +158,7 @@ describe('EducationSection', () => {
 
     await waitFor(() => {
       expect(screen.queryByText('To Delete')).not.toBeInTheDocument()
-      expect(screen.getByText(/no education entries yet/i)).toBeInTheDocument()
+      expect(screen.getByText(/add degrees, bootcamps, or relevant coursework/i)).toBeInTheDocument()
     })
   })
 

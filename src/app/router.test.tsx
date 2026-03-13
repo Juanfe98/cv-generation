@@ -34,7 +34,8 @@ describe('Router', () => {
   it('renders EditorPage at /editor', () => {
     renderWithProviders(['/editor'])
 
-    expect(screen.getByRole('heading', { name: /editor/i })).toBeInTheDocument()
+    expect(screen.getByTestId('editor-container')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: 'Personal Information' })).toBeInTheDocument()
   })
 
   it('renders PreviewPage at /preview', () => {
@@ -53,6 +54,6 @@ describe('Router', () => {
   it('renders fallback name "Unnamed" when CV has no name', () => {
     renderWithProviders(['/editor'])
 
-    expect(screen.getByRole('heading', { name: /unnamed/i })).toBeInTheDocument()
+    expect(screen.getByText('Editing: Unnamed')).toBeInTheDocument()
   })
 })

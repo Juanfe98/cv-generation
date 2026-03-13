@@ -52,7 +52,7 @@ describe('ProjectSection', () => {
 
   it('shows empty state when no projects', () => {
     renderWithProvider()
-    expect(screen.getByText(/no projects yet/i)).toBeInTheDocument()
+    expect(screen.getByText(/add personal or open-source projects that showcase your skills/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /add project/i })).toBeInTheDocument()
   })
 
@@ -190,7 +190,7 @@ describe('ProjectSection', () => {
 
     await waitFor(() => {
       expect(screen.queryByText('To Delete')).not.toBeInTheDocument()
-      expect(screen.getByText(/no projects yet/i)).toBeInTheDocument()
+      expect(screen.getByText(/add personal or open-source projects that showcase your skills/i)).toBeInTheDocument()
     })
   })
 

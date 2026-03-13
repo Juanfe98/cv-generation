@@ -52,7 +52,7 @@ export function ProjectSection() {
   return (
     <div className="space-y-4">
       {projects.length === 0 && !isAdding && (
-        <p className="text-sm text-slate-500">No projects yet.</p>
+        <p className="text-sm text-slate-500">Add personal or open-source projects that showcase your skills.</p>
       )}
 
       {projects.map((project, index) => (

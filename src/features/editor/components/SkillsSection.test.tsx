@@ -40,7 +40,7 @@ describe('SkillsSection', () => {
 
   it('shows empty state when no skills', () => {
     renderWithProvider()
-    expect(screen.getByText(/no skills added yet/i)).toBeInTheDocument()
+    expect(screen.getByText(/add technical skills, tools, or areas of expertise/i)).toBeInTheDocument()
   })
 
   it('renders existing skills from cv', () => {

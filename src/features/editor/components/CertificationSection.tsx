@@ -52,7 +52,7 @@ export function CertificationSection() {
   return (
     <div className="space-y-4">
       {certifications.length === 0 && !isAdding && (
-        <p className="text-sm text-slate-500">No certifications yet.</p>
+        <p className="text-sm text-slate-500">Add professional certifications or licenses.</p>
       )}
 
       {certifications.map((cert, index) => (

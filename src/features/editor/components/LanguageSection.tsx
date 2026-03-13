@@ -52,7 +52,7 @@ export function LanguageSection() {
   return (
     <div className="space-y-4">
       {languages.length === 0 && !isAdding && (
-        <p className="text-sm text-slate-500">No languages added yet.</p>
+        <p className="text-sm text-slate-500">Add languages you speak and your proficiency level.</p>
       )}
 
       {languages.map((lang, index) => (

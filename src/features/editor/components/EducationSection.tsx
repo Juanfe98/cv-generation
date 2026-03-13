@@ -59,7 +59,7 @@ export function EducationSection() {
   return (
     <div className="space-y-4">
       {educationList.length === 0 && !isAdding && (
-        <p className="text-sm text-slate-500">No education entries yet.</p>
+        <p className="text-sm text-slate-500">Add degrees, bootcamps, or relevant coursework.</p>
       )}
 
       {educationList.map((edu, index) => (
