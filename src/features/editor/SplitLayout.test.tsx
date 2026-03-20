@@ -44,7 +44,7 @@ describe('SplitLayout', () => {
       renderWithProvider()
 
       const editorButton = screen.getByRole('button', { name: /editor/i })
-      expect(editorButton).toHaveClass('border-blue-600')
+      expect(editorButton).toHaveClass('text-blue-600')
     })
 
     it('switches to preview view when preview button is clicked', async () => {
@@ -54,7 +54,7 @@ describe('SplitLayout', () => {
       const previewButton = screen.getByRole('button', { name: /preview/i })
       await user.click(previewButton)
 
-      expect(previewButton).toHaveClass('border-blue-600')
+      expect(previewButton).toHaveClass('text-blue-600')
     })
 
     it('switches back to editor view when editor button is clicked', async () => {
@@ -65,10 +65,10 @@ describe('SplitLayout', () => {
       const editorButton = screen.getByRole('button', { name: /editor/i })
 
       await user.click(previewButton)
-      expect(previewButton).toHaveClass('border-blue-600')
+      expect(previewButton).toHaveClass('text-blue-600')
 
       await user.click(editorButton)
-      expect(editorButton).toHaveClass('border-blue-600')
+      expect(editorButton).toHaveClass('text-blue-600')
     })
   })
 
