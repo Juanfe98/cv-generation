@@ -1,0 +1,8 @@
+{
+  "fieldRequired": "This field is required",
+  "invalidEmail": "Please enter a valid email address",
+  "invalidUrl": "Please enter a valid URL",
+  "invalidDate": "Date must be in YYYY-MM format",
+  "minLength": "Must be at least {{min}} characters",
+  "maxLength": "Must be at most {{max}} characters"
+}

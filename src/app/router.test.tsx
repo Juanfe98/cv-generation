@@ -35,7 +35,7 @@ describe('Router', () => {
     renderWithProviders(['/editor'])
 
     expect(screen.getByTestId('editor-container')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { level: 1, name: 'Personal Information' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: 'Getting Started' })).toBeInTheDocument()
   })
 
   it('renders PreviewPage at /preview', () => {

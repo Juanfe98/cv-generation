@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useCv } from '../../app/providers'
 import { ConfirmDialog } from '../../shared/components'
 import { SplitLayout } from './SplitLayout'
@@ -12,6 +13,8 @@ import {
 } from './wizard'
 
 export function EditorPage() {
+  const { t } = useTranslation('wizard')
+  const { t: tCommon } = useTranslation('common')
   const { cv, resetCv, isSaving } = useCv()
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   const displayName = cv.profile.fullName || 'Unnamed'
@@ -35,7 +38,7 @@ export function EditorPage() {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-sm text-slate-500">
-                Step {currentStep} of {TOTAL_STEPS}
+                {t('navigation.stepOf', { current: currentStep, total: TOTAL_STEPS })}
               </span>
               <span className="text-slate-300">•</span>
               <h1 className="text-xl font-bold text-slate-900 md:text-2xl">
@@ -50,13 +53,13 @@ export function EditorPage() {
           </div>
           <div className="flex items-center gap-3">
             {isSaving && (
-              <span className="text-sm text-slate-500">Saving...</span>
+              <span className="text-sm text-slate-500">{tCommon('status.saving')}</span>
             )}
             <button
               onClick={() => setShowResetConfirm(true)}
               className="text-sm text-slate-400 hover:text-slate-600"
             >
-              Start Over
+              {tCommon('buttons.delete')}
             </button>
           </div>
         </div>
@@ -87,10 +90,10 @@ export function EditorPage() {
 
       <ConfirmDialog
         isOpen={showResetConfirm}
-        title="Start Over?"
-        message="This will clear all your CV data including personal info, experience, education, and skills. This action cannot be undone."
-        confirmLabel="Clear All Data"
-        cancelLabel="Cancel"
+        title={tCommon('dialog.confirmDeleteTitle')}
+        message={tCommon('dialog.confirmDelete')}
+        confirmLabel={tCommon('buttons.confirm')}
+        cancelLabel={tCommon('buttons.cancel')}
         variant="destructive"
         onConfirm={() => {
           resetCv()

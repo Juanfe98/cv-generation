@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useReveal } from '../hooks'
 
 // Template preview components - each with unique layout
@@ -139,35 +140,36 @@ function CreativePreview() {
 const templates = [
   {
     id: 'classic',
-    name: 'Classic',
-    description: 'Traditional single-column layout. Clean and timeless.',
+    nameKey: 'templateShowcase.classic.name',
+    descKey: 'templateShowcase.classic.description',
     badge: 'ATS-Friendly',
     preview: <ClassicPreview />,
   },
   {
     id: 'modern',
-    name: 'Modern',
-    description: 'Two-column design with sidebar. Contemporary and organized.',
+    nameKey: 'templateShowcase.modern.name',
+    descKey: 'templateShowcase.modern.description',
     badge: 'Most Popular',
     preview: <ModernPreview />,
   },
   {
     id: 'executive',
-    name: 'Executive',
-    description: 'Refined layout for senior roles. Sophisticated presence.',
+    nameKey: 'templateShowcase.executive.name',
+    descKey: 'templateShowcase.executive.description',
     badge: null,
     preview: <ExecutivePreview />,
   },
   {
     id: 'creative',
-    name: 'Creative',
-    description: 'Bold design for creative fields. Stand out visually.',
+    nameKey: 'templateShowcase.creative.name',
+    descKey: 'templateShowcase.creative.description',
     badge: null,
     preview: <CreativePreview />,
   },
 ]
 
 export function TemplateShowcase() {
+  const { t } = useTranslation('landing')
   const { ref, isVisible } = useReveal<HTMLElement>()
 
   return (
@@ -182,14 +184,13 @@ export function TemplateShowcase() {
           }`}
         >
           <span className="inline-block rounded-full bg-blue-100 px-4 py-1.5 text-sm font-medium text-blue-700">
-            Templates
+            {t('navbar.templates')}
           </span>
           <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Designs that make an impression
+            {t('templateShowcase.title')}
           </h2>
           <p className="mt-4 text-lg text-slate-600">
-            Professional templates crafted to highlight your strengths and pass
-            applicant tracking systems.
+            {t('templateShowcase.subtitle')}
           </p>
         </div>
 
@@ -204,7 +205,7 @@ export function TemplateShowcase() {
               key={template.id}
               to="/editor"
               className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:border-blue-300 hover:shadow-xl focus-visible:border-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-              aria-label={`${template.name} template${template.badge ? ` - ${template.badge}` : ''}: ${template.description}`}
+              aria-label={`${t(template.nameKey)} template${template.badge ? ` - ${template.badge}` : ''}: ${t(template.descKey)}`}
             >
               {/* Badge */}
               {template.badge && (
@@ -225,15 +226,15 @@ export function TemplateShowcase() {
               {/* Info */}
               <div className="p-4">
                 <h3 className="text-base font-semibold text-slate-900 transition-colors group-hover:text-blue-600 group-focus-visible:text-blue-600">
-                  {template.name}
+                  {t(template.nameKey)}
                 </h3>
                 <p className="mt-1 text-sm text-slate-500">
-                  {template.description}
+                  {t(template.descKey)}
                 </p>
 
                 {/* Action indicator - visible on hover and focus */}
                 <div className="mt-3 flex items-center text-sm font-medium text-blue-600 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
-                  <span>Use this template</span>
+                  <span>{t('navbar.startBuilding')}</span>
                   <svg
                     className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5"
                     fill="none"
@@ -253,13 +254,6 @@ export function TemplateShowcase() {
             </Link>
           ))}
         </div>
-
-        {/* Template hint */}
-        <p className="mt-6 text-center text-sm text-slate-400">
-          <span className="hidden sm:inline">
-            Click any template to start building your CV
-          </span>
-        </p>
       </div>
     </section>
   )

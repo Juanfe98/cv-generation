@@ -1,7 +1,7 @@
 import type { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { educationItemSchema, normalizeEducationItem } from '../../../core'
+import { educationItemSchema, normalizeEducationItem, translateErrorMessage } from '../../../core'
 import type { EducationItem } from '../../../core'
 
 type EducationFormInput = z.input<typeof educationItemSchema>
@@ -51,7 +51,7 @@ export function EducationForm({ education, onSubmit, onCancel }: EducationFormPr
           className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
         />
         {errors.institution && (
-          <p className="mt-1 text-sm text-red-600">{errors.institution.message}</p>
+          <p className="mt-1 text-sm text-red-600">{translateErrorMessage(errors.institution.message)}</p>
         )}
       </div>
 
@@ -105,7 +105,7 @@ export function EducationForm({ education, onSubmit, onCancel }: EducationFormPr
             className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           />
           {errors.startDate && (
-            <p className="mt-1 text-sm text-red-600">{errors.startDate.message}</p>
+            <p className="mt-1 text-sm text-red-600">{translateErrorMessage(errors.startDate.message)}</p>
           )}
         </div>
 
@@ -124,7 +124,7 @@ export function EducationForm({ education, onSubmit, onCancel }: EducationFormPr
             className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           />
           {errors.endDate && (
-            <p className="mt-1 text-sm text-red-600">{errors.endDate.message}</p>
+            <p className="mt-1 text-sm text-red-600">{translateErrorMessage(errors.endDate.message)}</p>
           )}
         </div>
       </div>

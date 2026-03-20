@@ -1,0 +1,125 @@
+{
+  "navbar": {
+    "features": "Features",
+    "howItWorks": "How It Works",
+    "templates": "Templates",
+    "startBuilding": "Start Building"
+  },
+  "hero": {
+    "badge": "Free forever • No account needed",
+    "title": "Build a CV that",
+    "titleHighlight": "gets you hired",
+    "subtitle": "Create a professional resume in minutes with our guided editor and real-time preview. No sign-up required.",
+    "cta": "Start Building Your CV",
+    "secondaryCta": "See How It Works"
+  },
+  "productMockup": {
+    "stepOf": "Step {{current}} of {{total}}",
+    "personalInfo": "Personal Info",
+    "fullName": "Full Name",
+    "professionalTitle": "Professional Title",
+    "titlePlaceholder": "Enter your title...",
+    "email": "Email",
+    "location": "Location",
+    "yourName": "Your Name",
+    "yourTitle": "Your Title",
+    "contact": "Contact",
+    "experience": "Experience",
+    "skills": "Skills",
+    "autoSaved": "Auto-saved",
+    "justNow": "Just now",
+    "livePreview": "Live preview",
+    "syncing": "Syncing...",
+    "updatesInstantly": "Updates instantly"
+  },
+  "features": {
+    "title": "Everything you need",
+    "subtitle": "Powerful features to help you create, customize, and share your professional CV.",
+    "guidedEditor": {
+      "title": "Guided Editor",
+      "description": "Step-by-step wizard that walks you through each section, ensuring you don't miss anything important."
+    },
+    "livePreview": {
+      "title": "Live Preview",
+      "description": "See your changes instantly as you type. What you see is exactly what you'll get in your final PDF."
+    },
+    "multipleTemplates": {
+      "title": "Multiple Templates",
+      "description": "Choose from professionally designed templates that work for any industry or experience level."
+    },
+    "pdfExport": {
+      "title": "PDF Export",
+      "description": "Download your CV as a perfectly formatted PDF, ready to send to employers."
+    },
+    "autoSave": {
+      "title": "Auto-Save",
+      "description": "Your work is automatically saved to your browser. Never lose your progress."
+    },
+    "noAccount": {
+      "title": "No Account Needed",
+      "description": "Start building immediately. No sign-up, no email verification, no friction."
+    }
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Create your professional CV in three simple steps.",
+    "step1": {
+      "title": "Fill in your details",
+      "description": "Our guided wizard walks you through each section—personal info, experience, education, and skills."
+    },
+    "step2": {
+      "title": "Choose a template",
+      "description": "Pick from our collection of professional templates designed to make your CV stand out."
+    },
+    "step3": {
+      "title": "Download your CV",
+      "description": "Export your finished CV as a polished PDF, ready to send to employers."
+    }
+  },
+  "templateShowcase": {
+    "title": "Professional Templates",
+    "subtitle": "Choose from beautifully designed templates that make your experience shine.",
+    "classic": {
+      "name": "Classic",
+      "description": "Traditional and timeless"
+    },
+    "modern": {
+      "name": "Modern",
+      "description": "Clean and contemporary"
+    },
+    "creative": {
+      "name": "Creative",
+      "description": "Bold and distinctive"
+    },
+    "executive": {
+      "name": "Executive",
+      "description": "Professional and refined"
+    }
+  },
+  "valueProposition": {
+    "title": "Why Choose CV Generator?",
+    "free": {
+      "title": "100% Free",
+      "description": "No hidden costs, no premium tiers. Every feature is available to everyone."
+    },
+    "privacy": {
+      "title": "Privacy First",
+      "description": "Your data stays in your browser. We don't store or sell your information."
+    },
+    "fast": {
+      "title": "Fast & Simple",
+      "description": "Create a professional CV in under 10 minutes with our intuitive interface."
+    }
+  },
+  "cta": {
+    "title": "Ready to build your CV?",
+    "subtitle": "Join thousands of job seekers who've created their perfect resume.",
+    "button": "Start Building — It's Free"
+  },
+  "footer": {
+    "tagline": "Create your professional CV in minutes.",
+    "copyright": "© {{year}} CV Generator. All rights reserved.",
+    "madeWith": "Made with",
+    "builtBy": "Built by"
+  }
+}

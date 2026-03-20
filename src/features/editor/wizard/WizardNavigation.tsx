@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 interface WizardNavigationProps {
   onPrevious: () => void
@@ -15,6 +16,9 @@ export function WizardNavigation({
   isLastStep,
   nextStepTitle,
 }: WizardNavigationProps) {
+  const { t } = useTranslation('wizard')
+  const { t: tCommon } = useTranslation('common')
+
   return (
     <div className="flex items-center justify-between">
       {/* Previous - subtle ghost button */}
@@ -33,7 +37,7 @@ export function WizardNavigation({
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
         </svg>
-        Previous
+        {t('navigation.back')}
       </button>
 
       {/* Next - prominent primary button */}
@@ -42,7 +46,7 @@ export function WizardNavigation({
           to="/preview"
           className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-500/20"
         >
-          Preview CV
+          {tCommon('buttons.preview')} CV
           <svg
             className="h-4 w-4"
             fill="none"
@@ -59,7 +63,7 @@ export function WizardNavigation({
           onClick={onNext}
           className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-500/20"
         >
-          {nextStepTitle ? `Continue to ${nextStepTitle}` : 'Continue'}
+          {nextStepTitle ? `${t('navigation.next')}: ${nextStepTitle}` : t('navigation.next')}
           <svg
             className="h-4 w-4"
             fill="none"

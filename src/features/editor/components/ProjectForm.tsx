@@ -1,7 +1,7 @@
 import type { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { projectItemSchema, normalizeProjectItem } from '../../../core'
+import { projectItemSchema, normalizeProjectItem, translateErrorMessage } from '../../../core'
 import type { ProjectItem } from '../../../core'
 
 type ProjectFormInput = z.input<typeof projectItemSchema>
@@ -51,7 +51,7 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
           className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
         />
         {errors.name && (
-          <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+          <p className="mt-1 text-sm text-red-600">{translateErrorMessage(errors.name.message)}</p>
         )}
       </div>
 
@@ -86,7 +86,7 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
           className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
         />
         {errors.link && (
-          <p className="mt-1 text-sm text-red-600">{errors.link.message}</p>
+          <p className="mt-1 text-sm text-red-600">{translateErrorMessage(errors.link.message)}</p>
         )}
       </div>
 

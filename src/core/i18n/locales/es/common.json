@@ -1,0 +1,27 @@
+{
+  "buttons": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "add": "Agregar",
+    "confirm": "Confirmar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "finish": "Finalizar",
+    "download": "Descargar",
+    "preview": "Vista previa"
+  },
+  "dialog": {
+    "confirmDelete": "¿Estás seguro de que deseas eliminar este elemento?",
+    "confirmDeleteTitle": "Eliminar elemento",
+    "unsavedChanges": "Tienes cambios sin guardar. ¿Estás seguro de que deseas salir?",
+    "unsavedChangesTitle": "Cambios sin guardar"
+  },
+  "status": {
+    "saving": "Guardando...",
+    "saved": "Guardado",
+    "loading": "Cargando..."
+  }
+}

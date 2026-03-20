@@ -1,0 +1,125 @@
+{
+  "navbar": {
+    "features": "Características",
+    "howItWorks": "Cómo funciona",
+    "templates": "Plantillas",
+    "startBuilding": "Comenzar"
+  },
+  "hero": {
+    "badge": "Gratis para siempre • Sin necesidad de cuenta",
+    "title": "Crea un CV que",
+    "titleHighlight": "te consiga empleo",
+    "subtitle": "Crea un currículum profesional en minutos con nuestro editor guiado y vista previa en tiempo real. Sin registro.",
+    "cta": "Comienza a crear tu CV",
+    "secondaryCta": "Ver cómo funciona"
+  },
+  "productMockup": {
+    "stepOf": "Paso {{current}} de {{total}}",
+    "personalInfo": "Información personal",
+    "fullName": "Nombre completo",
+    "professionalTitle": "Título profesional",
+    "titlePlaceholder": "Ingresa tu título...",
+    "email": "Correo electrónico",
+    "location": "Ubicación",
+    "yourName": "Tu nombre",
+    "yourTitle": "Tu título",
+    "contact": "Contacto",
+    "experience": "Experiencia",
+    "skills": "Habilidades",
+    "autoSaved": "Guardado automático",
+    "justNow": "Ahora mismo",
+    "livePreview": "Vista previa en vivo",
+    "syncing": "Sincronizando...",
+    "updatesInstantly": "Se actualiza al instante"
+  },
+  "features": {
+    "title": "Todo lo que necesitas",
+    "subtitle": "Funciones potentes para ayudarte a crear, personalizar y compartir tu CV profesional.",
+    "guidedEditor": {
+      "title": "Editor guiado",
+      "description": "Asistente paso a paso que te guía a través de cada sección, asegurando que no olvides nada importante."
+    },
+    "livePreview": {
+      "title": "Vista previa en vivo",
+      "description": "Ve tus cambios al instante mientras escribes. Lo que ves es exactamente lo que obtendrás en tu PDF final."
+    },
+    "multipleTemplates": {
+      "title": "Múltiples plantillas",
+      "description": "Elige entre plantillas diseñadas profesionalmente que funcionan para cualquier industria o nivel de experiencia."
+    },
+    "pdfExport": {
+      "title": "Exportar a PDF",
+      "description": "Descarga tu CV como un PDF perfectamente formateado, listo para enviar a empleadores."
+    },
+    "autoSave": {
+      "title": "Guardado automático",
+      "description": "Tu trabajo se guarda automáticamente en tu navegador. Nunca pierdas tu progreso."
+    },
+    "noAccount": {
+      "title": "Sin necesidad de cuenta",
+      "description": "Comienza a crear inmediatamente. Sin registro, sin verificación de correo, sin complicaciones."
+    }
+  },
+  "howItWorks": {
+    "title": "Cómo funciona",
+    "subtitle": "Crea tu CV profesional en tres simples pasos.",
+    "step1": {
+      "title": "Completa tus datos",
+      "description": "Nuestro asistente guiado te lleva a través de cada sección: información personal, experiencia, educación y habilidades."
+    },
+    "step2": {
+      "title": "Elige una plantilla",
+      "description": "Selecciona de nuestra colección de plantillas profesionales diseñadas para hacer que tu CV destaque."
+    },
+    "step3": {
+      "title": "Descarga tu CV",
+      "description": "Exporta tu CV terminado como un PDF pulido, listo para enviar a empleadores."
+    }
+  },
+  "templateShowcase": {
+    "title": "Plantillas profesionales",
+    "subtitle": "Elige entre plantillas bellamente diseñadas que hacen brillar tu experiencia.",
+    "classic": {
+      "name": "Clásica",
+      "description": "Tradicional y atemporal"
+    },
+    "modern": {
+      "name": "Moderna",
+      "description": "Limpia y contemporánea"
+    },
+    "creative": {
+      "name": "Creativa",
+      "description": "Audaz y distintiva"
+    },
+    "executive": {
+      "name": "Ejecutiva",
+      "description": "Profesional y refinada"
+    }
+  },
+  "valueProposition": {
+    "title": "¿Por qué elegir CV Generator?",
+    "free": {
+      "title": "100% Gratis",
+      "description": "Sin costos ocultos, sin niveles premium. Todas las funciones están disponibles para todos."
+    },
+    "privacy": {
+      "title": "Privacidad primero",
+      "description": "Tus datos permanecen en tu navegador. No almacenamos ni vendemos tu información."
+    },
+    "fast": {
+      "title": "Rápido y simple",
+      "description": "Crea un CV profesional en menos de 10 minutos con nuestra interfaz intuitiva."
+    }
+  },
+  "cta": {
+    "title": "¿Listo para crear tu CV?",
+    "subtitle": "Únete a miles de buscadores de empleo que han creado su currículum perfecto.",
+    "button": "Comenzar — Es gratis"
+  },
+  "footer": {
+    "tagline": "Crea tu CV profesional en minutos.",
+    "copyright": "© {{year}} CV Generator. Todos los derechos reservados.",
+    "madeWith": "Hecho con",
+    "builtBy": "Creado por"
+  }
+}

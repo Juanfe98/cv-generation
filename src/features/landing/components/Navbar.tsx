@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useScrollSpy } from '../hooks'
+import { LanguageSwitcher } from '../../../shared/components'
 
 function Logo() {
   return (
@@ -70,19 +72,20 @@ function MobileMenuButton({
   )
 }
 
-const navLinks = [
-  { href: '#features', id: 'features', label: 'Features' },
-  { href: '#how-it-works', id: 'how-it-works', label: 'How It Works' },
-  { href: '#templates', id: 'templates', label: 'Templates' },
+const navLinkIds = [
+  { href: '#features', id: 'features', labelKey: 'navbar.features' },
+  { href: '#how-it-works', id: 'how-it-works', labelKey: 'navbar.howItWorks' },
+  { href: '#templates', id: 'templates', labelKey: 'navbar.templates' },
 ]
 
 export function Navbar() {
+  const { t } = useTranslation('landing')
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   // Scroll spy to highlight active section
   const activeSection = useScrollSpy({
-    sectionIds: navLinks.map((link) => link.id),
+    sectionIds: navLinkIds.map((link) => link.id),
     offset: 120,
   })
 
@@ -120,7 +123,7 @@ export function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link) => {
+          {navLinkIds.map((link) => {
             const isActive = activeSection === link.id
             return (
               <a
@@ -132,7 +135,7 @@ export function Navbar() {
                     : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                 }`}
               >
-                {link.label}
+                {t(link.labelKey)}
                 {/* Active indicator */}
                 {isActive && (
                   <span className="absolute bottom-0 left-1/2 h-0.5 w-4 -translate-x-1/2 rounded-full bg-blue-600" />
@@ -144,11 +147,12 @@ export function Navbar() {
 
         {/* Desktop CTA */}
         <div className="hidden items-center gap-3 md:flex">
+          <LanguageSwitcher variant="compact" />
           <Link
             to="/editor"
             className="group relative inline-flex items-center gap-2 overflow-hidden rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-slate-800 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
           >
-            <span>Start Building</span>
+            <span>{t('navbar.startBuilding')}</span>
             <svg
               className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
               fill="none"
@@ -176,7 +180,7 @@ export function Navbar() {
       {isMobileMenuOpen && (
         <div className="border-t border-slate-200 bg-white md:hidden">
           <div className="space-y-1 px-4 py-4">
-            {navLinks.map((link) => {
+            {navLinkIds.map((link) => {
               const isActive = activeSection === link.id
               return (
                 <a
@@ -189,17 +193,20 @@ export function Navbar() {
                       : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                   }`}
                 >
-                  {link.label}
+                  {t(link.labelKey)}
                 </a>
               )
             })}
+            <div className="flex items-center justify-between border-t border-slate-100 pt-3">
+              <LanguageSwitcher />
+            </div>
             <div className="pt-2">
               <Link
                 to="/editor"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="flex w-full items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-slate-800"
               >
-                Start Building
+                {t('navbar.startBuilding')}
                 <svg
                   className="h-4 w-4"
                   fill="none"

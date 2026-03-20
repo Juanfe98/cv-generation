@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useParallax } from '../hooks'
 
-function Badge() {
+function Badge({ text }: { text: string }) {
   return (
     <div className="animate-fade-in-up inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 shadow-sm">
       <span className="flex h-2 w-2 items-center justify-center">
         <span className="absolute h-2 w-2 animate-ping rounded-full bg-emerald-400 opacity-75" />
         <span className="relative h-2 w-2 rounded-full bg-emerald-500" />
       </span>
-      <span className="text-sm font-medium text-slate-600">
-        Free forever &bull; No account needed
-      </span>
+      <span className="text-sm font-medium text-slate-600">{text}</span>
     </div>
   )
 }
@@ -358,6 +357,8 @@ function ProductMockup() {
 }
 
 export function Hero() {
+  const { t } = useTranslation('landing')
+
   return (
     <section className="relative overflow-hidden">
       {/* Background gradient */}
@@ -373,19 +374,18 @@ export function Hero() {
 
       <div className="relative px-4 pb-16 pt-12 sm:px-6 sm:pb-24 sm:pt-16 lg:px-8 lg:pt-20">
         <div className="mx-auto max-w-4xl text-center">
-          <Badge />
+          <Badge text={t('hero.badge')} />
 
           <h1 className="animate-fade-in-up-delay-1 mt-6 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-            Build a CV that
+            {t('hero.title')}
             <br />
             <span className="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
-              gets you hired
+              {t('hero.titleHighlight')}
             </span>
           </h1>
 
           <p className="animate-fade-in-up-delay-2 mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600 sm:text-xl">
-            Create a professional resume in minutes with our guided editor and
-            real-time preview. No sign-up required.
+            {t('hero.subtitle')}
           </p>
 
           <div className="animate-fade-in-up-delay-3 mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -393,7 +393,7 @@ export function Hero() {
               to="/editor"
               className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-blue-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 sm:w-auto"
             >
-              <span>Start Building Your CV</span>
+              <span>{t('hero.cta')}</span>
               <svg
                 className="h-5 w-5 transition-transform group-hover:translate-x-0.5"
                 fill="none"
@@ -413,7 +413,7 @@ export function Hero() {
               href="#how-it-works"
               className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-8 py-4 text-base font-semibold text-slate-700 shadow-sm transition-all hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-offset-2 sm:w-auto"
             >
-              <span>See How It Works</span>
+              <span>{t('hero.secondaryCta')}</span>
             </a>
           </div>
         </div>

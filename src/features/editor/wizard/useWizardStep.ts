@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import {
-  WIZARD_STEPS,
   TOTAL_STEPS,
   getStepConfig,
+  getWizardSteps,
   isValidStep,
   type StepConfig,
 } from './wizardConfig'
@@ -64,6 +64,9 @@ export function useWizardStep(): UseWizardStepReturn {
   const isLastStep = currentStep === TOTAL_STEPS
   const stepConfig = getStepConfig(currentStep)
 
+  // Get translated steps at render time
+  const steps = useMemo(() => getWizardSteps(), [])
+
   return {
     currentStep,
     goToStep,
@@ -73,6 +76,6 @@ export function useWizardStep(): UseWizardStepReturn {
     isLastStep,
     stepConfig,
     totalSteps: TOTAL_STEPS,
-    steps: WIZARD_STEPS,
+    steps,
   }
 }

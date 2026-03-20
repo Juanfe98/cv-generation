@@ -1,0 +1,145 @@
+{
+  "sections": {
+    "profile": "Profile",
+    "experience": "Experience",
+    "education": "Education",
+    "skills": "Skills",
+    "projects": "Projects",
+    "languages": "Languages",
+    "certifications": "Certifications",
+    "additionalInfo": "Additional Information"
+  },
+  "profile": {
+    "title": "Personal Information",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "John Doe",
+    "headline": "Professional Headline",
+    "headlinePlaceholder": "Software Engineer",
+    "location": "Location",
+    "locationPlaceholder": "San Francisco, CA",
+    "email": "Email",
+    "emailPlaceholder": "john@example.com",
+    "phone": "Phone",
+    "phonePlaceholder": "+1 (555) 123-4567",
+    "website": "Website",
+    "websitePlaceholder": "https://johndoe.com",
+    "links": "Profile Links",
+    "addLink": "Add Link",
+    "linkLabel": "Label",
+    "linkLabelPlaceholder": "LinkedIn",
+    "linkUrl": "URL",
+    "linkUrlPlaceholder": "https://linkedin.com/in/johndoe"
+  },
+  "experience": {
+    "title": "Work Experience",
+    "addExperience": "Add Experience",
+    "company": "Company",
+    "companyPlaceholder": "Acme Inc.",
+    "role": "Job Title",
+    "rolePlaceholder": "Software Engineer",
+    "location": "Location",
+    "locationPlaceholder": "San Francisco, CA",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "currentRole": "I currently work here",
+    "present": "Present",
+    "highlights": "Key Achievements",
+    "highlightsPlaceholder": "• Led team of 5 engineers...",
+    "addHighlight": "Add achievement",
+    "emptyState": "No work experience added yet. Click \"Add Experience\" to get started."
+  },
+  "education": {
+    "title": "Education",
+    "addEducation": "Add Education",
+    "institution": "Institution",
+    "institutionPlaceholder": "University of California",
+    "degree": "Degree",
+    "degreePlaceholder": "Bachelor of Science",
+    "field": "Field of Study",
+    "fieldPlaceholder": "Computer Science",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "emptyState": "No education added yet. Click \"Add Education\" to get started."
+  },
+  "skills": {
+    "title": "Skills",
+    "addSkill": "Add Skill",
+    "skillPlaceholder": "Type a skill and press Enter",
+    "emptyState": "No skills added yet. Type a skill and press Enter to add it."
+  },
+  "projects": {
+    "title": "Projects",
+    "addProject": "Add Project",
+    "name": "Project Name",
+    "namePlaceholder": "My Awesome Project",
+    "description": "Description",
+    "descriptionPlaceholder": "A brief description of the project...",
+    "link": "Project Link",
+    "linkPlaceholder": "https://github.com/...",
+    "highlights": "Key Features",
+    "highlightsPlaceholder": "• Built with React and TypeScript...",
+    "addHighlight": "Add feature",
+    "emptyState": "No projects added yet. Click \"Add Project\" to showcase your work."
+  },
+  "languages": {
+    "title": "Languages",
+    "addLanguage": "Add Language",
+    "name": "Language",
+    "namePlaceholder": "English",
+    "level": "Proficiency Level",
+    "levelPlaceholder": "Native",
+    "levels": {
+      "native": "Native",
+      "fluent": "Fluent",
+      "advanced": "Advanced",
+      "intermediate": "Intermediate",
+      "basic": "Basic"
+    },
+    "emptyState": "No languages added yet. Click \"Add Language\" to get started."
+  },
+  "certifications": {
+    "title": "Certifications",
+    "addCertification": "Add Certification",
+    "name": "Certification Name",
+    "namePlaceholder": "AWS Solutions Architect",
+    "issuer": "Issuing Organization",
+    "issuerPlaceholder": "Amazon Web Services",
+    "date": "Date Obtained",
+    "emptyState": "No certifications added yet. Click \"Add Certification\" to get started."
+  },
+  "additionalInfo": {
+    "title": "Additional Information",
+    "placeholder": "Add any other relevant information..."
+  },
+  "templates": {
+    "title": "Choose Template",
+    "changeTemplate": "Change Template",
+    "currentTemplate": "Current: {{template}}",
+    "selectTemplate": "Select Template"
+  },
+  "theme": {
+    "title": "Theme Settings",
+    "accentColor": "Accent Color",
+    "spacing": "Spacing",
+    "colors": {
+      "blue": "Blue",
+      "emerald": "Emerald",
+      "violet": "Violet",
+      "amber": "Amber"
+    },
+    "spacingOptions": {
+      "compact": "Compact",
+      "standard": "Standard",
+      "relaxed": "Relaxed"
+    }
+  },
+  "preview": {
+    "title": "Preview",
+    "downloadPdf": "Download PDF",
+    "backToEditor": "Back to Editor"
+  },
+  "mobileToggle": {
+    "editor": "Editor",
+    "preview": "Preview"
+  }
+}

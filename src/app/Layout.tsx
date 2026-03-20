@@ -1,12 +1,16 @@
 import { NavLink, Outlet } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { LanguageSwitcher } from '../shared/components'
 
 export function Layout() {
+  const { t } = useTranslation('editor')
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-          <h1 className="text-xl font-bold text-slate-900">ResumeForge</h1>
-          <nav className="flex gap-4">
+          <h1 className="text-xl font-bold text-slate-900">CV Generator</h1>
+          <nav className="flex items-center gap-4">
             <NavLink
               to="/editor"
               className={({ isActive }) =>
@@ -15,7 +19,7 @@ export function Layout() {
                 }`
               }
             >
-              Editor
+              {t('mobileToggle.editor')}
             </NavLink>
             <NavLink
               to="/preview"
@@ -25,8 +29,9 @@ export function Layout() {
                 }`
               }
             >
-              Preview
+              {t('mobileToggle.preview')}
             </NavLink>
+            <LanguageSwitcher variant="compact" />
           </nav>
         </div>
       </header>

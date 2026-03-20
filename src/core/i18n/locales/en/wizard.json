@@ -1,0 +1,57 @@
+{
+  "steps": {
+    "gettingStarted": {
+      "title": "Getting Started",
+      "shortTitle": "Start"
+    },
+    "workExperience": {
+      "title": "Work Experience",
+      "shortTitle": "Experience"
+    },
+    "education": {
+      "title": "Education",
+      "shortTitle": "Education"
+    },
+    "skillsProjects": {
+      "title": "Skills & Projects",
+      "shortTitle": "Skills"
+    },
+    "review": {
+      "title": "Review & Export",
+      "shortTitle": "Review"
+    }
+  },
+  "navigation": {
+    "back": "Back",
+    "next": "Next",
+    "finish": "Finish",
+    "stepOf": "Step {{current}} of {{total}}"
+  },
+  "gettingStarted": {
+    "title": "Let's build your CV",
+    "subtitle": "Start by entering your basic information. You can always edit this later.",
+    "tip": "Tip: A strong headline helps recruiters understand your expertise at a glance."
+  },
+  "workExperience": {
+    "title": "Your work experience",
+    "subtitle": "Add your relevant work history, starting with your most recent position.",
+    "tip": "Tip: Focus on achievements and impact, not just responsibilities."
+  },
+  "education": {
+    "title": "Your education",
+    "subtitle": "Add your educational background and any relevant certifications.",
+    "tip": "Tip: Include relevant coursework or honors if you're early in your career."
+  },
+  "skillsProjects": {
+    "title": "Skills & Projects",
+    "subtitle": "Highlight your key skills and showcase your best projects.",
+    "tip": "Tip: Include both technical and soft skills relevant to your target role."
+  },
+  "review": {
+    "title": "Review your CV",
+    "subtitle": "Take a final look at your CV before downloading.",
+    "downloadReady": "Your CV is ready to download!",
+    "editSections": "Edit sections",
+    "downloadPdf": "Download PDF"
+  }
+}

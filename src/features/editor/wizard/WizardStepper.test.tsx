@@ -1,11 +1,12 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
 import { WizardStepper } from './WizardStepper'
-import { WIZARD_STEPS } from './wizardConfig'
+import { getWizardSteps } from './wizardConfig'
 
 describe('WizardStepper', () => {
+  const wizardSteps = getWizardSteps()
   const defaultProps = {
-    steps: WIZARD_STEPS,
+    steps: wizardSteps,
     currentStep: 1,
     onStepClick: vi.fn(),
   }
@@ -14,7 +15,7 @@ describe('WizardStepper', () => {
     it('renders all steps', () => {
       render(<WizardStepper {...defaultProps} />)
 
-      WIZARD_STEPS.forEach(step => {
+      wizardSteps.forEach(step => {
         expect(screen.getByText(step.shortTitle)).toBeInTheDocument()
       })
     })
@@ -56,7 +57,7 @@ describe('WizardStepper', () => {
       )
 
       const completedStep = screen.getByRole('button', {
-        name: /personal info.*completed/i,
+        name: /start.*completed/i,
       })
       fireEvent.click(completedStep)
 
@@ -68,7 +69,7 @@ describe('WizardStepper', () => {
     it('shows step count', () => {
       render(<WizardStepper {...defaultProps} currentStep={2} />)
 
-      expect(screen.getByText('Step 2 of 5')).toBeInTheDocument()
+      expect(screen.getByText(/step 2 of 5/i)).toBeInTheDocument()
     })
 
     it('shows current step title', () => {

@@ -58,7 +58,7 @@ describe('ExperienceSection', () => {
 
   it('shows empty state when no experiences', () => {
     renderWithProvider()
-    expect(screen.getByText(/add roles that highlight your professional journey/i)).toBeInTheDocument()
+    expect(screen.getByText(/no work experience added yet/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /add experience/i })).toBeInTheDocument()
   })
 
@@ -88,7 +88,7 @@ describe('ExperienceSection', () => {
     await user.click(screen.getByRole('button', { name: /add experience/i }))
 
     await user.type(screen.getByLabelText(/company/i), 'New Company')
-    await user.type(screen.getByLabelText(/role/i), 'Developer')
+    await user.type(screen.getByLabelText(/job title/i), 'Developer')
     await user.type(screen.getByLabelText(/start date/i), '2023-06')
 
     await user.click(screen.getByRole('button', { name: /^add$/i }))
@@ -132,7 +132,7 @@ describe('ExperienceSection', () => {
     await user.clear(companyInput)
     await user.type(companyInput, 'Updated Company')
 
-    await user.click(screen.getByRole('button', { name: /update/i }))
+    await user.click(screen.getByRole('button', { name: /save/i }))
 
     await waitFor(() => {
       expect(screen.getByText('Updated Company')).toBeInTheDocument()
@@ -159,7 +159,7 @@ describe('ExperienceSection', () => {
 
     await waitFor(() => {
       expect(screen.queryByText('To Delete')).not.toBeInTheDocument()
-      expect(screen.getByText(/add roles that highlight your professional journey/i)).toBeInTheDocument()
+      expect(screen.getByText(/no work experience added yet/i)).toBeInTheDocument()
     })
   })
 
@@ -209,7 +209,7 @@ describe('ExperienceSection', () => {
     await user.click(screen.getByRole('button', { name: /add experience/i }))
 
     await user.type(screen.getByLabelText(/company/i), 'Current Job')
-    await user.type(screen.getByLabelText(/role/i), 'Developer')
+    await user.type(screen.getByLabelText(/job title/i), 'Developer')
     await user.type(screen.getByLabelText(/start date/i), '2023-01')
     await user.type(screen.getByLabelText(/end date/i), '2024-01')
     await user.click(screen.getByLabelText(/i currently work here/i))

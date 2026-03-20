@@ -2,8 +2,10 @@ import { useEffect, useRef } from 'react'
 import type { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useTranslation } from 'react-i18next'
 import { useCv } from '../../../app/providers'
 import { profileSchema } from '../../../core'
+import { translateErrorMessage } from '../../../core/i18n/translateZodErrors'
 
 type ProfileFormInput = z.input<typeof profileSchema>
 
@@ -13,6 +15,7 @@ const inputStyles =
   'mt-2 block w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 shadow-sm transition-all duration-200 placeholder:text-slate-400 hover:border-slate-300 hover:shadow focus:border-blue-500 focus:shadow-md focus:outline-none focus:ring-4 focus:ring-blue-500/10'
 
 export function ProfileSection() {
+  const { t } = useTranslation('editor')
   const { cv, updateCv } = useCv()
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -27,6 +30,7 @@ export function ProfileSection() {
 
   // Live sync form values to CV context with debounce
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/incompatible-library -- subscription pattern is intentional and properly cleaned up
     const subscription = watch(data => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
@@ -57,11 +61,6 @@ export function ProfileSection() {
 
   return (
     <div>
-      {/* Helper text */}
-      <p className="mb-5 text-sm text-slate-500">
-        This is the first thing recruiters see. Keep it current and easy to scan.
-      </p>
-
       {/* Form fields */}
       <div className="space-y-5">
         {/* Full Name / Headline */}
@@ -71,17 +70,20 @@ export function ProfileSection() {
               htmlFor="fullName"
               className="block text-sm font-medium text-slate-700"
             >
-              Full Name
+              {t('profile.fullName')}
               <span className="ml-1 text-red-500">*</span>
             </label>
             <input
               id="fullName"
               type="text"
               {...register('fullName')}
+              placeholder={t('profile.fullNamePlaceholder')}
               className={inputStyles}
             />
             {errors.fullName && (
-              <p className="mt-1 text-sm text-red-600">{errors.fullName.message}</p>
+              <p className="mt-1 text-sm text-red-600">
+                {translateErrorMessage(errors.fullName.message)}
+              </p>
             )}
           </div>
 
@@ -90,18 +92,15 @@ export function ProfileSection() {
               htmlFor="headline"
               className="block text-sm font-medium text-slate-700"
             >
-              Headline
+              {t('profile.headline')}
             </label>
             <input
               id="headline"
               type="text"
               {...register('headline')}
-              placeholder="e.g., Senior Software Engineer"
+              placeholder={t('profile.headlinePlaceholder')}
               className={inputStyles}
             />
-            <p className="mt-1 text-xs text-slate-500">
-              The title you want recruiters to notice first
-            </p>
           </div>
         </div>
 
@@ -112,17 +111,19 @@ export function ProfileSection() {
               htmlFor="email"
               className="block text-sm font-medium text-slate-700"
             >
-              Email
+              {t('profile.email')}
             </label>
             <input
               id="email"
               type="email"
               {...register('email')}
-              placeholder="you@example.com"
+              placeholder={t('profile.emailPlaceholder')}
               className={inputStyles}
             />
             {errors.email && (
-              <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+              <p className="mt-1 text-sm text-red-600">
+                {translateErrorMessage(errors.email.message)}
+              </p>
             )}
           </div>
 
@@ -131,13 +132,13 @@ export function ProfileSection() {
               htmlFor="phone"
               className="block text-sm font-medium text-slate-700"
             >
-              Phone
+              {t('profile.phone')}
             </label>
             <input
               id="phone"
               type="tel"
               {...register('phone')}
-              placeholder="+1 (555) 000-0000"
+              placeholder={t('profile.phonePlaceholder')}
               className={inputStyles}
             />
           </div>
@@ -150,18 +151,15 @@ export function ProfileSection() {
               htmlFor="location"
               className="block text-sm font-medium text-slate-700"
             >
-              Location
+              {t('profile.location')}
             </label>
             <input
               id="location"
               type="text"
               {...register('location')}
-              placeholder="e.g., San Francisco, CA"
+              placeholder={t('profile.locationPlaceholder')}
               className={inputStyles}
             />
-            <p className="mt-1 text-xs text-slate-500">
-              City and country is usually enough
-            </p>
           </div>
 
           <div>
@@ -169,28 +167,22 @@ export function ProfileSection() {
               htmlFor="website"
               className="block text-sm font-medium text-slate-700"
             >
-              Website
+              {t('profile.website')}
             </label>
             <input
               id="website"
               type="url"
               {...register('website')}
-              placeholder="https://yourportfolio.com"
+              placeholder={t('profile.websitePlaceholder')}
               className={inputStyles}
             />
-            <p className="mt-1 text-xs text-slate-500">
-              Portfolio, LinkedIn, or personal website
-            </p>
             {errors.website && (
-              <p className="mt-1 text-sm text-red-600">{errors.website.message}</p>
+              <p className="mt-1 text-sm text-red-600">
+                {translateErrorMessage(errors.website.message)}
+              </p>
             )}
           </div>
         </div>
-
-        {/* Reassurance note */}
-        <p className="pt-2 text-xs text-slate-400">
-          Only your name is required to continue. You can update the rest anytime.
-        </p>
       </div>
     </div>
   )
