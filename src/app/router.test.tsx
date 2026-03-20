@@ -51,9 +51,10 @@ describe('Router', () => {
     expect(screen.getByRole('link', { name: /preview/i })).toBeInTheDocument()
   })
 
-  it('renders fallback name "Unnamed" when CV has no name', () => {
+  it('does not show name when CV has no profile name', () => {
     renderWithProviders(['/editor'])
 
-    expect(screen.getByText('Editing: Unnamed')).toBeInTheDocument()
+    // When there's no name set, the name display should not be present
+    expect(screen.queryByText('Unnamed')).not.toBeInTheDocument()
   })
 })
