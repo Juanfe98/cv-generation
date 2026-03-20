@@ -5,7 +5,7 @@ export function Layout() {
     <div className="flex min-h-screen flex-col">
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-          <h1 className="text-xl font-bold text-slate-900">CV Generator</h1>
+          <h1 className="text-xl font-bold text-slate-900">ResumeForge</h1>
           <nav className="flex gap-4">
             <NavLink
               to="/editor"
