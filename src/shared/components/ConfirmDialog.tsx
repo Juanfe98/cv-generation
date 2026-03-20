@@ -89,12 +89,12 @@ export function ConfirmDialog({
 
   const confirmButtonClasses =
     variant === 'destructive'
-      ? 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500'
-      : 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500'
+      ? 'bg-red-600 text-white shadow-lg shadow-red-500/20 hover:bg-red-700 hover:shadow-xl hover:shadow-red-500/25 focus-visible:ring-red-600'
+      : 'bg-blue-600 text-white shadow-lg shadow-blue-500/20 hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-500/25 focus-visible:ring-blue-600'
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm"
       onClick={handleBackdropClick}
       role="dialog"
       aria-modal="true"
@@ -103,7 +103,7 @@ export function ConfirmDialog({
     >
       <div
         ref={modalRef}
-        className="w-full max-w-md rounded-xl bg-white p-6 shadow-2xl"
+        className="w-full max-w-md rounded-2xl border border-slate-200/50 bg-white p-6 shadow-2xl"
       >
         <h2
           id="confirm-dialog-title"
@@ -121,14 +121,14 @@ export function ConfirmDialog({
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-lg px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
+            className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition-all hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-offset-2"
           >
             {cancelLabel}
           </button>
           <button
             type="button"
             onClick={onConfirm}
-            className={`rounded-lg px-4 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 ${confirmButtonClasses}`}
+            className={`rounded-lg px-4 py-2 text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${confirmButtonClasses}`}
           >
             {confirmLabel}
           </button>
