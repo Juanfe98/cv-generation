@@ -7,7 +7,7 @@ import type { CvModel } from './types'
  * Examples: "2024-03", "2020-12"
  */
 const dateStringSchema = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, {
-  message: 'Date must be in YYYY-MM format',
+  message: 'validation:invalidDate',
 })
 
 const optionalDateString = z
@@ -16,7 +16,7 @@ const optionalDateString = z
   .or(z.literal(''))
   .default('')
 
-const nonEmptyString = z.string().min(1, 'This field is required')
+const nonEmptyString = z.string().min(1, 'validation:fieldRequired')
 
 const profileLinkSchema = z.object({
   label: z.string().default(''),

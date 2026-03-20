@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import { useCv } from '../../../app/providers'
 import type { ExperienceItem } from '../../../core'
@@ -6,17 +7,18 @@ import { reorderArray } from '../../../shared/utils'
 import { EditorCard, ReorderButtons, AddItemButton, EditButton, DeleteButton } from '../../../shared/editor'
 import { ExperienceForm } from './ExperienceForm'
 
-function formatDateRange(start: string, end: string, isCurrent: boolean): string {
+function formatDateRange(start: string, end: string, isCurrent: boolean, presentText: string): string {
   const formatDate = (d: string) => {
     if (!d) return ''
     const [year, month] = d.split('-')
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     return `${monthNames[parseInt(month, 10) - 1]} ${year}`
   }
-  return `${formatDate(start)} – ${isCurrent ? 'Present' : formatDate(end)}`
+  return `${formatDate(start)} – ${isCurrent ? presentText : formatDate(end)}`
 }
 
 export function ExperienceSection() {
+  const { t } = useTranslation('editor')
   const { cv, updateCv } = useCv()
   const [editingId, setEditingId] = useState<string | null>(null)
   const [isAdding, setIsAdding] = useState(false)
@@ -76,7 +78,7 @@ export function ExperienceSection() {
   return (
     <div className="space-y-4">
       {experiences.length === 0 && !isAdding && (
-        <p className="text-sm text-slate-500">Add roles that highlight your professional journey.</p>
+        <p className="text-sm text-slate-500">{t('experience.emptyState')}</p>
       )}
 
       {experiences.map((exp, index) => {
@@ -111,7 +113,7 @@ export function ExperienceSection() {
                         </p>
                         {!isExpanded && (
                           <p className="mt-0.5 text-xs text-slate-400">
-                            {formatDateRange(exp.startDate, exp.endDate, exp.isCurrent)}
+                            {formatDateRange(exp.startDate, exp.endDate, exp.isCurrent, t('experience.present'))}
                           </p>
                         )}
                       </div>
@@ -136,7 +138,7 @@ export function ExperienceSection() {
                 {isExpanded && (
                   <div className="mt-3 space-y-3 pl-8">
                     <p className="text-sm font-medium text-slate-600">
-                      {formatDateRange(exp.startDate, exp.endDate, exp.isCurrent)}
+                      {formatDateRange(exp.startDate, exp.endDate, exp.isCurrent, t('experience.present'))}
                       {exp.location && (
                         <span className="font-normal text-slate-400"> · {exp.location}</span>
                       )}
@@ -165,7 +167,7 @@ export function ExperienceSection() {
         </EditorCard>
       ) : (
         <AddItemButton onClick={() => setIsAdding(true)}>
-          Add Experience
+          {t('experience.addExperience')}
         </AddItemButton>
       )}
     </div>

@@ -1,0 +1,57 @@
+{
+  "steps": {
+    "gettingStarted": {
+      "title": "Comenzar",
+      "shortTitle": "Inicio"
+    },
+    "workExperience": {
+      "title": "Experiencia laboral",
+      "shortTitle": "Experiencia"
+    },
+    "education": {
+      "title": "Educación",
+      "shortTitle": "Educación"
+    },
+    "skillsProjects": {
+      "title": "Habilidades y proyectos",
+      "shortTitle": "Habilidades"
+    },
+    "review": {
+      "title": "Revisar y exportar",
+      "shortTitle": "Revisar"
+    }
+  },
+  "navigation": {
+    "back": "Atrás",
+    "next": "Siguiente",
+    "finish": "Finalizar",
+    "stepOf": "Paso {{current}} de {{total}}"
+  },
+  "gettingStarted": {
+    "title": "Vamos a crear tu CV",
+    "subtitle": "Comienza ingresando tu información básica. Siempre puedes editarla después.",
+    "tip": "Consejo: Un buen título profesional ayuda a los reclutadores a entender tu experiencia de un vistazo."
+  },
+  "workExperience": {
+    "title": "Tu experiencia laboral",
+    "subtitle": "Agrega tu historial laboral relevante, comenzando con tu puesto más reciente.",
+    "tip": "Consejo: Enfócate en logros e impacto, no solo en responsabilidades."
+  },
+  "education": {
+    "title": "Tu educación",
+    "subtitle": "Agrega tu formación académica y cualquier certificación relevante.",
+    "tip": "Consejo: Incluye cursos relevantes u honores si estás comenzando tu carrera."
+  },
+  "skillsProjects": {
+    "title": "Habilidades y proyectos",
+    "subtitle": "Destaca tus habilidades clave y muestra tus mejores proyectos.",
+    "tip": "Consejo: Incluye tanto habilidades técnicas como blandas relevantes para tu puesto objetivo."
+  },
+  "review": {
+    "title": "Revisa tu CV",
+    "subtitle": "Dale un último vistazo a tu CV antes de descargarlo.",
+    "downloadReady": "¡Tu CV está listo para descargar!",
+    "editSections": "Editar secciones",
+    "downloadPdf": "Descargar PDF"
+  }
+}

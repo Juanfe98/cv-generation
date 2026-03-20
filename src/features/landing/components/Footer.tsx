@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 function Logo() {
   return (
@@ -26,14 +27,15 @@ function Logo() {
   )
 }
 
-export function Footer() {
-  const currentYear = new Date().getFullYear()
+const linkKeys = [
+  { href: '#features', labelKey: 'navbar.features' },
+  { href: '#how-it-works', labelKey: 'navbar.howItWorks' },
+  { href: '#templates', labelKey: 'navbar.templates' },
+]
 
-  const links = [
-    { href: '#features', label: 'Features' },
-    { href: '#how-it-works', label: 'How It Works' },
-    { href: '#templates', label: 'Templates' },
-  ]
+export function Footer() {
+  const { t } = useTranslation('landing')
+  const currentYear = new Date().getFullYear()
 
   return (
     <footer className="border-t border-slate-200 bg-white">
@@ -43,20 +45,19 @@ export function Footer() {
           <div className="flex flex-col items-center lg:items-start">
             <Logo />
             <p className="mt-3 max-w-xs text-center text-sm text-slate-500 lg:text-left">
-              Create professional resumes in minutes. Free, private, and designed
-              for modern job seekers.
+              {t('footer.tagline')}
             </p>
           </div>
 
           {/* Navigation */}
           <nav className="flex flex-wrap justify-center gap-x-8 gap-y-2">
-            {links.map((link) => (
+            {linkKeys.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 className="text-sm font-medium text-slate-600 transition-colors hover:text-slate-900"
               >
-                {link.label}
+                {t(link.labelKey)}
               </a>
             ))}
             <a
@@ -80,8 +81,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-10 border-t border-slate-100 pt-6">
           <p className="text-center text-sm text-slate-500">
-            &copy; {currentYear} CV Generator. Built with care for job seekers
-            everywhere.
+            {t('footer.copyright', { year: currentYear })}
           </p>
         </div>
       </div>

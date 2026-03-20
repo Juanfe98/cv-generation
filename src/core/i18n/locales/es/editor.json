@@ -1,0 +1,145 @@
+{
+  "sections": {
+    "profile": "Perfil",
+    "experience": "Experiencia",
+    "education": "Educación",
+    "skills": "Habilidades",
+    "projects": "Proyectos",
+    "languages": "Idiomas",
+    "certifications": "Certificaciones",
+    "additionalInfo": "Información adicional"
+  },
+  "profile": {
+    "title": "Información personal",
+    "fullName": "Nombre completo",
+    "fullNamePlaceholder": "Juan Pérez",
+    "headline": "Título profesional",
+    "headlinePlaceholder": "Ingeniero de Software",
+    "location": "Ubicación",
+    "locationPlaceholder": "Ciudad de México",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "juan@ejemplo.com",
+    "phone": "Teléfono",
+    "phonePlaceholder": "+52 55 1234 5678",
+    "website": "Sitio web",
+    "websitePlaceholder": "https://juanperez.com",
+    "links": "Enlaces de perfil",
+    "addLink": "Agregar enlace",
+    "linkLabel": "Etiqueta",
+    "linkLabelPlaceholder": "LinkedIn",
+    "linkUrl": "URL",
+    "linkUrlPlaceholder": "https://linkedin.com/in/juanperez"
+  },
+  "experience": {
+    "title": "Experiencia laboral",
+    "addExperience": "Agregar experiencia",
+    "company": "Empresa",
+    "companyPlaceholder": "Empresa S.A.",
+    "role": "Puesto",
+    "rolePlaceholder": "Ingeniero de Software",
+    "location": "Ubicación",
+    "locationPlaceholder": "Ciudad de México",
+    "startDate": "Fecha de inicio",
+    "endDate": "Fecha de fin",
+    "currentRole": "Actualmente trabajo aquí",
+    "present": "Presente",
+    "highlights": "Logros principales",
+    "highlightsPlaceholder": "• Lideré equipo de 5 ingenieros...",
+    "addHighlight": "Agregar logro",
+    "emptyState": "No se ha agregado experiencia laboral. Haz clic en \"Agregar experiencia\" para comenzar."
+  },
+  "education": {
+    "title": "Educación",
+    "addEducation": "Agregar educación",
+    "institution": "Institución",
+    "institutionPlaceholder": "Universidad Nacional",
+    "degree": "Título",
+    "degreePlaceholder": "Licenciatura",
+    "field": "Campo de estudio",
+    "fieldPlaceholder": "Ciencias de la Computación",
+    "startDate": "Fecha de inicio",
+    "endDate": "Fecha de fin",
+    "emptyState": "No se ha agregado educación. Haz clic en \"Agregar educación\" para comenzar."
+  },
+  "skills": {
+    "title": "Habilidades",
+    "addSkill": "Agregar habilidad",
+    "skillPlaceholder": "Escribe una habilidad y presiona Enter",
+    "emptyState": "No se han agregado habilidades. Escribe una habilidad y presiona Enter para agregarla."
+  },
+  "projects": {
+    "title": "Proyectos",
+    "addProject": "Agregar proyecto",
+    "name": "Nombre del proyecto",
+    "namePlaceholder": "Mi proyecto increíble",
+    "description": "Descripción",
+    "descriptionPlaceholder": "Una breve descripción del proyecto...",
+    "link": "Enlace del proyecto",
+    "linkPlaceholder": "https://github.com/...",
+    "highlights": "Características principales",
+    "highlightsPlaceholder": "• Construido con React y TypeScript...",
+    "addHighlight": "Agregar característica",
+    "emptyState": "No se han agregado proyectos. Haz clic en \"Agregar proyecto\" para mostrar tu trabajo."
+  },
+  "languages": {
+    "title": "Idiomas",
+    "addLanguage": "Agregar idioma",
+    "name": "Idioma",
+    "namePlaceholder": "Español",
+    "level": "Nivel de competencia",
+    "levelPlaceholder": "Nativo",
+    "levels": {
+      "native": "Nativo",
+      "fluent": "Fluido",
+      "advanced": "Avanzado",
+      "intermediate": "Intermedio",
+      "basic": "Básico"
+    },
+    "emptyState": "No se han agregado idiomas. Haz clic en \"Agregar idioma\" para comenzar."
+  },
+  "certifications": {
+    "title": "Certificaciones",
+    "addCertification": "Agregar certificación",
+    "name": "Nombre de la certificación",
+    "namePlaceholder": "AWS Solutions Architect",
+    "issuer": "Organización emisora",
+    "issuerPlaceholder": "Amazon Web Services",
+    "date": "Fecha de obtención",
+    "emptyState": "No se han agregado certificaciones. Haz clic en \"Agregar certificación\" para comenzar."
+  },
+  "additionalInfo": {
+    "title": "Información adicional",
+    "placeholder": "Agrega cualquier otra información relevante..."
+  },
+  "templates": {
+    "title": "Elegir plantilla",
+    "changeTemplate": "Cambiar plantilla",
+    "currentTemplate": "Actual: {{template}}",
+    "selectTemplate": "Seleccionar plantilla"
+  },
+  "theme": {
+    "title": "Configuración del tema",
+    "accentColor": "Color de acento",
+    "spacing": "Espaciado",
+    "colors": {
+      "blue": "Azul",
+      "emerald": "Esmeralda",
+      "violet": "Violeta",
+      "amber": "Ámbar"
+    },
+    "spacingOptions": {
+      "compact": "Compacto",
+      "standard": "Estándar",
+      "relaxed": "Relajado"
+    }
+  },
+  "preview": {
+    "title": "Vista previa",
+    "downloadPdf": "Descargar PDF",
+    "backToEditor": "Volver al editor"
+  },
+  "mobileToggle": {
+    "editor": "Editor",
+    "preview": "Vista previa"
+  }
+}

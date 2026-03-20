@@ -1,8 +1,10 @@
 import type { z } from 'zod'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useTranslation } from 'react-i18next'
 import { experienceItemSchema, normalizeExperienceItem } from '../../../core'
 import type { ExperienceItem } from '../../../core'
+import { translateErrorMessage } from '../../../core/i18n/translateZodErrors'
 
 type ExperienceFormInput = z.input<typeof experienceItemSchema>
 
@@ -13,10 +15,13 @@ interface ExperienceFormProps {
 }
 
 export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFormProps) {
+  const { t } = useTranslation('editor')
+  const { t: tCommon } = useTranslation('common')
+
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     formState: { errors, isDirty },
   } = useForm<ExperienceFormInput>({
     resolver: zodResolver(experienceItemSchema),
@@ -32,7 +37,7 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
     },
   })
 
-  const isCurrent = watch('isCurrent')
+  const isCurrent = useWatch({ control, name: 'isCurrent' })
 
   const handleFormSubmit = (data: ExperienceFormInput) => {
     const parsed = experienceItemSchema.parse(data)
@@ -49,16 +54,19 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
             htmlFor="company"
             className="block text-sm font-medium text-slate-700"
           >
-            Company *
+            {t('experience.company')} *
           </label>
           <input
             id="company"
             type="text"
             {...register('company')}
+            placeholder={t('experience.companyPlaceholder')}
             className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           />
           {errors.company && (
-            <p className="mt-1 text-sm text-red-600">{errors.company.message}</p>
+            <p className="mt-1 text-sm text-red-600">
+              {translateErrorMessage(errors.company.message)}
+            </p>
           )}
         </div>
 
@@ -67,16 +75,19 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
             htmlFor="role"
             className="block text-sm font-medium text-slate-700"
           >
-            Role *
+            {t('experience.role')} *
           </label>
           <input
             id="role"
             type="text"
             {...register('role')}
+            placeholder={t('experience.rolePlaceholder')}
             className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           />
           {errors.role && (
-            <p className="mt-1 text-sm text-red-600">{errors.role.message}</p>
+            <p className="mt-1 text-sm text-red-600">
+              {translateErrorMessage(errors.role.message)}
+            </p>
           )}
         </div>
       </div>
@@ -86,13 +97,13 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
           htmlFor="location"
           className="block text-sm font-medium text-slate-700"
         >
-          Location
+          {t('experience.location')}
         </label>
         <input
           id="location"
           type="text"
           {...register('location')}
-          placeholder="e.g., San Francisco, CA"
+          placeholder={t('experience.locationPlaceholder')}
           className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
         />
       </div>
@@ -103,7 +114,7 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
             htmlFor="startDate"
             className="block text-sm font-medium text-slate-700"
           >
-            Start Date * (YYYY-MM)
+            {t('experience.startDate')} * (YYYY-MM)
           </label>
           <input
             id="startDate"
@@ -113,7 +124,9 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
             className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           />
           {errors.startDate && (
-            <p className="mt-1 text-sm text-red-600">{errors.startDate.message}</p>
+            <p className="mt-1 text-sm text-red-600">
+              {translateErrorMessage(errors.startDate.message)}
+            </p>
           )}
         </div>
 
@@ -122,7 +135,7 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
             htmlFor="endDate"
             className="block text-sm font-medium text-slate-700"
           >
-            End Date (YYYY-MM)
+            {t('experience.endDate')} (YYYY-MM)
           </label>
           <input
             id="endDate"
@@ -133,7 +146,9 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
             className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:bg-slate-100"
           />
           {errors.endDate && (
-            <p className="mt-1 text-sm text-red-600">{errors.endDate.message}</p>
+            <p className="mt-1 text-sm text-red-600">
+              {translateErrorMessage(errors.endDate.message)}
+            </p>
           )}
         </div>
       </div>
@@ -146,7 +161,7 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
           className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
         />
         <label htmlFor="isCurrent" className="ml-2 text-sm text-slate-700">
-          I currently work here
+          {t('experience.currentRole')}
         </label>
       </div>
 
@@ -155,7 +170,7 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
           htmlFor="highlights"
           className="block text-sm font-medium text-slate-700"
         >
-          Highlights (one per line)
+          {t('experience.highlights')}
         </label>
         <textarea
           id="highlights"
@@ -170,7 +185,7 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
             },
           })}
           defaultValue={experience?.highlights?.join('\n') ?? ''}
-          placeholder="Led team of 5 engineers&#10;Increased revenue by 20%"
+          placeholder={t('experience.highlightsPlaceholder')}
           className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
         />
       </div>
@@ -181,14 +196,14 @@ export function ExperienceForm({ experience, onSubmit, onCancel }: ExperienceFor
           disabled={!isDirty}
           className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
         >
-          {experience ? 'Update' : 'Add'}
+          {experience ? tCommon('buttons.save') : tCommon('buttons.add')}
         </button>
         <button
           type="button"
           onClick={onCancel}
           className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
         >
-          Cancel
+          {tCommon('buttons.cancel')}
         </button>
       </div>
     </form>

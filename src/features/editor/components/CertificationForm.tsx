@@ -1,7 +1,7 @@
 import type { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { certificationItemSchema, normalizeCertificationItem } from '../../../core'
+import { certificationItemSchema, normalizeCertificationItem, translateErrorMessage } from '../../../core'
 import type { CertificationItem } from '../../../core'
 
 type CertificationFormInput = z.input<typeof certificationItemSchema>
@@ -50,7 +50,7 @@ export function CertificationForm({ certification, onSubmit, onCancel }: Certifi
           className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
         />
         {errors.name && (
-          <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+          <p className="mt-1 text-sm text-red-600">{translateErrorMessage(errors.name.message)}</p>
         )}
       </div>
 
@@ -86,7 +86,7 @@ export function CertificationForm({ certification, onSubmit, onCancel }: Certifi
             className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           />
           {errors.date && (
-            <p className="mt-1 text-sm text-red-600">{errors.date.message}</p>
+            <p className="mt-1 text-sm text-red-600">{translateErrorMessage(errors.date.message)}</p>
           )}
         </div>
       </div>

@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useReveal } from '../hooks'
 
 export function CallToAction() {
+  const { t } = useTranslation('landing')
   const { ref, isVisible } = useReveal<HTMLElement>()
 
   return (
@@ -47,12 +49,11 @@ export function CallToAction() {
           </div>
 
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-            Ready to build your CV?
+            {t('cta.title')}
           </h2>
 
           <p className="mx-auto mt-4 max-w-xl text-lg text-slate-400">
-            Join thousands of professionals who have created their perfect
-            resume. Free, fast, and completely private.
+            {t('cta.subtitle')}
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -60,7 +61,7 @@ export function CallToAction() {
               to="/editor"
               className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:bg-blue-500 hover:shadow-xl hover:shadow-blue-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 sm:w-auto"
             >
-              <span>Start Building Now</span>
+              <span>{t('cta.button')}</span>
               <svg
                 className="h-5 w-5 transition-transform group-hover:translate-x-0.5"
                 fill="none"
@@ -93,7 +94,7 @@ export function CallToAction() {
                   d="M5 13l4 4L19 7"
                 />
               </svg>
-              <span>No sign-up required</span>
+              <span>{t('valueProposition.free.title')}</span>
             </div>
             <div className="flex items-center gap-2">
               <svg
@@ -109,7 +110,7 @@ export function CallToAction() {
                   d="M5 13l4 4L19 7"
                 />
               </svg>
-              <span>Free forever</span>
+              <span>{t('valueProposition.privacy.title')}</span>
             </div>
             <div className="flex items-center gap-2">
               <svg
@@ -125,7 +126,7 @@ export function CallToAction() {
                   d="M5 13l4 4L19 7"
                 />
               </svg>
-              <span>Data stays on your device</span>
+              <span>{t('valueProposition.fast.title')}</span>
             </div>
           </div>
         </div>
